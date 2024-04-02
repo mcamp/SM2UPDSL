@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: dk.sdu.mmmi.assa.sm
+Bundle-ManifestVersion: 2
+Bundle-Name: dk.sdu.mmmi.assa.sm
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: dk.sdu.mmmi.assa.sm; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: dk.sdu.mmmi.assa.sm.scoping,
+ dk.sdu.mmmi.assa.sm.serializer,
+ dk.sdu.mmmi.assa.sm.services,
+ dk.sdu.mmmi.assa.sm.generator,
+ dk.sdu.mmmi.assa.sm.parser.antlr.internal,
+ dk.sdu.mmmi.assa.sm.validation,
+ dk.sdu.mmmi.assa.sm.stateMachine.impl,
+ dk.sdu.mmmi.assa.sm.stateMachine,
+ dk.sdu.mmmi.assa.sm,
+ dk.sdu.mmmi.assa.sm.parser.antlr,
+ dk.sdu.mmmi.assa.sm.stateMachine.util
+Import-Package: org.apache.log4j
