@@ -14,7 +14,7 @@ Machine:
 	'machine' name=ID '{' (states+=State | transitions+=Transition)* '}';
 	
 State:
-	(fail?='fail')? 'state' name=ID ('with' machine=Machine)?
+	(fail?='fail' | end?='end')? 'state' name=ID ('with' machine=Machine)?
 ;
 
 Transition:

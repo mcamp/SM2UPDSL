@@ -153,7 +153,7 @@ class StateMachineUppaalGeneratorTest {
 	}
 	
 	@Test
-	def nestedMachnie(){
+	def nestedMachine(){
 		'''
 			project test
 			machine test {
@@ -165,19 +165,89 @@ class StateMachineUppaalGeneratorTest {
 			}
 		'''.assertUppaal(
 			'''
+			chan gen_two_inner_start;
 			process test {
 				state
 					one,
+					gen_pre_two,
 					two;
+				commit gen_pre_two;
 				init one;
+				trans
+					gen_pre_two -> two {
+						sync gen_two_inner_start!;
+					};
 			}
 			process two_inner {
 				state
+					gen_init,
 					three,
 					four;
-				init three;
+				init gen_init;
+				trans
+					gen_init -> three {
+						sync gen_two_inner_start?;
+					};
 			}
 			system test, two_inner;
+			'''
+		)
+	}
+	
+	@Test
+	def nestedMachineWithTransition(){
+		'''
+			project test
+			machine test {
+				state one
+				state two with machine inner{ 
+					state innerOne
+					state innerTwo
+					innerOne -> innerTwo when test
+				}
+				one -> two
+			}
+		'''.assertUppaal(
+			'''
+			chan test, gen_two_inner_start;
+			process test {
+				state
+					one,
+					gen_pre_two,
+					two;
+				commit gen_pre_two;
+				init one;
+				trans
+					one -> gen_pre_two {
+					},
+					gen_pre_two -> two {
+						sync gen_two_inner_start!;
+					};
+			}
+			process two_inner {
+				state
+					gen_init,
+					innerOne,
+					innerTwo;
+				init gen_init;
+				trans
+					gen_init -> innerOne {
+						sync gen_two_inner_start?;
+					},
+					innerOne -> innerTwo {
+						sync test?;
+					};
+			}
+			process gen_sync_test {
+				state
+					initSync;
+				init initSync;
+				trans
+					initSync -> initSync {
+						sync test!;
+					};
+			}
+			system test, two_inner, gen_sync_test;
 			'''
 		)
 	}
@@ -199,28 +269,39 @@ class StateMachineUppaalGeneratorTest {
 			}
 		'''.assertUppaal(
 			'''
-			chan finish;
+			chan finish, gen_two_inner_start;
 			process test {
 				state
 					one,
+					gen_pre_two,
 					two,
 					three;
+				commit gen_pre_two;
 				init one;
 				trans
-					one -> two {
+					one -> gen_pre_two {
 					},
 					two -> three {
 						sync finish?;
+					},
+					gen_pre_two -> two {
+						sync gen_two_inner_start!;
 					};
 			}
 			process two_inner {
 				state
+					gen_init,
 					innerOne,
 					innerTwo;
-				init innerOne;
+				init gen_init;
 				trans
+					gen_init -> innerOne {
+						sync gen_two_inner_start?;
+					},
 					innerOne -> innerTwo {
 						sync finish!;
+					},
+					innerTwo -> gen_init {
 					};
 			}
 			system test, two_inner;
@@ -316,7 +397,16 @@ class StateMachineUppaalGeneratorTest {
 						assign gen_clock := 0;
 					};
 			}
-			system test;
+			process gen_sync_finish {
+				state
+					initSync;
+				init initSync;
+				trans
+					initSync -> initSync {
+						sync finish?;
+					};
+			}
+			system test, gen_sync_finish;
 			'''
 		)
 	}
@@ -338,32 +428,43 @@ class StateMachineUppaalGeneratorTest {
 		'''.assertUppaal(
 			'''
 			clock gen_clock;
-			chan ready, finish;
+			chan ready, finish, gen_two_inner_start;
 			process test {
 				state
 					one,
+					gen_pre_two,
 					two;
+				commit gen_pre_two;
 				init one;
 				trans
-					one -> two {
+					one -> gen_pre_two {
 						sync ready?;
 					},
 					two -> one {
 						sync finish?;
+					},
+					gen_pre_two -> two {
+						sync gen_two_inner_start!;
 					};
 			}
 			process two_inner {
 				state
+					gen_init,
 					innerOne {
 						gen_clock <= 5
 					},
 					innerTwo;
-				init innerOne;
+				init gen_init;
 				trans
+					gen_init -> innerOne {
+						sync gen_two_inner_start?;
+					},
 					innerOne -> innerTwo {
 						guard gen_clock >= 5;
 						sync finish!;
 						assign gen_clock := 0;
+					},
+					innerTwo -> gen_init {
 					};
 			}
 			process gen_sync_ready {
