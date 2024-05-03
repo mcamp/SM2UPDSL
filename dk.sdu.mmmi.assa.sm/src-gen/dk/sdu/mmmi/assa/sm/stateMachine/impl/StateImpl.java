@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl#isFail <em>Fail</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl#isEnd <em>End</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl#getName <em>Name</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl#getMachine <em>Machine</em>}</li>
  * </ul>
@@ -52,6 +53,26 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @ordered
    */
   protected boolean fail = FAIL_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isEnd() <em>End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isEnd()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean END_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isEnd() <em>End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isEnd()
+   * @generated
+   * @ordered
+   */
+  protected boolean end = END_EDEFAULT;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -127,6 +148,31 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     fail = newFail;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.STATE__FAIL, oldFail, fail));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isEnd()
+  {
+    return end;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setEnd(boolean newEnd)
+  {
+    boolean oldEnd = end;
+    end = newEnd;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.STATE__END, oldEnd, end));
   }
 
   /**
@@ -232,6 +278,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     {
       case StateMachinePackage.STATE__FAIL:
         return isFail();
+      case StateMachinePackage.STATE__END:
+        return isEnd();
       case StateMachinePackage.STATE__NAME:
         return getName();
       case StateMachinePackage.STATE__MACHINE:
@@ -252,6 +300,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     {
       case StateMachinePackage.STATE__FAIL:
         setFail((Boolean)newValue);
+        return;
+      case StateMachinePackage.STATE__END:
+        setEnd((Boolean)newValue);
         return;
       case StateMachinePackage.STATE__NAME:
         setName((String)newValue);
@@ -276,6 +327,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case StateMachinePackage.STATE__FAIL:
         setFail(FAIL_EDEFAULT);
         return;
+      case StateMachinePackage.STATE__END:
+        setEnd(END_EDEFAULT);
+        return;
       case StateMachinePackage.STATE__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -298,6 +352,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     {
       case StateMachinePackage.STATE__FAIL:
         return fail != FAIL_EDEFAULT;
+      case StateMachinePackage.STATE__END:
+        return end != END_EDEFAULT;
       case StateMachinePackage.STATE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case StateMachinePackage.STATE__MACHINE:
@@ -319,6 +375,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (fail: ");
     result.append(fail);
+    result.append(", end: ");
+    result.append(end);
     result.append(", name: ");
     result.append(name);
     result.append(')');

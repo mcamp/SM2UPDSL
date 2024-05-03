@@ -137,6 +137,9 @@ class UppaalGenerator {
 	«IF transition.isTime»
 	guard gen_clock >= «transition.timeout.toClockString»;
 	«ENDIF»
+	«IF transition.hasGuard»
+	guard «transition.guard»;
+	«ENDIF»
 	«IF !transition.sync.isNullOrEmpty»
 	sync «transition.sync»;
 	«ENDIF»
@@ -441,9 +444,13 @@ class UppaalTransition {
 	var public float timeout
 	var public boolean isTime
 	
+	var Transition originalTx
+	
 	new(){ }
 
 	new(Transition transition) {
+		originalTx = transition
+		
 		from = transition.from.name
 		to = transition.to.name
 		if(!transition.when.isNullOrEmpty) {
@@ -455,12 +462,22 @@ class UppaalTransition {
 			channel = transition.signal	
 		}
 		
+		
 		this.timeout = transition.timeout
 		this.isTime = transition.isTime
 	}
 	
 	def hasChannel(){
 		!channel.nullOrEmpty
+	}
+	
+	def hasGuard(){
+		if (originalTx === null) return false
+		return originalTx.hasGuard
+	}
+	
+	def guard() {
+		return originalTx.guard
 	}
 }
 

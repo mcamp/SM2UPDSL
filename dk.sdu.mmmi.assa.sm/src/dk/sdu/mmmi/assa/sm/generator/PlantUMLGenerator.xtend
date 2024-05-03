@@ -14,10 +14,19 @@ class PlantUMLGenerator {
 	
 	def compile(Root root)'''
 	@startuml
-	[*] --> «root.machine.name»
-	state «root.machine.name»«IF !root.machine.states.empty» {
-		«root.machine.compileBody»
-	}«ENDIF»
+	«IF root.machines.size > 1»
+	[*] --> «root.name»
+	state «root.name» {
+	«ENDIF»
+		«FOR machine:root.machines SEPARATOR "\n--"»
+		[*] --> «machine.name»
+		state «machine.name»«IF !machine.states.empty» {
+			«machine.compileBody»
+		}«ENDIF»
+		«ENDFOR»
+	«IF root.machines.size > 1»
+	}
+	«ENDIF»
 	@enduml
 	'''
 	
@@ -47,14 +56,13 @@ class PlantUMLGenerator {
 	'''
 	
 	def compileAction(Transition transition){
-		var ret = ""
-		if(transition.isTime) ret = " : after "+transition.timeout.toMillisecondsString+"ms"
-		if(!transition.when.isNullOrEmpty) ret = " : "+transition.when+"?"
-		if(!transition.signal.isNullOrEmpty){
-			if(ret.isEmpty) ret = " : "
-			else ret += " | "
-			ret += transition.signal+"!"
-		} 
+		if(!transition.hasBody) return ""
+		var ret = " :"
+		if(transition.hasWhen) ret += " "+transition.when+"?"
+		if(transition.isTime) ret += " [after "+transition.timeout.toMillisecondsString+"ms]"
+		if(transition.hasGuard) ret += " ["+transition.guard+"]"
+		if(transition.hasSignal) ret += " / "+transition.signal+"!"
+
 		return ret
 	}
 	
@@ -70,7 +78,13 @@ class PlantUMLGenerator {
 	}
 	
 	
-	
+	def hasBody(Transition transition) {
+		return transition.hasWhen 
+			|| transition.isTime
+			|| transition.hasSignal
+			|| transition.hasGuard
+		
+	}
 	
 	
 }

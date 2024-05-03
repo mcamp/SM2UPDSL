@@ -29,19 +29,19 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final Keyword cProjectKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Assignment cMachineAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cMachineMachineParserRuleCall_2_0 = (RuleCall)cMachineAssignment_2.eContents().get(0);
+		private final Assignment cMachinesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cMachinesMachineParserRuleCall_2_0 = (RuleCall)cMachinesAssignment_2.eContents().get(0);
 		
 		//Root:
 		//    (
 		//        'project' name=ID
-		//        machine=Machine
+		//        machines+=Machine*
 		//    )?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//(
 		//    'project' name=ID
-		//    machine=Machine
+		//    machines+=Machine*
 		//)?
 		public Group getGroup() { return cGroup; }
 		
@@ -54,11 +54,11 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//machine=Machine
-		public Assignment getMachineAssignment_2() { return cMachineAssignment_2; }
+		//machines+=Machine*
+		public Assignment getMachinesAssignment_2() { return cMachinesAssignment_2; }
 		
 		//Machine
-		public RuleCall getMachineMachineParserRuleCall_2_0() { return cMachineMachineParserRuleCall_2_0; }
+		public RuleCall getMachinesMachineParserRuleCall_2_0() { return cMachinesMachineParserRuleCall_2_0; }
 	}
 	public class MachineElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Machine");
@@ -114,8 +114,11 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	public class StateElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.State");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cFailAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cFailFailKeyword_0_0 = (Keyword)cFailAssignment_0.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Assignment cFailAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final Keyword cFailFailKeyword_0_0_0 = (Keyword)cFailAssignment_0_0.eContents().get(0);
+		private final Assignment cEndAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final Keyword cEndEndKeyword_0_1_0 = (Keyword)cEndAssignment_0_1.eContents().get(0);
 		private final Keyword cStateKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
@@ -125,18 +128,27 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final RuleCall cMachineMachineParserRuleCall_3_1_0 = (RuleCall)cMachineAssignment_3_1.eContents().get(0);
 		
 		//State:
-		//    (fail?='fail')? 'state' name=ID ('with' machine=Machine)?
+		//    (fail?='fail' | end?='end')? 'state' name=ID ('with' machine=Machine)?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(fail?='fail')? 'state' name=ID ('with' machine=Machine)?
+		//(fail?='fail' | end?='end')? 'state' name=ID ('with' machine=Machine)?
 		public Group getGroup() { return cGroup; }
 		
-		//(fail?='fail')?
-		public Assignment getFailAssignment_0() { return cFailAssignment_0; }
+		//(fail?='fail' | end?='end')?
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		
+		//fail?='fail'
+		public Assignment getFailAssignment_0_0() { return cFailAssignment_0_0; }
 		
 		//'fail'
-		public Keyword getFailFailKeyword_0_0() { return cFailFailKeyword_0_0; }
+		public Keyword getFailFailKeyword_0_0_0() { return cFailFailKeyword_0_0_0; }
+		
+		//end?='end'
+		public Assignment getEndAssignment_0_1() { return cEndAssignment_0_1; }
+		
+		//'end'
+		public Keyword getEndEndKeyword_0_1_0() { return cEndEndKeyword_0_1_0; }
 		
 		//'state'
 		public Keyword getStateKeyword_1() { return cStateKeyword_1; }
@@ -170,31 +182,40 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final CrossReference cToStateCrossReference_2_0 = (CrossReference)cToAssignment_2.eContents().get(0);
 		private final RuleCall cToStateIDTerminalRuleCall_2_0_1 = (RuleCall)cToStateCrossReference_2_0.eContents().get(1);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cWhenKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cWhenAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cWhenIDTerminalRuleCall_3_1_0 = (RuleCall)cWhenAssignment_3_1.eContents().get(0);
+		private final Assignment cHasGuardAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
+		private final Keyword cHasGuardGuardKeyword_3_0_0 = (Keyword)cHasGuardAssignment_3_0.eContents().get(0);
+		private final Assignment cGuardAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cGuardBooleanParserRuleCall_3_1_0 = (RuleCall)cGuardAssignment_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Assignment cTimeAssignment_4_0 = (Assignment)cGroup_4.eContents().get(0);
-		private final Keyword cTimeAfterKeyword_4_0_0 = (Keyword)cTimeAssignment_4_0.eContents().get(0);
-		private final Assignment cTimeoutAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cTimeoutFloatParserRuleCall_4_1_0 = (RuleCall)cTimeoutAssignment_4_1.eContents().get(0);
+		private final Assignment cHasWhenAssignment_4_0 = (Assignment)cGroup_4.eContents().get(0);
+		private final Keyword cHasWhenWhenKeyword_4_0_0 = (Keyword)cHasWhenAssignment_4_0.eContents().get(0);
+		private final Assignment cWhenAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cWhenIDTerminalRuleCall_4_1_0 = (RuleCall)cWhenAssignment_4_1.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cSignalKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cSignalAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cSignalIDTerminalRuleCall_5_1_0 = (RuleCall)cSignalAssignment_5_1.eContents().get(0);
+		private final Assignment cTimeAssignment_5_0 = (Assignment)cGroup_5.eContents().get(0);
+		private final Keyword cTimeAfterKeyword_5_0_0 = (Keyword)cTimeAssignment_5_0.eContents().get(0);
+		private final Assignment cTimeoutAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cTimeoutFloatParserRuleCall_5_1_0 = (RuleCall)cTimeoutAssignment_5_1.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Assignment cHasSignalAssignment_6_0 = (Assignment)cGroup_6.eContents().get(0);
+		private final Keyword cHasSignalSignalKeyword_6_0_0 = (Keyword)cHasSignalAssignment_6_0.eContents().get(0);
+		private final Assignment cSignalAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cSignalIDTerminalRuleCall_6_1_0 = (RuleCall)cSignalAssignment_6_1.eContents().get(0);
 		
 		//Transition:
 		//    from=[State] '->' to=[State]
-		//        ('when' when=ID)?
+		//        (hasGuard?='guard' guard=Boolean)?
+		//        (hasWhen?='when' when=ID)?
 		//        (time?='after' timeout=Float)?
-		//        ('signal' signal=ID)?
+		//        (hasSignal?='signal' signal=ID)?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//from=[State] '->' to=[State]
-		//    ('when' when=ID)?
+		//    (hasGuard?='guard' guard=Boolean)?
+		//    (hasWhen?='when' when=ID)?
 		//    (time?='after' timeout=Float)?
-		//    ('signal' signal=ID)?
+		//    (hasSignal?='signal' signal=ID)?
 		public Group getGroup() { return cGroup; }
 		
 		//from=[State]
@@ -218,44 +239,65 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		//ID
 		public RuleCall getToStateIDTerminalRuleCall_2_0_1() { return cToStateIDTerminalRuleCall_2_0_1; }
 		
-		//('when' when=ID)?
+		//(hasGuard?='guard' guard=Boolean)?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'when'
-		public Keyword getWhenKeyword_3_0() { return cWhenKeyword_3_0; }
+		//hasGuard?='guard'
+		public Assignment getHasGuardAssignment_3_0() { return cHasGuardAssignment_3_0; }
 		
-		//when=ID
-		public Assignment getWhenAssignment_3_1() { return cWhenAssignment_3_1; }
+		//'guard'
+		public Keyword getHasGuardGuardKeyword_3_0_0() { return cHasGuardGuardKeyword_3_0_0; }
 		
-		//ID
-		public RuleCall getWhenIDTerminalRuleCall_3_1_0() { return cWhenIDTerminalRuleCall_3_1_0; }
+		//guard=Boolean
+		public Assignment getGuardAssignment_3_1() { return cGuardAssignment_3_1; }
 		
-		//(time?='after' timeout=Float)?
+		//Boolean
+		public RuleCall getGuardBooleanParserRuleCall_3_1_0() { return cGuardBooleanParserRuleCall_3_1_0; }
+		
+		//(hasWhen?='when' when=ID)?
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//time?='after'
-		public Assignment getTimeAssignment_4_0() { return cTimeAssignment_4_0; }
+		//hasWhen?='when'
+		public Assignment getHasWhenAssignment_4_0() { return cHasWhenAssignment_4_0; }
 		
-		//'after'
-		public Keyword getTimeAfterKeyword_4_0_0() { return cTimeAfterKeyword_4_0_0; }
+		//'when'
+		public Keyword getHasWhenWhenKeyword_4_0_0() { return cHasWhenWhenKeyword_4_0_0; }
 		
-		//timeout=Float
-		public Assignment getTimeoutAssignment_4_1() { return cTimeoutAssignment_4_1; }
-		
-		//Float
-		public RuleCall getTimeoutFloatParserRuleCall_4_1_0() { return cTimeoutFloatParserRuleCall_4_1_0; }
-		
-		//('signal' signal=ID)?
-		public Group getGroup_5() { return cGroup_5; }
-		
-		//'signal'
-		public Keyword getSignalKeyword_5_0() { return cSignalKeyword_5_0; }
-		
-		//signal=ID
-		public Assignment getSignalAssignment_5_1() { return cSignalAssignment_5_1; }
+		//when=ID
+		public Assignment getWhenAssignment_4_1() { return cWhenAssignment_4_1; }
 		
 		//ID
-		public RuleCall getSignalIDTerminalRuleCall_5_1_0() { return cSignalIDTerminalRuleCall_5_1_0; }
+		public RuleCall getWhenIDTerminalRuleCall_4_1_0() { return cWhenIDTerminalRuleCall_4_1_0; }
+		
+		//(time?='after' timeout=Float)?
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//time?='after'
+		public Assignment getTimeAssignment_5_0() { return cTimeAssignment_5_0; }
+		
+		//'after'
+		public Keyword getTimeAfterKeyword_5_0_0() { return cTimeAfterKeyword_5_0_0; }
+		
+		//timeout=Float
+		public Assignment getTimeoutAssignment_5_1() { return cTimeoutAssignment_5_1; }
+		
+		//Float
+		public RuleCall getTimeoutFloatParserRuleCall_5_1_0() { return cTimeoutFloatParserRuleCall_5_1_0; }
+		
+		//(hasSignal?='signal' signal=ID)?
+		public Group getGroup_6() { return cGroup_6; }
+		
+		//hasSignal?='signal'
+		public Assignment getHasSignalAssignment_6_0() { return cHasSignalAssignment_6_0; }
+		
+		//'signal'
+		public Keyword getHasSignalSignalKeyword_6_0_0() { return cHasSignalSignalKeyword_6_0_0; }
+		
+		//signal=ID
+		public Assignment getSignalAssignment_6_1() { return cSignalAssignment_6_1; }
+		
+		//ID
+		public RuleCall getSignalIDTerminalRuleCall_6_1_0() { return cSignalIDTerminalRuleCall_6_1_0; }
 	}
 	public class FloatElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Float");
@@ -283,6 +325,24 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		//INT
 		public RuleCall getINTTerminalRuleCall_1_1() { return cINTTerminalRuleCall_1_1; }
 	}
+	public class BooleanElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Boolean");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cTrueKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cFalseKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		
+		//Boolean returns ecore::EBoolean: 'true' | 'false';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'true' | 'false'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//'true'
+		public Keyword getTrueKeyword_0() { return cTrueKeyword_0; }
+		
+		//'false'
+		public Keyword getFalseKeyword_1() { return cFalseKeyword_1; }
+	}
 	
 	
 	private final RootElements pRoot;
@@ -290,6 +350,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	private final StateElements pState;
 	private final TransitionElements pTransition;
 	private final FloatElements pFloat;
+	private final BooleanElements pBoolean;
 	
 	private final Grammar grammar;
 	
@@ -305,6 +366,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		this.pState = new StateElements();
 		this.pTransition = new TransitionElements();
 		this.pFloat = new FloatElements();
+		this.pBoolean = new BooleanElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -337,7 +399,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	//Root:
 	//    (
 	//        'project' name=ID
-	//        machine=Machine
+	//        machines+=Machine*
 	//    )?;
 	public RootElements getRootAccess() {
 		return pRoot;
@@ -358,7 +420,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	}
 	
 	//State:
-	//    (fail?='fail')? 'state' name=ID ('with' machine=Machine)?
+	//    (fail?='fail' | end?='end')? 'state' name=ID ('with' machine=Machine)?
 	//;
 	public StateElements getStateAccess() {
 		return pState;
@@ -370,9 +432,10 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	
 	//Transition:
 	//    from=[State] '->' to=[State]
-	//        ('when' when=ID)?
+	//        (hasGuard?='guard' guard=Boolean)?
+	//        (hasWhen?='when' when=ID)?
 	//        (time?='after' timeout=Float)?
-	//        ('signal' signal=ID)?
+	//        (hasSignal?='signal' signal=ID)?
 	//;
 	public TransitionElements getTransitionAccess() {
 		return pTransition;
@@ -389,6 +452,15 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	
 	public ParserRule getFloatRule() {
 		return getFloatAccess().getRule();
+	}
+	
+	//Boolean returns ecore::EBoolean: 'true' | 'false';
+	public BooleanElements getBooleanAccess() {
+		return pBoolean;
+	}
+	
+	public ParserRule getBooleanRule() {
+		return getBooleanAccess().getRule();
 	}
 	
 	//terminal ID: '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;

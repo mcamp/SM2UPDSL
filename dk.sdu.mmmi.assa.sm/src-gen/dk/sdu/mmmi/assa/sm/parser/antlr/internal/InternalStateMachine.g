@@ -101,22 +101,22 @@ ruleRoot returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getRootAccess().getMachineMachineParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getRootAccess().getMachinesMachineParserRuleCall_2_0());
 				}
-				lv_machine_2_0=ruleMachine
+				lv_machines_2_0=ruleMachine
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getRootRule());
 					}
-					set(
+					add(
 						$current,
-						"machine",
-						lv_machine_2_0,
+						"machines",
+						lv_machines_2_0,
 						"dk.sdu.mmmi.assa.sm.StateMachine.Machine");
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)
+		)*
 	)?
 ;
 
@@ -228,27 +228,44 @@ ruleState returns [EObject current=null]
 	(
 		(
 			(
-				lv_fail_0_0='fail'
-				{
-					newLeafNode(lv_fail_0_0, grammarAccess.getStateAccess().getFailFailKeyword_0_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getStateRule());
+				(
+					lv_fail_0_0='fail'
+					{
+						newLeafNode(lv_fail_0_0, grammarAccess.getStateAccess().getFailFailKeyword_0_0_0());
 					}
-					setWithLastConsumed($current, "fail", lv_fail_0_0 != null, "fail");
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getStateRule());
+						}
+						setWithLastConsumed($current, "fail", lv_fail_0_0 != null, "fail");
+					}
+				)
+			)
+			    |
+			(
+				(
+					lv_end_1_0='end'
+					{
+						newLeafNode(lv_end_1_0, grammarAccess.getStateAccess().getEndEndKeyword_0_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getStateRule());
+						}
+						setWithLastConsumed($current, "end", lv_end_1_0 != null, "end");
+					}
+				)
 			)
 		)?
-		otherlv_1='state'
+		otherlv_2='state'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getStateAccess().getStateKeyword_1());
+			newLeafNode(otherlv_2, grammarAccess.getStateAccess().getStateKeyword_1());
 		}
 		(
 			(
-				lv_name_2_0=RULE_ID
+				lv_name_3_0=RULE_ID
 				{
-					newLeafNode(lv_name_2_0, grammarAccess.getStateAccess().getNameIDTerminalRuleCall_2_0());
+					newLeafNode(lv_name_3_0, grammarAccess.getStateAccess().getNameIDTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
@@ -257,22 +274,22 @@ ruleState returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_2_0,
+						lv_name_3_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
 		(
-			otherlv_3='with'
+			otherlv_4='with'
 			{
-				newLeafNode(otherlv_3, grammarAccess.getStateAccess().getWithKeyword_3_0());
+				newLeafNode(otherlv_4, grammarAccess.getStateAccess().getWithKeyword_3_0());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getStateAccess().getMachineMachineParserRuleCall_3_1_0());
 					}
-					lv_machine_4_0=ruleMachine
+					lv_machine_5_0=ruleMachine
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getStateRule());
@@ -280,7 +297,7 @@ ruleState returns [EObject current=null]
 						set(
 							$current,
 							"machine",
-							lv_machine_4_0,
+							lv_machine_5_0,
 							"dk.sdu.mmmi.assa.sm.StateMachine.Machine");
 						afterParserOrEnumRuleCall();
 					}
@@ -337,15 +354,60 @@ ruleTransition returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_3='when'
-			{
-				newLeafNode(otherlv_3, grammarAccess.getTransitionAccess().getWhenKeyword_3_0());
-			}
 			(
 				(
-					lv_when_4_0=RULE_ID
+					lv_hasGuard_3_0='guard'
 					{
-						newLeafNode(lv_when_4_0, grammarAccess.getTransitionAccess().getWhenIDTerminalRuleCall_3_1_0());
+						newLeafNode(lv_hasGuard_3_0, grammarAccess.getTransitionAccess().getHasGuardGuardKeyword_3_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTransitionRule());
+						}
+						setWithLastConsumed($current, "hasGuard", lv_hasGuard_3_0 != null, "guard");
+					}
+				)
+			)
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getTransitionAccess().getGuardBooleanParserRuleCall_3_1_0());
+					}
+					lv_guard_4_0=ruleBoolean
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getTransitionRule());
+						}
+						set(
+							$current,
+							"guard",
+							lv_guard_4_0,
+							"dk.sdu.mmmi.assa.sm.StateMachine.Boolean");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
+		(
+			(
+				(
+					lv_hasWhen_5_0='when'
+					{
+						newLeafNode(lv_hasWhen_5_0, grammarAccess.getTransitionAccess().getHasWhenWhenKeyword_4_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTransitionRule());
+						}
+						setWithLastConsumed($current, "hasWhen", lv_hasWhen_5_0 != null, "when");
+					}
+				)
+			)
+			(
+				(
+					lv_when_6_0=RULE_ID
+					{
+						newLeafNode(lv_when_6_0, grammarAccess.getTransitionAccess().getWhenIDTerminalRuleCall_4_1_0());
 					}
 					{
 						if ($current==null) {
@@ -354,7 +416,7 @@ ruleTransition returns [EObject current=null]
 						setWithLastConsumed(
 							$current,
 							"when",
-							lv_when_4_0,
+							lv_when_6_0,
 							"org.eclipse.xtext.common.Terminals.ID");
 					}
 				)
@@ -363,24 +425,24 @@ ruleTransition returns [EObject current=null]
 		(
 			(
 				(
-					lv_time_5_0='after'
+					lv_time_7_0='after'
 					{
-						newLeafNode(lv_time_5_0, grammarAccess.getTransitionAccess().getTimeAfterKeyword_4_0_0());
+						newLeafNode(lv_time_7_0, grammarAccess.getTransitionAccess().getTimeAfterKeyword_5_0_0());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getTransitionRule());
 						}
-						setWithLastConsumed($current, "time", lv_time_5_0 != null, "after");
+						setWithLastConsumed($current, "time", lv_time_7_0 != null, "after");
 					}
 				)
 			)
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getTransitionAccess().getTimeoutFloatParserRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getTransitionAccess().getTimeoutFloatParserRuleCall_5_1_0());
 					}
-					lv_timeout_6_0=ruleFloat
+					lv_timeout_8_0=ruleFloat
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getTransitionRule());
@@ -388,7 +450,7 @@ ruleTransition returns [EObject current=null]
 						set(
 							$current,
 							"timeout",
-							lv_timeout_6_0,
+							lv_timeout_8_0,
 							"dk.sdu.mmmi.assa.sm.StateMachine.Float");
 						afterParserOrEnumRuleCall();
 					}
@@ -396,15 +458,25 @@ ruleTransition returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_7='signal'
-			{
-				newLeafNode(otherlv_7, grammarAccess.getTransitionAccess().getSignalKeyword_5_0());
-			}
 			(
 				(
-					lv_signal_8_0=RULE_ID
+					lv_hasSignal_9_0='signal'
 					{
-						newLeafNode(lv_signal_8_0, grammarAccess.getTransitionAccess().getSignalIDTerminalRuleCall_5_1_0());
+						newLeafNode(lv_hasSignal_9_0, grammarAccess.getTransitionAccess().getHasSignalSignalKeyword_6_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTransitionRule());
+						}
+						setWithLastConsumed($current, "hasSignal", lv_hasSignal_9_0 != null, "signal");
+					}
+				)
+			)
+			(
+				(
+					lv_signal_10_0=RULE_ID
+					{
+						newLeafNode(lv_signal_10_0, grammarAccess.getTransitionAccess().getSignalIDTerminalRuleCall_6_1_0());
 					}
 					{
 						if ($current==null) {
@@ -413,7 +485,7 @@ ruleTransition returns [EObject current=null]
 						setWithLastConsumed(
 							$current,
 							"signal",
-							lv_signal_8_0,
+							lv_signal_10_0,
 							"org.eclipse.xtext.common.Terminals.ID");
 					}
 				)
@@ -459,6 +531,36 @@ ruleFloat returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
 				newLeafNode(this_INT_2, grammarAccess.getFloatAccess().getINTTerminalRuleCall_1_1());
 			}
 		)?
+	)
+;
+
+// Entry rule entryRuleBoolean
+entryRuleBoolean returns [String current=null]:
+	{ newCompositeNode(grammarAccess.getBooleanRule()); }
+	iv_ruleBoolean=ruleBoolean
+	{ $current=$iv_ruleBoolean.current.getText(); }
+	EOF;
+
+// Rule Boolean
+ruleBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		kw='true'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getBooleanAccess().getTrueKeyword_0());
+		}
+		    |
+		kw='false'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getBooleanAccess().getFalseKeyword_1());
+		}
 	)
 ;
 

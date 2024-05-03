@@ -144,7 +144,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EReference getRoot_Machine()
+  public EReference getRoot_Machines()
   {
     return (EReference)rootEClass.getEStructuralFeatures().get(1);
   }
@@ -221,7 +221,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EAttribute getState_Name()
+  public EAttribute getState_End()
   {
     return (EAttribute)stateEClass.getEStructuralFeatures().get(1);
   }
@@ -232,9 +232,20 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
+  public EAttribute getState_Name()
+  {
+    return (EAttribute)stateEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getState_Machine()
   {
-    return (EReference)stateEClass.getEStructuralFeatures().get(2);
+    return (EReference)stateEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -276,7 +287,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EAttribute getTransition_When()
+  public EAttribute getTransition_HasGuard()
   {
     return (EAttribute)transitionEClass.getEStructuralFeatures().get(2);
   }
@@ -287,7 +298,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EAttribute getTransition_Time()
+  public EAttribute getTransition_Guard()
   {
     return (EAttribute)transitionEClass.getEStructuralFeatures().get(3);
   }
@@ -298,7 +309,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EAttribute getTransition_Timeout()
+  public EAttribute getTransition_HasWhen()
   {
     return (EAttribute)transitionEClass.getEStructuralFeatures().get(4);
   }
@@ -309,9 +320,53 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EAttribute getTransition_Signal()
+  public EAttribute getTransition_When()
   {
     return (EAttribute)transitionEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getTransition_Time()
+  {
+    return (EAttribute)transitionEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getTransition_Timeout()
+  {
+    return (EAttribute)transitionEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getTransition_HasSignal()
+  {
+    return (EAttribute)transitionEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getTransition_Signal()
+  {
+    return (EAttribute)transitionEClass.getEStructuralFeatures().get(9);
   }
 
   /**
@@ -347,7 +402,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     // Create classes and their features
     rootEClass = createEClass(ROOT);
     createEAttribute(rootEClass, ROOT__NAME);
-    createEReference(rootEClass, ROOT__MACHINE);
+    createEReference(rootEClass, ROOT__MACHINES);
 
     machineEClass = createEClass(MACHINE);
     createEAttribute(machineEClass, MACHINE__NAME);
@@ -356,15 +411,20 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
 
     stateEClass = createEClass(STATE);
     createEAttribute(stateEClass, STATE__FAIL);
+    createEAttribute(stateEClass, STATE__END);
     createEAttribute(stateEClass, STATE__NAME);
     createEReference(stateEClass, STATE__MACHINE);
 
     transitionEClass = createEClass(TRANSITION);
     createEReference(transitionEClass, TRANSITION__FROM);
     createEReference(transitionEClass, TRANSITION__TO);
+    createEAttribute(transitionEClass, TRANSITION__HAS_GUARD);
+    createEAttribute(transitionEClass, TRANSITION__GUARD);
+    createEAttribute(transitionEClass, TRANSITION__HAS_WHEN);
     createEAttribute(transitionEClass, TRANSITION__WHEN);
     createEAttribute(transitionEClass, TRANSITION__TIME);
     createEAttribute(transitionEClass, TRANSITION__TIMEOUT);
+    createEAttribute(transitionEClass, TRANSITION__HAS_SIGNAL);
     createEAttribute(transitionEClass, TRANSITION__SIGNAL);
   }
 
@@ -401,7 +461,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     // Initialize classes and features; add operations and parameters
     initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRoot_Name(), ecorePackage.getEString(), "name", null, 0, 1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRoot_Machine(), this.getMachine(), null, "machine", null, 0, 1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRoot_Machines(), this.getMachine(), null, "machines", null, 0, -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(machineEClass, Machine.class, "Machine", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getMachine_Name(), ecorePackage.getEString(), "name", null, 0, 1, Machine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -410,15 +470,20 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
 
     initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getState_Fail(), ecorePackage.getEBoolean(), "fail", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getState_End(), ecorePackage.getEBoolean(), "end", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_Name(), ecorePackage.getEString(), "name", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Machine(), this.getMachine(), null, "machine", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTransition_From(), this.getState(), null, "from", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTransition_To(), this.getState(), null, "to", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTransition_HasGuard(), ecorePackage.getEBoolean(), "hasGuard", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTransition_Guard(), ecorePackage.getEBoolean(), "guard", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTransition_HasWhen(), ecorePackage.getEBoolean(), "hasWhen", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_When(), ecorePackage.getEString(), "when", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_Time(), ecorePackage.getEBoolean(), "time", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_Timeout(), ecorePackage.getEFloat(), "timeout", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTransition_HasSignal(), ecorePackage.getEBoolean(), "hasSignal", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_Signal(), ecorePackage.getEString(), "signal", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource

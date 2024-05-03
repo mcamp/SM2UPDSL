@@ -17,9 +17,7 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -69,19 +67,10 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	 *     Root returns Root
 	 *
 	 * Constraint:
-	 *     (name=ID machine=Machine)
+	 *     (name=ID machines+=Machine*)
 	 */
 	protected void sequence_Root(ISerializationContext context, Root semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.ROOT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.ROOT__NAME));
-			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.ROOT__MACHINE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.ROOT__MACHINE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getRootAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getRootAccess().getMachineMachineParserRuleCall_2_0(), semanticObject.getMachine());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -90,7 +79,7 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	 *     State returns State
 	 *
 	 * Constraint:
-	 *     (fail?='fail'? name=ID machine=Machine?)
+	 *     ((fail?='fail' | end?='end')? name=ID machine=Machine?)
 	 */
 	protected void sequence_State(ISerializationContext context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -102,7 +91,14 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	 *     Transition returns Transition
 	 *
 	 * Constraint:
-	 *     (from=[State|ID] to=[State|ID] when=ID? (time?='after' timeout=Float)? signal=ID?)
+	 *     (
+	 *         from=[State|ID] 
+	 *         to=[State|ID] 
+	 *         (hasGuard?='guard' guard=Boolean)? 
+	 *         (hasWhen?='when' when=ID)? 
+	 *         (time?='after' timeout=Float)? 
+	 *         (hasSignal?='signal' signal=ID)?
+	 *     )
 	 */
 	protected void sequence_Transition(ISerializationContext context, Transition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

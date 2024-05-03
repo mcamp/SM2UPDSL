@@ -25,9 +25,13 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getFrom <em>From</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getTo <em>To</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#isHasGuard <em>Has Guard</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#isGuard <em>Guard</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#isHasWhen <em>Has When</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getWhen <em>When</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#isTime <em>Time</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getTimeout <em>Timeout</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#isHasSignal <em>Has Signal</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getSignal <em>Signal</em>}</li>
  * </ul>
  *
@@ -54,6 +58,66 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
    * @ordered
    */
   protected State to;
+
+  /**
+   * The default value of the '{@link #isHasGuard() <em>Has Guard</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isHasGuard()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean HAS_GUARD_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isHasGuard() <em>Has Guard</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isHasGuard()
+   * @generated
+   * @ordered
+   */
+  protected boolean hasGuard = HAS_GUARD_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isGuard() <em>Guard</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isGuard()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean GUARD_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isGuard() <em>Guard</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isGuard()
+   * @generated
+   * @ordered
+   */
+  protected boolean guard = GUARD_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isHasWhen() <em>Has When</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isHasWhen()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean HAS_WHEN_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isHasWhen() <em>Has When</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isHasWhen()
+   * @generated
+   * @ordered
+   */
+  protected boolean hasWhen = HAS_WHEN_EDEFAULT;
 
   /**
    * The default value of the '{@link #getWhen() <em>When</em>}' attribute.
@@ -114,6 +178,26 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
    * @ordered
    */
   protected float timeout = TIMEOUT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isHasSignal() <em>Has Signal</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isHasSignal()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean HAS_SIGNAL_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isHasSignal() <em>Has Signal</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isHasSignal()
+   * @generated
+   * @ordered
+   */
+  protected boolean hasSignal = HAS_SIGNAL_EDEFAULT;
 
   /**
    * The default value of the '{@link #getSignal() <em>Signal</em>}' attribute.
@@ -252,6 +336,81 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
    * @generated
    */
   @Override
+  public boolean isHasGuard()
+  {
+    return hasGuard;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setHasGuard(boolean newHasGuard)
+  {
+    boolean oldHasGuard = hasGuard;
+    hasGuard = newHasGuard;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.TRANSITION__HAS_GUARD, oldHasGuard, hasGuard));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isGuard()
+  {
+    return guard;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setGuard(boolean newGuard)
+  {
+    boolean oldGuard = guard;
+    guard = newGuard;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.TRANSITION__GUARD, oldGuard, guard));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isHasWhen()
+  {
+    return hasWhen;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setHasWhen(boolean newHasWhen)
+  {
+    boolean oldHasWhen = hasWhen;
+    hasWhen = newHasWhen;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.TRANSITION__HAS_WHEN, oldHasWhen, hasWhen));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getWhen()
   {
     return when;
@@ -327,6 +486,31 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
    * @generated
    */
   @Override
+  public boolean isHasSignal()
+  {
+    return hasSignal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setHasSignal(boolean newHasSignal)
+  {
+    boolean oldHasSignal = hasSignal;
+    hasSignal = newHasSignal;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.TRANSITION__HAS_SIGNAL, oldHasSignal, hasSignal));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getSignal()
   {
     return signal;
@@ -362,12 +546,20 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
       case StateMachinePackage.TRANSITION__TO:
         if (resolve) return getTo();
         return basicGetTo();
+      case StateMachinePackage.TRANSITION__HAS_GUARD:
+        return isHasGuard();
+      case StateMachinePackage.TRANSITION__GUARD:
+        return isGuard();
+      case StateMachinePackage.TRANSITION__HAS_WHEN:
+        return isHasWhen();
       case StateMachinePackage.TRANSITION__WHEN:
         return getWhen();
       case StateMachinePackage.TRANSITION__TIME:
         return isTime();
       case StateMachinePackage.TRANSITION__TIMEOUT:
         return getTimeout();
+      case StateMachinePackage.TRANSITION__HAS_SIGNAL:
+        return isHasSignal();
       case StateMachinePackage.TRANSITION__SIGNAL:
         return getSignal();
     }
@@ -390,6 +582,15 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
       case StateMachinePackage.TRANSITION__TO:
         setTo((State)newValue);
         return;
+      case StateMachinePackage.TRANSITION__HAS_GUARD:
+        setHasGuard((Boolean)newValue);
+        return;
+      case StateMachinePackage.TRANSITION__GUARD:
+        setGuard((Boolean)newValue);
+        return;
+      case StateMachinePackage.TRANSITION__HAS_WHEN:
+        setHasWhen((Boolean)newValue);
+        return;
       case StateMachinePackage.TRANSITION__WHEN:
         setWhen((String)newValue);
         return;
@@ -398,6 +599,9 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
         return;
       case StateMachinePackage.TRANSITION__TIMEOUT:
         setTimeout((Float)newValue);
+        return;
+      case StateMachinePackage.TRANSITION__HAS_SIGNAL:
+        setHasSignal((Boolean)newValue);
         return;
       case StateMachinePackage.TRANSITION__SIGNAL:
         setSignal((String)newValue);
@@ -422,6 +626,15 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
       case StateMachinePackage.TRANSITION__TO:
         setTo((State)null);
         return;
+      case StateMachinePackage.TRANSITION__HAS_GUARD:
+        setHasGuard(HAS_GUARD_EDEFAULT);
+        return;
+      case StateMachinePackage.TRANSITION__GUARD:
+        setGuard(GUARD_EDEFAULT);
+        return;
+      case StateMachinePackage.TRANSITION__HAS_WHEN:
+        setHasWhen(HAS_WHEN_EDEFAULT);
+        return;
       case StateMachinePackage.TRANSITION__WHEN:
         setWhen(WHEN_EDEFAULT);
         return;
@@ -430,6 +643,9 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
         return;
       case StateMachinePackage.TRANSITION__TIMEOUT:
         setTimeout(TIMEOUT_EDEFAULT);
+        return;
+      case StateMachinePackage.TRANSITION__HAS_SIGNAL:
+        setHasSignal(HAS_SIGNAL_EDEFAULT);
         return;
       case StateMachinePackage.TRANSITION__SIGNAL:
         setSignal(SIGNAL_EDEFAULT);
@@ -452,12 +668,20 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
         return from != null;
       case StateMachinePackage.TRANSITION__TO:
         return to != null;
+      case StateMachinePackage.TRANSITION__HAS_GUARD:
+        return hasGuard != HAS_GUARD_EDEFAULT;
+      case StateMachinePackage.TRANSITION__GUARD:
+        return guard != GUARD_EDEFAULT;
+      case StateMachinePackage.TRANSITION__HAS_WHEN:
+        return hasWhen != HAS_WHEN_EDEFAULT;
       case StateMachinePackage.TRANSITION__WHEN:
         return WHEN_EDEFAULT == null ? when != null : !WHEN_EDEFAULT.equals(when);
       case StateMachinePackage.TRANSITION__TIME:
         return time != TIME_EDEFAULT;
       case StateMachinePackage.TRANSITION__TIMEOUT:
         return timeout != TIMEOUT_EDEFAULT;
+      case StateMachinePackage.TRANSITION__HAS_SIGNAL:
+        return hasSignal != HAS_SIGNAL_EDEFAULT;
       case StateMachinePackage.TRANSITION__SIGNAL:
         return SIGNAL_EDEFAULT == null ? signal != null : !SIGNAL_EDEFAULT.equals(signal);
     }
@@ -475,12 +699,20 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (when: ");
+    result.append(" (hasGuard: ");
+    result.append(hasGuard);
+    result.append(", guard: ");
+    result.append(guard);
+    result.append(", hasWhen: ");
+    result.append(hasWhen);
+    result.append(", when: ");
     result.append(when);
     result.append(", time: ");
     result.append(time);
     result.append(", timeout: ");
     result.append(timeout);
+    result.append(", hasSignal: ");
+    result.append(hasSignal);
     result.append(", signal: ");
     result.append(signal);
     result.append(')');

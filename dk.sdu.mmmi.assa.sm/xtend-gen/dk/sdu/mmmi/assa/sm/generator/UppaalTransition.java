@@ -17,10 +17,13 @@ public class UppaalTransition {
   
   public boolean isTime;
   
+  private Transition originalTx;
+  
   public UppaalTransition() {
   }
   
   public UppaalTransition(final Transition transition) {
+    this.originalTx = transition;
     this.from = transition.getFrom().getName();
     this.to = transition.getTo().getName();
     boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(transition.getWhen());
@@ -46,5 +49,16 @@ public class UppaalTransition {
   public boolean hasChannel() {
     boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(this.channel);
     return (!_isNullOrEmpty);
+  }
+  
+  public boolean hasGuard() {
+    if ((this.originalTx == null)) {
+      return false;
+    }
+    return this.originalTx.isHasGuard();
+  }
+  
+  public boolean guard() {
+    return this.originalTx.isGuard();
   }
 }

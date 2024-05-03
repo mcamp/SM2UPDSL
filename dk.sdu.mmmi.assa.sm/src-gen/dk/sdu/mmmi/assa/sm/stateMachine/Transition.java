@@ -16,9 +16,13 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getFrom <em>From</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getTo <em>To</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasGuard <em>Has Guard</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isGuard <em>Guard</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasWhen <em>Has When</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getWhen <em>When</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isTime <em>Time</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getTimeout <em>Timeout</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasSignal <em>Has Signal</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getSignal <em>Signal</em>}</li>
  * </ul>
  *
@@ -71,6 +75,72 @@ public interface Transition extends EObject
    * @generated
    */
   void setTo(State value);
+
+  /**
+   * Returns the value of the '<em><b>Has Guard</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Has Guard</em>' attribute.
+   * @see #setHasGuard(boolean)
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getTransition_HasGuard()
+   * @model
+   * @generated
+   */
+  boolean isHasGuard();
+
+  /**
+   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasGuard <em>Has Guard</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Has Guard</em>' attribute.
+   * @see #isHasGuard()
+   * @generated
+   */
+  void setHasGuard(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Guard</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Guard</em>' attribute.
+   * @see #setGuard(boolean)
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getTransition_Guard()
+   * @model
+   * @generated
+   */
+  boolean isGuard();
+
+  /**
+   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isGuard <em>Guard</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Guard</em>' attribute.
+   * @see #isGuard()
+   * @generated
+   */
+  void setGuard(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Has When</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Has When</em>' attribute.
+   * @see #setHasWhen(boolean)
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getTransition_HasWhen()
+   * @model
+   * @generated
+   */
+  boolean isHasWhen();
+
+  /**
+   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasWhen <em>Has When</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Has When</em>' attribute.
+   * @see #isHasWhen()
+   * @generated
+   */
+  void setHasWhen(boolean value);
 
   /**
    * Returns the value of the '<em><b>When</b></em>' attribute.
@@ -137,6 +207,28 @@ public interface Transition extends EObject
    * @generated
    */
   void setTimeout(float value);
+
+  /**
+   * Returns the value of the '<em><b>Has Signal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Has Signal</em>' attribute.
+   * @see #setHasSignal(boolean)
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getTransition_HasSignal()
+   * @model
+   * @generated
+   */
+  boolean isHasSignal();
+
+  /**
+   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasSignal <em>Has Signal</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Has Signal</em>' attribute.
+   * @see #isHasSignal()
+   * @generated
+   */
+  void setHasSignal(boolean value);
 
   /**
    * Returns the value of the '<em><b>Signal</b></em>' attribute.

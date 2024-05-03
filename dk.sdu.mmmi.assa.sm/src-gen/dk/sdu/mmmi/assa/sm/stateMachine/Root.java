@@ -3,6 +3,8 @@
  */
 package dk.sdu.mmmi.assa.sm.stateMachine;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -15,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getName <em>Name</em>}</li>
- *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getMachine <em>Machine</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getMachines <em>Machines</em>}</li>
  * </ul>
  *
  * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getRoot()
@@ -47,25 +49,15 @@ public interface Root extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Machine</b></em>' containment reference.
+   * Returns the value of the '<em><b>Machines</b></em>' containment reference list.
+   * The list contents are of type {@link dk.sdu.mmmi.assa.sm.stateMachine.Machine}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Machine</em>' containment reference.
-   * @see #setMachine(Machine)
-   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getRoot_Machine()
+   * @return the value of the '<em>Machines</em>' containment reference list.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getRoot_Machines()
    * @model containment="true"
    * @generated
    */
-  Machine getMachine();
-
-  /**
-   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getMachine <em>Machine</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Machine</em>' containment reference.
-   * @see #getMachine()
-   * @generated
-   */
-  void setMachine(Machine value);
+  EList<Machine> getMachines();
 
 } // Root

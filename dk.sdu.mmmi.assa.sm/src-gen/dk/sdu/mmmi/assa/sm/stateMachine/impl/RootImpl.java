@@ -7,14 +7,21 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.Root;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +32,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.RootImpl#getName <em>Name</em>}</li>
- *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.RootImpl#getMachine <em>Machine</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.RootImpl#getMachines <em>Machines</em>}</li>
  * </ul>
  *
  * @generated
@@ -53,14 +60,14 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getMachine() <em>Machine</em>}' containment reference.
+   * The cached value of the '{@link #getMachines() <em>Machines</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMachine()
+   * @see #getMachines()
    * @generated
    * @ordered
    */
-  protected Machine machine;
+  protected EList<Machine> machines;
 
   /**
    * <!-- begin-user-doc -->
@@ -114,48 +121,13 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root
    * @generated
    */
   @Override
-  public Machine getMachine()
+  public EList<Machine> getMachines()
   {
-    return machine;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetMachine(Machine newMachine, NotificationChain msgs)
-  {
-    Machine oldMachine = machine;
-    machine = newMachine;
-    if (eNotificationRequired())
+    if (machines == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, StateMachinePackage.ROOT__MACHINE, oldMachine, newMachine);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      machines = new EObjectContainmentEList<Machine>(Machine.class, this, StateMachinePackage.ROOT__MACHINES);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setMachine(Machine newMachine)
-  {
-    if (newMachine != machine)
-    {
-      NotificationChain msgs = null;
-      if (machine != null)
-        msgs = ((InternalEObject)machine).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - StateMachinePackage.ROOT__MACHINE, null, msgs);
-      if (newMachine != null)
-        msgs = ((InternalEObject)newMachine).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - StateMachinePackage.ROOT__MACHINE, null, msgs);
-      msgs = basicSetMachine(newMachine, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.ROOT__MACHINE, newMachine, newMachine));
+    return machines;
   }
 
   /**
@@ -168,8 +140,8 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root
   {
     switch (featureID)
     {
-      case StateMachinePackage.ROOT__MACHINE:
-        return basicSetMachine(null, msgs);
+      case StateMachinePackage.ROOT__MACHINES:
+        return ((InternalEList<?>)getMachines()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -186,8 +158,8 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root
     {
       case StateMachinePackage.ROOT__NAME:
         return getName();
-      case StateMachinePackage.ROOT__MACHINE:
-        return getMachine();
+      case StateMachinePackage.ROOT__MACHINES:
+        return getMachines();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -197,6 +169,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -205,8 +178,9 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root
       case StateMachinePackage.ROOT__NAME:
         setName((String)newValue);
         return;
-      case StateMachinePackage.ROOT__MACHINE:
-        setMachine((Machine)newValue);
+      case StateMachinePackage.ROOT__MACHINES:
+        getMachines().clear();
+        getMachines().addAll((Collection<? extends Machine>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -225,8 +199,8 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root
       case StateMachinePackage.ROOT__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case StateMachinePackage.ROOT__MACHINE:
-        setMachine((Machine)null);
+      case StateMachinePackage.ROOT__MACHINES:
+        getMachines().clear();
         return;
     }
     super.eUnset(featureID);
@@ -244,8 +218,8 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root
     {
       case StateMachinePackage.ROOT__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case StateMachinePackage.ROOT__MACHINE:
-        return machine != null;
+      case StateMachinePackage.ROOT__MACHINES:
+        return machines != null && !machines.isEmpty();
     }
     return super.eIsSet(featureID);
   }

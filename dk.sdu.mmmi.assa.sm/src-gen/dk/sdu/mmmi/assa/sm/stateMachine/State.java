@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.State#isFail <em>Fail</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.State#isEnd <em>End</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.State#getName <em>Name</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.State#getMachine <em>Machine</em>}</li>
  * </ul>
@@ -46,6 +47,28 @@ public interface State extends EObject
    * @generated
    */
   void setFail(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>End</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>End</em>' attribute.
+   * @see #setEnd(boolean)
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getState_End()
+   * @model
+   * @generated
+   */
+  boolean isEnd();
+
+  /**
+   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.State#isEnd <em>End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>End</em>' attribute.
+   * @see #isEnd()
+   * @generated
+   */
+  void setEnd(boolean value);
 
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

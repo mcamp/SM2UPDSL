@@ -25,13 +25,13 @@ class StateMachinePlantUMLGeneratorTest {
 	@Test
 	def machineNoState(){
 		'''
-			project test
+			project projectTest
 			machine test {}
 		'''.assertPlantUML(
 		'''
 			@startuml
-			[*] --> test
-			state test
+				[*] --> test
+				state test
 			@enduml
 		''')
 	}
@@ -47,12 +47,12 @@ class StateMachinePlantUMLGeneratorTest {
 		'''.assertPlantUML(
 			'''
 			@startuml
-			[*] --> test
-			state test {
-				[*] --> one
-				state one
-				state two
-			}
+				[*] --> test
+				state test {
+					[*] --> one
+					state one
+					state two
+				}
 			@enduml
 			'''
 		)
@@ -70,13 +70,13 @@ class StateMachinePlantUMLGeneratorTest {
 		'''.assertPlantUML(
 			'''
 			@startuml
-			[*] --> test
-			state test {
-				[*] --> one
-				state one
-				state two
-				one --> two
-			}
+				[*] --> test
+				state test {
+					[*] --> one
+					state one
+					state two
+					one --> two
+				}
 			@enduml
 			'''
 		)
@@ -94,13 +94,13 @@ class StateMachinePlantUMLGeneratorTest {
 		'''.assertPlantUML(
 			'''
 			@startuml
-			[*] --> test
-			state test {
-				[*] --> one
-				state one
-				state two
-				one --> two : test?
-			}
+				[*] --> test
+				state test {
+					[*] --> one
+					state one
+					state two
+					one --> two : test?
+				}
 			@enduml
 			'''
 		)
@@ -118,13 +118,13 @@ class StateMachinePlantUMLGeneratorTest {
 		'''.assertPlantUML(
 			'''
 			@startuml
-			[*] --> test
-			state test {
-				[*] --> one
-				state one
-				state failState <<end>> #red
-				one --> failState : sthFail?
-			}
+				[*] --> test
+				state test {
+					[*] --> one
+					state one
+					state failState <<end>> #red
+					one --> failState : sthFail?
+				}
 			@enduml
 			'''
 		)
@@ -145,17 +145,17 @@ class StateMachinePlantUMLGeneratorTest {
 		'''.assertPlantUML(
 			'''
 			@startuml
-			[*] --> test
-			state test {
-				[*] --> one
-				state one
-				state "two/inner" as two {
-					[*] --> three
-					state three
-					state four
-					three --> four : sthInside?
+				[*] --> test
+				state test {
+					[*] --> one
+					state one
+					state "two/inner" as two {
+						[*] --> three
+						state three
+						state four
+						three --> four : sthInside?
+					}
 				}
-			}
 			@enduml
 			'''
 		)
@@ -179,20 +179,20 @@ class StateMachinePlantUMLGeneratorTest {
 		'''.assertPlantUML(
 			'''
 			@startuml
-			[*] --> test
-			state test {
-				[*] --> one
-				state one
-				state "two/inner" as two {
-					[*] --> innerOne
-					state innerOne
-					state innerTwo
-					innerOne --> innerTwo : finish!
+				[*] --> test
+				state test {
+					[*] --> one
+					state one
+					state "two/inner" as two {
+						[*] --> innerOne
+						state innerOne
+						state innerTwo
+						innerOne --> innerTwo : / finish!
+					}
+					state three
+					one --> two
+					two --> three : finish?
 				}
-				state three
-				one --> two
-				two --> three : finish?
-			}
 			@enduml
 			'''
 		)
@@ -210,13 +210,13 @@ class StateMachinePlantUMLGeneratorTest {
 		'''.assertPlantUML(
 			'''
 			@startuml
-			[*] --> test
-			state test {
-				[*] --> one
-				state one
-				state two
-				one --> two : after 500ms
-			}
+				[*] --> test
+				state test {
+					[*] --> one
+					state one
+					state two
+					one --> two : [after 500ms]
+				}
 			@enduml
 			'''
 		)
@@ -234,22 +234,138 @@ class StateMachinePlantUMLGeneratorTest {
 		'''.assertPlantUML(
 			'''
 			@startuml
+				[*] --> test
+				state test {
+					[*] --> one
+					state one
+					state two
+					one --> two : [after 500ms] / finish!
+				}
+			@enduml
+			'''
+		)
+	}
+	
+	@Test
+	def void multipleMachines() {
+		'''
+			project test
+			machine m1 {
+				state one
+			}
+			machine m2 {
+				state two
+			}
+		'''.assertPlantUML(
+			'''
+			@startuml
 			[*] --> test
 			state test {
-				[*] --> one
-				state one
-				state two
-				one --> two : after 500ms | finish!
+				[*] --> m1
+				state m1 {
+					[*] --> one
+					state one
+				}
+				--
+				[*] --> m2
+				state m2 {
+					[*] --> two
+					state two
+				}
 			}
 			@enduml
 			'''
 		)
 	}
 	
+	@Test
+	def void multipleThreeMachines() {
+		'''
+			project test
+			machine m1 {
+				state one
+			}
+			machine m2 {
+				state two
+			}
+			machine m3 {
+				state three
+			}
+		'''.assertPlantUML(
+			'''
+			@startuml
+			[*] --> test
+			state test {
+				[*] --> m1
+				state m1 {
+					[*] --> one
+					state one
+				}
+				--
+				[*] --> m2
+				state m2 {
+					[*] --> two
+					state two
+				}
+				--
+				[*] --> m3
+				state m3 {
+					[*] --> three
+					state three
+				}
+			}
+			@enduml
+			'''
+		)
+	}
 	
+	@Test
+	def void guardTransitions() {
+		'''
+			project test
+			machine m1 {
+				state one
+				state two
+				one -> two guard false
+				one -> two guard true
+			}
+		'''.assertPlantUML('''
+			@startuml
+				[*] --> m1
+				state m1 {
+					[*] --> one
+					state one
+					state two
+					one --> two : [false]
+					one --> two : [true]
+				}
+			@enduml
+		''')
+	}
 	
-	
-	
+	@Test
+	def void guardAndSignalTransition() {
+		'''
+			project test
+			machine m1 {
+				state one
+				state two
+				one -> two guard false signal signal1
+				one -> two guard true signal signal2
+			}
+		'''.assertPlantUML('''
+			@startuml
+				[*] --> m1
+				state m1 {
+					[*] --> one
+					state one
+					state two
+					one --> two : [false] / signal1!
+					one --> two : [true] / signal2!
+				}
+			@enduml
+		''')
+	}
 	
 	
 }

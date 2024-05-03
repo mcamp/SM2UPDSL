@@ -77,13 +77,13 @@ public interface StateMachinePackage extends EPackage
   int ROOT__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Machine</b></em>' containment reference.
+   * The feature id for the '<em><b>Machines</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ROOT__MACHINE = 1;
+  int ROOT__MACHINES = 1;
 
   /**
    * The number of structural features of the '<em>Root</em>' class.
@@ -160,13 +160,22 @@ public interface StateMachinePackage extends EPackage
   int STATE__FAIL = 0;
 
   /**
+   * The feature id for the '<em><b>End</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__END = 1;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__NAME = 1;
+  int STATE__NAME = 2;
 
   /**
    * The feature id for the '<em><b>Machine</b></em>' containment reference.
@@ -175,7 +184,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__MACHINE = 2;
+  int STATE__MACHINE = 3;
 
   /**
    * The number of structural features of the '<em>State</em>' class.
@@ -184,7 +193,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE_FEATURE_COUNT = 3;
+  int STATE_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl <em>Transition</em>}' class.
@@ -215,13 +224,40 @@ public interface StateMachinePackage extends EPackage
   int TRANSITION__TO = 1;
 
   /**
+   * The feature id for the '<em><b>Has Guard</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRANSITION__HAS_GUARD = 2;
+
+  /**
+   * The feature id for the '<em><b>Guard</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRANSITION__GUARD = 3;
+
+  /**
+   * The feature id for the '<em><b>Has When</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRANSITION__HAS_WHEN = 4;
+
+  /**
    * The feature id for the '<em><b>When</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TRANSITION__WHEN = 2;
+  int TRANSITION__WHEN = 5;
 
   /**
    * The feature id for the '<em><b>Time</b></em>' attribute.
@@ -230,7 +266,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__TIME = 3;
+  int TRANSITION__TIME = 6;
 
   /**
    * The feature id for the '<em><b>Timeout</b></em>' attribute.
@@ -239,7 +275,16 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__TIMEOUT = 4;
+  int TRANSITION__TIMEOUT = 7;
+
+  /**
+   * The feature id for the '<em><b>Has Signal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRANSITION__HAS_SIGNAL = 8;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' attribute.
@@ -248,7 +293,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__SIGNAL = 5;
+  int TRANSITION__SIGNAL = 9;
 
   /**
    * The number of structural features of the '<em>Transition</em>' class.
@@ -257,7 +302,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION_FEATURE_COUNT = 6;
+  int TRANSITION_FEATURE_COUNT = 10;
 
 
   /**
@@ -282,15 +327,15 @@ public interface StateMachinePackage extends EPackage
   EAttribute getRoot_Name();
 
   /**
-   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getMachine <em>Machine</em>}'.
+   * Returns the meta object for the containment reference list '{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getMachines <em>Machines</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Machine</em>'.
-   * @see dk.sdu.mmmi.assa.sm.stateMachine.Root#getMachine()
+   * @return the meta object for the containment reference list '<em>Machines</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Root#getMachines()
    * @see #getRoot()
    * @generated
    */
-  EReference getRoot_Machine();
+  EReference getRoot_Machines();
 
   /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Machine <em>Machine</em>}'.
@@ -357,6 +402,17 @@ public interface StateMachinePackage extends EPackage
   EAttribute getState_Fail();
 
   /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.State#isEnd <em>End</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>End</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.State#isEnd()
+   * @see #getState()
+   * @generated
+   */
+  EAttribute getState_End();
+
+  /**
    * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.State#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -411,6 +467,39 @@ public interface StateMachinePackage extends EPackage
   EReference getTransition_To();
 
   /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasGuard <em>Has Guard</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Has Guard</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasGuard()
+   * @see #getTransition()
+   * @generated
+   */
+  EAttribute getTransition_HasGuard();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isGuard <em>Guard</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Guard</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Transition#isGuard()
+   * @see #getTransition()
+   * @generated
+   */
+  EAttribute getTransition_Guard();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasWhen <em>Has When</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Has When</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasWhen()
+   * @see #getTransition()
+   * @generated
+   */
+  EAttribute getTransition_HasWhen();
+
+  /**
    * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getWhen <em>When</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -442,6 +531,17 @@ public interface StateMachinePackage extends EPackage
    * @generated
    */
   EAttribute getTransition_Timeout();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasSignal <em>Has Signal</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Has Signal</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasSignal()
+   * @see #getTransition()
+   * @generated
+   */
+  EAttribute getTransition_HasSignal();
 
   /**
    * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getSignal <em>Signal</em>}'.
@@ -496,12 +596,12 @@ public interface StateMachinePackage extends EPackage
     EAttribute ROOT__NAME = eINSTANCE.getRoot_Name();
 
     /**
-     * The meta object literal for the '<em><b>Machine</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Machines</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ROOT__MACHINE = eINSTANCE.getRoot_Machine();
+    EReference ROOT__MACHINES = eINSTANCE.getRoot_Machines();
 
     /**
      * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl <em>Machine</em>}' class.
@@ -556,6 +656,14 @@ public interface StateMachinePackage extends EPackage
     EAttribute STATE__FAIL = eINSTANCE.getState_Fail();
 
     /**
+     * The meta object literal for the '<em><b>End</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STATE__END = eINSTANCE.getState_End();
+
+    /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -598,6 +706,30 @@ public interface StateMachinePackage extends EPackage
     EReference TRANSITION__TO = eINSTANCE.getTransition_To();
 
     /**
+     * The meta object literal for the '<em><b>Has Guard</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TRANSITION__HAS_GUARD = eINSTANCE.getTransition_HasGuard();
+
+    /**
+     * The meta object literal for the '<em><b>Guard</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TRANSITION__GUARD = eINSTANCE.getTransition_Guard();
+
+    /**
+     * The meta object literal for the '<em><b>Has When</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TRANSITION__HAS_WHEN = eINSTANCE.getTransition_HasWhen();
+
+    /**
      * The meta object literal for the '<em><b>When</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -620,6 +752,14 @@ public interface StateMachinePackage extends EPackage
      * @generated
      */
     EAttribute TRANSITION__TIMEOUT = eINSTANCE.getTransition_Timeout();
+
+    /**
+     * The meta object literal for the '<em><b>Has Signal</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TRANSITION__HAS_SIGNAL = eINSTANCE.getTransition_HasSignal();
 
     /**
      * The meta object literal for the '<em><b>Signal</b></em>' attribute feature.

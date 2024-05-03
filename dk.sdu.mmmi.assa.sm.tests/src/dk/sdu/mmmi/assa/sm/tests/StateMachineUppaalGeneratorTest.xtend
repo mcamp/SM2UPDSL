@@ -481,6 +481,208 @@ class StateMachineUppaalGeneratorTest {
 		)
 	}
 	
+	@Test
+	def void multipleMachines() {
+		'''
+			project test
+			machine m1 {
+				state one
+			}
+			machine m2 {
+				state two
+			}
+		'''.assertUppaal(
+			'''
+			process m1 {
+				state
+					one;
+				init one;
+			}
+			process m2 {
+				state
+					two;
+				init two;
+			}
+			system m1, m2;
+			'''
+		)
+	}
 	
+	@Test
+	def void multipleMachinesWithSignals() {
+		'''
+			project test
+			machine m1 {
+				state one
+				state two
+				state three
+				one -> two when signal2
+				one -> three when signal3
+			}
+			machine m2 {
+				state m21
+				m21 -> m21 signal signal2
+				m21 -> m21 signal signal3
+			}
+		'''.assertUppaal(
+			'''
+			chan signal2, signal3;
+			process m1 {
+				state
+					one,
+					two,
+					three;
+				init one;
+				trans
+					one -> two {
+						sync signal2?;
+					},
+					one -> three {
+						sync signal3?;
+					};
+			}
+			process m2 {
+				state
+					m21;
+				init m21;
+				trans
+					m21 -> m21 {
+						sync signal2!;
+					},
+					m21 -> m21 {
+						sync signal3!;
+					};
+			}
+			system m1, m2;
+			'''
+		)
+	}
+	
+	@Test
+	def void guardTransitions() {
+		'''
+			project test
+			machine m1 {
+				state one
+				state two
+				one -> two guard false
+				one -> two guard true
+			}
+		'''.assertUppaal('''
+			process m1 {
+				state
+					one,
+					two;
+				init one;
+				trans
+					one -> two {
+						guard false;
+					},
+					one -> two {
+						guard true;
+					};
+			}
+			system m1;
+		''')
+	}
+	
+	@Test
+	def void guardAndSignalTransition() {
+		'''
+			project test
+			machine m1 {
+				state one
+				state two
+				one -> two guard false signal signal1
+				one -> two guard true signal signal2
+			}
+		'''.assertUppaal('''
+			chan signal1, signal2;
+			process m1 {
+				state
+					one,
+					two;
+				init one;
+				trans
+					one -> two {
+						guard false;
+						sync signal1!;
+					},
+					one -> two {
+						guard true;
+						sync signal2!;
+					};
+			}
+			process gen_sync_signal1 {
+				state
+					initSync;
+				init initSync;
+				trans
+					initSync -> initSync {
+						sync signal1?;
+					};
+			}
+			process gen_sync_signal2 {
+				state
+					initSync;
+				init initSync;
+				trans
+					initSync -> initSync {
+						sync signal2?;
+					};
+			}
+			system m1, gen_sync_signal1, gen_sync_signal2;
+		''')
+	}
+	
+	@Test
+	def void guardSignalAndMultipleMachines() {
+		'''
+			project test
+			machine m1 {
+				state one
+				state two
+				state three
+				one -> two when signal1
+				one -> three when signal2
+			}
+			machine m2 {
+				state m21
+				m21 -> m21 guard false signal signal1
+				m21 -> m21 guard true signal signal2
+			}
+		'''.assertUppaal('''
+			chan signal1, signal2;
+			process m1 {
+				state
+					one,
+					two,
+					three;
+				init one;
+				trans
+					one -> two {
+						sync signal1?;
+					},
+					one -> three {
+						sync signal2?;
+					};
+			}
+			process m2 {
+				state
+					m21;
+				init m21;
+				trans
+					m21 -> m21 {
+						guard false;
+						sync signal1!;
+					},
+					m21 -> m21 {
+						guard true;
+						sync signal2!;
+					};
+			}
+			system m1, m2;
+		''')
+	}
 	
 }

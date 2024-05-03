@@ -22,7 +22,7 @@ class StateMachineGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val root = resource.contents.filter(Root).head
-		if(root.machine === null) return;
+		if(root.machines.empty) return;
 		plantUMLGenerator.generate(root, fsa)
 		uppaalGenerator.generate(root,fsa)
 	}
