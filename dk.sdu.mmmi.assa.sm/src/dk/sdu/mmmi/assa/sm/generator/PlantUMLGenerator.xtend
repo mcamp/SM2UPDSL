@@ -4,6 +4,7 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Machine
 import dk.sdu.mmmi.assa.sm.stateMachine.Root
 import dk.sdu.mmmi.assa.sm.stateMachine.State
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.generator.IFileSystemAccess2
 
 class PlantUMLGenerator {
@@ -31,26 +32,17 @@ class PlantUMLGenerator {
 	'''
 	
 	def compile(State state)'''
-	state «state.nameOrNested»«IF state.isFail» <<end>> #red«ENDIF»
+	state "«state.name»" as «state.nestedName»«IF state.machine !== null» {
+		«state.machine.compileBody»
+	}«ENDIF»«IF state.isFail» <<end>> #red«ENDIF»
 	'''
 	
 	def compile(Transition transition)'''
-	«transition.from.name» --> «transition.to.name»«transition.compileAction»
-	'''
-	
-	def nameOrNested(State state) {
-		if(state.machine === null) return state.name
-		return state.compileNestedMachine
-	}
-	
-	def compileNestedMachine(State state)'''
-	"«state.name»/«state.machine.name»" as «state.name» {
-		«state.machine.compileBody»
-	}
+	«transition.from.nestedName» --> «transition.to.nestedName»«transition.compileAction»
 	'''
 	
 	def CharSequence compileBody(Machine machine)'''
-	[*] --> «machine.states.head.name»
+	[*] --> «machine.states.head.nestedName»
 	«FOR state:machine.states»«state.compile»«ENDFOR»
 	«FOR transition:machine.transitions»«transition.compile»«ENDFOR»
 	'''
@@ -86,5 +78,24 @@ class PlantUMLGenerator {
 		
 	}
 	
+	def CharSequence nestedName(State state){
+		return state.nestedName("_")
+	}
 	
+	def CharSequence nestedName(State state, String separator) {
+		var ret = ""
+		val parentMachine = state.parentMachine
+		val parentState = parentMachine.parentState
+		if(parentState !== null)
+			ret = parentState.nestedName(separator)+separator+ret
+		ret+""+state.parentMachine.name+separator+state.name
+	}
+	
+	def parentMachine(State state) {
+		EcoreUtil2.getContainerOfType(state, Machine)
+	}
+	
+	def parentState(Machine machine) {
+		EcoreUtil2.getContainerOfType(machine, State)	
+	}
 }

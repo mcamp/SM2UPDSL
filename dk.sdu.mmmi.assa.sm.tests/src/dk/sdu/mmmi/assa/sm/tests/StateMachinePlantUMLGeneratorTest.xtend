@@ -49,9 +49,9 @@ class StateMachinePlantUMLGeneratorTest {
 			@startuml
 				[*] --> test
 				state test {
-					[*] --> one
-					state one
-					state two
+					[*] --> test_one
+					state "one" as test_one
+					state "two" as test_two
 				}
 			@enduml
 			'''
@@ -72,10 +72,10 @@ class StateMachinePlantUMLGeneratorTest {
 			@startuml
 				[*] --> test
 				state test {
-					[*] --> one
-					state one
-					state two
-					one --> two
+					[*] --> test_one
+					state "one" as test_one
+					state "two" as test_two
+					test_one --> test_two
 				}
 			@enduml
 			'''
@@ -96,10 +96,10 @@ class StateMachinePlantUMLGeneratorTest {
 			@startuml
 				[*] --> test
 				state test {
-					[*] --> one
-					state one
-					state two
-					one --> two : test?
+					[*] --> test_one
+					state "one" as test_one
+					state "two" as test_two
+					test_one --> test_two : test?
 				}
 			@enduml
 			'''
@@ -120,10 +120,10 @@ class StateMachinePlantUMLGeneratorTest {
 			@startuml
 				[*] --> test
 				state test {
-					[*] --> one
-					state one
-					state failState <<end>> #red
-					one --> failState : sthFail?
+					[*] --> test_one
+					state "one" as test_one
+					state "failState" as test_failState <<end>> #red
+					test_one --> test_failState : sthFail?
 				}
 			@enduml
 			'''
@@ -147,13 +147,13 @@ class StateMachinePlantUMLGeneratorTest {
 			@startuml
 				[*] --> test
 				state test {
-					[*] --> one
-					state one
-					state "two/inner" as two {
-						[*] --> three
-						state three
-						state four
-						three --> four : sthInside?
+					[*] --> test_one
+					state "one" as test_one
+					state "two" as test_two {
+						[*] --> test_two_inner_three
+						state "three" as test_two_inner_three
+						state "four" as test_two_inner_four
+						test_two_inner_three --> test_two_inner_four : sthInside?
 					}
 				}
 			@enduml
@@ -181,17 +181,17 @@ class StateMachinePlantUMLGeneratorTest {
 			@startuml
 				[*] --> test
 				state test {
-					[*] --> one
-					state one
-					state "two/inner" as two {
-						[*] --> innerOne
-						state innerOne
-						state innerTwo
-						innerOne --> innerTwo : / finish!
+					[*] --> test_one
+					state "one" as test_one
+					state "two" as test_two {
+						[*] --> test_two_inner_innerOne
+						state "innerOne" as test_two_inner_innerOne
+						state "innerTwo" as test_two_inner_innerTwo
+						test_two_inner_innerOne --> test_two_inner_innerTwo : / finish!
 					}
-					state three
-					one --> two
-					two --> three : finish?
+					state "three" as test_three
+					test_one --> test_two
+					test_two --> test_three : finish?
 				}
 			@enduml
 			'''
@@ -212,10 +212,10 @@ class StateMachinePlantUMLGeneratorTest {
 			@startuml
 				[*] --> test
 				state test {
-					[*] --> one
-					state one
-					state two
-					one --> two : [after 500ms]
+					[*] --> test_one
+					state "one" as test_one
+					state "two" as test_two
+					test_one --> test_two : [after 500ms]
 				}
 			@enduml
 			'''
@@ -236,10 +236,10 @@ class StateMachinePlantUMLGeneratorTest {
 			@startuml
 				[*] --> test
 				state test {
-					[*] --> one
-					state one
-					state two
-					one --> two : [after 500ms] / finish!
+					[*] --> test_one
+					state "one" as test_one
+					state "two" as test_two
+					test_one --> test_two : [after 500ms] / finish!
 				}
 			@enduml
 			'''
@@ -263,14 +263,14 @@ class StateMachinePlantUMLGeneratorTest {
 			state test {
 				[*] --> m1
 				state m1 {
-					[*] --> one
-					state one
+					[*] --> m1_one
+					state "one" as m1_one
 				}
 				--
 				[*] --> m2
 				state m2 {
-					[*] --> two
-					state two
+					[*] --> m2_two
+					state "two" as m2_two
 				}
 			}
 			@enduml
@@ -298,20 +298,20 @@ class StateMachinePlantUMLGeneratorTest {
 			state test {
 				[*] --> m1
 				state m1 {
-					[*] --> one
-					state one
+					[*] --> m1_one
+					state "one" as m1_one
 				}
 				--
 				[*] --> m2
 				state m2 {
-					[*] --> two
-					state two
+					[*] --> m2_two
+					state "two" as m2_two
 				}
 				--
 				[*] --> m3
 				state m3 {
-					[*] --> three
-					state three
+					[*] --> m3_three
+					state "three" as m3_three
 				}
 			}
 			@enduml
@@ -333,11 +333,11 @@ class StateMachinePlantUMLGeneratorTest {
 			@startuml
 				[*] --> m1
 				state m1 {
-					[*] --> one
-					state one
-					state two
-					one --> two : [false]
-					one --> two : [true]
+					[*] --> m1_one
+					state "one" as m1_one
+					state "two" as m1_two
+					m1_one --> m1_two : [false]
+					m1_one --> m1_two : [true]
 				}
 			@enduml
 		''')
@@ -357,11 +357,11 @@ class StateMachinePlantUMLGeneratorTest {
 			@startuml
 				[*] --> m1
 				state m1 {
-					[*] --> one
-					state one
-					state two
-					one --> two : [false] / signal1!
-					one --> two : [true] / signal2!
+					[*] --> m1_one
+					state "one" as m1_one
+					state "two" as m1_two
+					m1_one --> m1_two : [false] / signal1!
+					m1_one --> m1_two : [true] / signal2!
 				}
 			@enduml
 		''')
