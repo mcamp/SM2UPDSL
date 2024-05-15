@@ -14,7 +14,7 @@ Machine:
 	'machine' name=ID '{' (states+=State | transitions+=Transition)* '}';
 	
 State:
-	(fail?='fail' | end?='end')? 'state' name=ID ('with' machine=Machine)?
+	(fail?='fail' | end?='end')? 'state' name=ID ('safety' 'properties' '{' properties+=SafetyProperty* '}')? ('with' machine=Machine)?
 ;
 
 Transition:
@@ -23,6 +23,11 @@ Transition:
 		(hasWhen?='when' when=ID)?
 		(time?='after' timeout=Float)?
 		(hasSignal?='signal' signal=ID)?
+;
+
+SafetyProperty: 
+	{Delay} 'startup' 'delay' time=Float |
+	{MaxExecutionTime} 'max' 'execution' time=Float
 ;
 
 Float returns ecore::EFloat: INT ('.' INT)?;

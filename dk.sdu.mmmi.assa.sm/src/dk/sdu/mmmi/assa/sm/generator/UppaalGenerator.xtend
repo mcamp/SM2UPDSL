@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.assa.sm.generator
 
+import dk.sdu.mmmi.assa.sm.stateMachine.Delay
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine
 import dk.sdu.mmmi.assa.sm.stateMachine.Root
 import dk.sdu.mmmi.assa.sm.stateMachine.State
@@ -14,10 +15,12 @@ class UppaalGenerator {
 	
 	var List<UppaalProcess> processes
 	var List<String> channels
+	var List<String> clocks
 	
 	def generate(Root root, IFileSystemAccess2 fsa) {
 		processes = root.allUppaalProcesses
 		channels = root.allChannels
+		clocks = root.allClocks
 		fsa.generateFile(root.name+'/uppaal.xta', root.compile)
 	}
 	
@@ -46,13 +49,13 @@ class UppaalGenerator {
 			allWhenTx.exists[whenTx | signalTx.signal == whenTx.when]
 		]
 
-		ret.addAll(allWhenNoSignalTx.map[new UppaalProcess(it)].toList)
-		ret.addAll(allSignalNoWhenTx.map[new UppaalProcess(it)].toList)
+		ret.addAll(allWhenNoSignalTx.map[UppaalProcess.fromWhenTransition(it)].toList)
+		ret.addAll(allSignalNoWhenTx.map[UppaalProcess.fromSignalTransition(it)].toList)
 		ret
 	}
 	
 	def CharSequence compile(Root root)'''
-	«IF root.hasTimeoutTransition»clock gen_clock;«ENDIF»
+	«FOR clock: clocks BEFORE "clock " SEPARATOR ", " AFTER ";"»«clock»«ENDFOR»
 	«FOR channel: channels BEFORE "chan " SEPARATOR ", " AFTER ";"»«channel»«ENDFOR»
 	«FOR process: processes»«process.compile»«ENDFOR»
 «««	«FOR automata:root.allAuxiliarAutomata»«automata.compile»«ENDFOR»
@@ -63,7 +66,7 @@ class UppaalGenerator {
 	process «process.name» {
 		«IF !process.states.isEmpty»
 		state
-			«FOR state:process.states SEPARATOR ",\n" AFTER ';'»«state.name»«state.bodyIfTimeoutTransition»«ENDFOR»
+			«FOR state:process.states SEPARATOR ",\n" AFTER ';'»«state.name»«state.compileBody»«ENDFOR»
 		«IF process.hasCommittedState»
 		commit «FOR state:process.states.filter[committed] SEPARATOR ", " AFTER ";"»«state.name»«ENDFOR»
 		«ENDIF»
@@ -149,7 +152,7 @@ class UppaalGenerator {
 	'''
 	
 	def CharSequence toClockString(float seconds) {
-		val clock = seconds*10
+		val clock = seconds
 		return clock.toInt +""
 	}
 	
@@ -157,20 +160,32 @@ class UppaalGenerator {
 		return Math.round(number)
 	}
 	
-	def CharSequence bodyIfTimeoutTransition(UppaalState state){
+	def CharSequence compileBody(UppaalState state){
 		val originalState = state.originalState
 		if(originalState === null) return ""
-		if (!originalState.hasTimeoutTransition) return ""
-		return " " +originalState.compileBody
+		return originalState.compileBody
 	}
 	
-	def compileBody(State state)'''
-	{
-		gen_clock <= «state.timeoutTransition.timeout.toClockString»
-	}'''
+	def compileBody(State state){
+		var conditions = newArrayList
+		val delayProperty = state.properties.filter(Delay).head
+		if (delayProperty !== null)
+			conditions.add("startup_clock > "+delayProperty.time.toClockString)
+		if (state.hasTimeoutTransition)
+			conditions.add("gen_clock <= "+state.timeoutTransition.timeout.toClockString)
+		if (conditions.isEmpty) return ""
+		'''
+		 {
+			«FOR condition: conditions SEPARATOR " && "»«condition»«ENDFOR»
+		}'''
+	}
 	
 	def hasTimeoutTransition(Root root) {
 		root.eAllContents.filter(Transition).exists[isTime]
+	}
+	
+	def hasStartupDelayProperty(Root root) {
+		!root.eAllContents.filter(Delay).isNullOrEmpty
 	}
 	
 	def hasTimeoutTransition(State state) {
@@ -208,7 +223,12 @@ class UppaalGenerator {
 		return retValue
 	}
 	
-	
+	def List<String> allClocks(Root root) {
+		val retValue = newArrayList
+		if (root.hasTimeoutTransition) retValue.add("gen_clock")
+		if (root.hasStartupDelayProperty) retValue.add("startup_clock")
+		return retValue
+	}
 	
 }
 
@@ -224,6 +244,7 @@ class UppaalProcess {
 	var public String name
 	val public List<UppaalState> states = newArrayList
 	var public List<UppaalTransition> transitions = newArrayList
+	val public List<UppaalState> firstGeneratedStates = newArrayList
 	
 	new(Machine machine) {
 		
@@ -241,46 +262,48 @@ class UppaalProcess {
 		// Add states to process
 		this.fillStates(machine)
 		
-	}
-	
-	new(Transition transition) {
-		if(transition.when !== null) {
-			this.createFromWhenTransition(transition)
-		}
-		else if(transition.signal !== null) {
-			this.createFromSignalTransition(transition)
-		}
+		// Add from safety property
+		this.fillFromSafetyProperties(machine)
 		
+		this.states.addAll(this.firstGeneratedStates)
 	}
 	
-	def private createFromWhenTransition(Transition transition) {
+	new(){}
+	
+	def static fromSignalTransition(Transition transition) {
+		val process = new UppaalProcess()
 		// Create name
-		this.name = "gen_sync_"+transition.when
+		process.name = "gen_sync_"+transition.signal
 		
 		//Create states
-		states.add(new UppaalState("initSync"))
-		
-		//Create transition
-		val tx = new UppaalTransition
-		tx.from = "initSync"
-		tx.to = "initSync"
-		tx.sync = transition.when+"!"
-		transitions.add(tx)
-	}
-	
-	def private createFromSignalTransition(Transition transition) {
-		// Create name
-		this.name = "gen_sync_"+transition.signal
-		
-		//Create states
-		states.add(new UppaalState("initSync"))
+		process.states.add(new UppaalState("initSync"))
 		
 		//Create transition
 		val tx = new UppaalTransition
 		tx.from = "initSync"
 		tx.to = "initSync"
 		tx.sync = transition.signal+"?"
-		transitions.add(tx)
+		process.transitions.add(tx)
+		
+		return process
+	}
+	
+	def static fromWhenTransition(Transition transition) {
+		val process = new UppaalProcess()
+		// Create name
+		process.name = "gen_sync_"+transition.when
+		
+		//Create states
+		process.states.add(new UppaalState("initSync"))
+		
+		//Create transition
+		val tx = new UppaalTransition
+		tx.from = "initSync"
+		tx.to = "initSync"
+		tx.sync = transition.when+"!"
+		process.transitions.add(tx)
+		
+		return process
 	}
 	
 	def private genInitNestedMachine(Machine machine) {
@@ -337,12 +360,32 @@ class UppaalProcess {
 			if(transition.to.hasNestedMachine) {
 				this.genTransitionToStartNestedMachine(transition)	
 			}
+			
+			// New transitions if tx has when and signal
+			else if(!(transition.signal.nullOrEmpty || transition.when.nullOrEmpty)) {
+				this.genTransitionWithWhenSignal(transition)
+			}
+			
 			// If not, add transition like normal
 			else {
 				this.transitions.add(new UppaalTransition(transition))
 			}
 		}	
-		
+	}
+	
+	def private fillFromSafetyProperties(Machine machine) {	
+		// Generated transitions: from startup delay states
+		for(state: machine.states) {
+			val startupDelay = state.properties.filter(Delay).head
+			if(startupDelay !== null) {
+				for(transition : machine.transitions.filter[to === state]){
+					val tx = new UppaalTransition
+					tx.from = transition.from.name
+					tx.to = this.initState.name
+					this.transitions.add(tx)	
+				}
+			}
+		}
 	}
 	
 	/**
@@ -358,6 +401,37 @@ class UppaalProcess {
 		// Modify the outgoing state
 		newTransition.to = newState
 		this.transitions.add(newTransition)
+	}
+	
+	/**
+	 * If a transition has a when and a signal, we need to add a new state to support multiple sync in uppaal
+	 * Moreover, it creates the pre_state if needed
+	 */ 
+	def private genTransitionWithWhenSignal(Transition transition) {
+		// Create tx to pre generated state
+		// Use previous code to create transition
+		val newStateName = transition.to.preStateName
+		
+		val newTransition1 = new UppaalTransition()
+		newTransition1.from = transition.from.name
+		newTransition1.to = newStateName
+		newTransition1.sync = transition.when + "?"
+		this.transitions.add(newTransition1)
+		
+		val newTransition2 = new UppaalTransition()
+		newTransition2.from = newStateName
+		newTransition2.to = transition.to.name
+		newTransition2.sync = transition.signal + "!"
+		this.transitions.add(newTransition2)
+		
+		val newState = this.firstGeneratedStates.findFirst[	it.name == newStateName ]
+
+		if (newState === null) {
+			val preState = new UppaalState(newStateName)
+			preState.committed = true
+			this.firstGeneratedStates.add(preState)
+		}
+		
 	}
 	
 	def UppaalState initState() {
@@ -377,6 +451,7 @@ class UppaalProcess {
 		}
 		ret
 	}
+	
 	
 	def isNested(Machine machine) {
 		if(EcoreUtil2.getContainerOfType(machine, State) === null) return false

@@ -19,6 +19,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//State/fail"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//State/end"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//State/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//State/properties"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//State/machine"/>
     </genClasses>
     <genClasses ecoreClass="StateMachine.ecore#//Transition">
@@ -33,5 +34,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//Transition/hasSignal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//Transition/signal"/>
     </genClasses>
+    <genClasses ecoreClass="StateMachine.ecore#//SafetyProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//SafetyProperty/time"/>
+    </genClasses>
+    <genClasses ecoreClass="StateMachine.ecore#//Delay"/>
+    <genClasses ecoreClass="StateMachine.ecore#//MaxExecutionTime"/>
   </genPackages>
 </genmodel:GenModel>

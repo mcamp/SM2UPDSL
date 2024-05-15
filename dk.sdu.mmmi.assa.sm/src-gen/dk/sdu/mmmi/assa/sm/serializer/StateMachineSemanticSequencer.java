@@ -5,7 +5,9 @@ package dk.sdu.mmmi.assa.sm.serializer;
 
 import com.google.inject.Inject;
 import dk.sdu.mmmi.assa.sm.services.StateMachineGrammarAccess;
+import dk.sdu.mmmi.assa.sm.stateMachine.Delay;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
+import dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime;
 import dk.sdu.mmmi.assa.sm.stateMachine.Root;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
@@ -17,7 +19,9 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -33,8 +37,14 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == StateMachinePackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case StateMachinePackage.DELAY:
+				sequence_SafetyProperty(context, (Delay) semanticObject); 
+				return; 
 			case StateMachinePackage.MACHINE:
 				sequence_Machine(context, (Machine) semanticObject); 
+				return; 
+			case StateMachinePackage.MAX_EXECUTION_TIME:
+				sequence_SafetyProperty(context, (MaxExecutionTime) semanticObject); 
 				return; 
 			case StateMachinePackage.ROOT:
 				sequence_Root(context, (Root) semanticObject); 
@@ -76,10 +86,46 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	
 	/**
 	 * Contexts:
+	 *     SafetyProperty returns Delay
+	 *
+	 * Constraint:
+	 *     time=Float
+	 */
+	protected void sequence_SafetyProperty(ISerializationContext context, Delay semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.SAFETY_PROPERTY__TIME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.SAFETY_PROPERTY__TIME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSafetyPropertyAccess().getTimeFloatParserRuleCall_0_3_0(), semanticObject.getTime());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SafetyProperty returns MaxExecutionTime
+	 *
+	 * Constraint:
+	 *     time=Float
+	 */
+	protected void sequence_SafetyProperty(ISerializationContext context, MaxExecutionTime semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.SAFETY_PROPERTY__TIME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.SAFETY_PROPERTY__TIME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSafetyPropertyAccess().getTimeFloatParserRuleCall_1_3_0(), semanticObject.getTime());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     State returns State
 	 *
 	 * Constraint:
-	 *     ((fail?='fail' | end?='end')? name=ID machine=Machine?)
+	 *     ((fail?='fail' | end?='end')? name=ID properties+=SafetyProperty* machine=Machine?)
 	 */
 	protected void sequence_State(ISerializationContext context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

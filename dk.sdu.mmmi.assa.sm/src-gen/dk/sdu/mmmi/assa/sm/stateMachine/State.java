@@ -3,6 +3,8 @@
  */
 package dk.sdu.mmmi.assa.sm.stateMachine;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -17,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.State#isFail <em>Fail</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.State#isEnd <em>End</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.State#getName <em>Name</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.State#getProperties <em>Properties</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.State#getMachine <em>Machine</em>}</li>
  * </ul>
  *
@@ -91,6 +94,18 @@ public interface State extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Properties</b></em>' containment reference list.
+   * The list contents are of type {@link dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Properties</em>' containment reference list.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getState_Properties()
+   * @model containment="true"
+   * @generated
+   */
+  EList<SafetyProperty> getProperties();
 
   /**
    * Returns the value of the '<em><b>Machine</b></em>' containment reference.

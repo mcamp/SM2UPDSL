@@ -235,4 +235,5 @@ class StateMachineParsingTest {
 		"signal2".assertEquals(tx2.signal)
 		
 	}
+
 }

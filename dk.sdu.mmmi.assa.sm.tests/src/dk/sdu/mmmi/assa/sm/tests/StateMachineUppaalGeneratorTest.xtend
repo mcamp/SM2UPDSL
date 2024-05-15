@@ -309,36 +309,6 @@ class StateMachineUppaalGeneratorTest {
 		)
 	}
 	
-	@Test
-	def void timeTransitionWithSeconds() {
-		'''
-			project test
-			machine test {
-				state one
-				state two
-				one -> two after 5
-			}
-		'''.assertUppaal(
-			'''
-			clock gen_clock;
-			process test {
-				state
-					one {
-						gen_clock <= 50
-					},
-					two;
-				init one;
-				trans
-					one -> two {
-						guard gen_clock >= 50;
-						assign gen_clock := 0;
-					};
-			}
-			system test;
-			'''
-		)
-	}
-	
 	
 	@Test
 	def void timeTransitionWithMilliSeconds() {
@@ -347,7 +317,7 @@ class StateMachineUppaalGeneratorTest {
 			machine test {
 				state one
 				state two
-				one -> two after 0.5
+				one -> two after 5
 			}
 		'''.assertUppaal(
 			'''
@@ -377,7 +347,7 @@ class StateMachineUppaalGeneratorTest {
 			machine test {
 				state one
 				state two
-				one -> two after 0.5 signal finish
+				one -> two after 5 signal finish
 			}
 		'''.assertUppaal(
 			'''
@@ -420,7 +390,7 @@ class StateMachineUppaalGeneratorTest {
 				state two with machine inner{ 
 					state innerOne
 					state innerTwo
-					innerOne -> innerTwo after 0.5 signal finish
+					innerOne -> innerTwo after 5 signal finish
 				}
 				one -> two when ready
 				two -> one when finish
@@ -685,4 +655,101 @@ class StateMachineUppaalGeneratorTest {
 		''')
 	}
 	
+	@Test
+	def void safetyPropertyStartupDelay() {
+		'''
+			project test
+			machine m1 {
+				state one
+				state two
+				state three safety properties {
+					startup delay 50
+				}
+				one -> two after 5
+				two -> three after 5
+				three -> one after 5
+			}
+		'''.assertUppaal('''
+			clock gen_clock, startup_clock;
+			process m1 {
+				state
+					one {
+						gen_clock <= 5
+					},
+					two {
+						gen_clock <= 5
+					},
+					three {
+						startup_clock > 50 && gen_clock <= 5
+					};
+				init one;
+				trans
+					one -> two {
+						guard gen_clock >= 5;
+						assign gen_clock := 0;
+					},
+					two -> three {
+						guard gen_clock >= 5;
+						assign gen_clock := 0;
+					},
+					three -> one {
+						guard gen_clock >= 5;
+						assign gen_clock := 0;
+					},
+					two -> one {
+					};
+			}
+			system m1;
+		''')
+	}
+	
+	@Test
+	def machineWithWhenAndSignalTransitions(){
+		'''
+			project test
+			machine test {
+				state one
+				state two
+				one -> two when testWhen signal testSignal
+			}
+		'''.assertUppaal(
+			'''
+			chan testWhen, testSignal;
+			process test {
+				state
+					one,
+					two,
+					gen_pre_two;
+				commit gen_pre_two;
+				init one;
+				trans
+					one -> gen_pre_two {
+						sync testWhen?;
+					},
+					gen_pre_two -> two {
+						sync testSignal!;
+					};
+			}
+			process gen_sync_testWhen {
+				state
+					initSync;
+				init initSync;
+				trans
+					initSync -> initSync {
+						sync testWhen!;
+					};
+			}
+			process gen_sync_testSignal {
+				state
+					initSync;
+				init initSync;
+				trans
+					initSync -> initSync {
+						sync testSignal?;
+					};
+			}
+			system test, gen_sync_testWhen, gen_sync_testSignal;
+			'''
+		)
+	}
 }

@@ -6,6 +6,7 @@ package dk.sdu.mmmi.assa.sm.services;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.List;
+import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
@@ -123,16 +124,23 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cWithKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cMachineAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cMachineMachineParserRuleCall_3_1_0 = (RuleCall)cMachineAssignment_3_1.eContents().get(0);
+		private final Keyword cSafetyKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cPropertiesKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final Assignment cPropertiesAssignment_3_3 = (Assignment)cGroup_3.eContents().get(3);
+		private final RuleCall cPropertiesSafetyPropertyParserRuleCall_3_3_0 = (RuleCall)cPropertiesAssignment_3_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3_4 = (Keyword)cGroup_3.eContents().get(4);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cWithKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cMachineAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cMachineMachineParserRuleCall_4_1_0 = (RuleCall)cMachineAssignment_4_1.eContents().get(0);
 		
 		//State:
-		//    (fail?='fail' | end?='end')? 'state' name=ID ('with' machine=Machine)?
+		//    (fail?='fail' | end?='end')? 'state' name=ID ('safety' 'properties' '{' properties+=SafetyProperty* '}')? ('with' machine=Machine)?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(fail?='fail' | end?='end')? 'state' name=ID ('with' machine=Machine)?
+		//(fail?='fail' | end?='end')? 'state' name=ID ('safety' 'properties' '{' properties+=SafetyProperty* '}')? ('with' machine=Machine)?
 		public Group getGroup() { return cGroup; }
 		
 		//(fail?='fail' | end?='end')?
@@ -159,17 +167,38 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
 		
-		//('with' machine=Machine)?
+		//('safety' 'properties' '{' properties+=SafetyProperty* '}')?
 		public Group getGroup_3() { return cGroup_3; }
 		
+		//'safety'
+		public Keyword getSafetyKeyword_3_0() { return cSafetyKeyword_3_0; }
+		
+		//'properties'
+		public Keyword getPropertiesKeyword_3_1() { return cPropertiesKeyword_3_1; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3_2() { return cLeftCurlyBracketKeyword_3_2; }
+		
+		//properties+=SafetyProperty*
+		public Assignment getPropertiesAssignment_3_3() { return cPropertiesAssignment_3_3; }
+		
+		//SafetyProperty
+		public RuleCall getPropertiesSafetyPropertyParserRuleCall_3_3_0() { return cPropertiesSafetyPropertyParserRuleCall_3_3_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_3_4() { return cRightCurlyBracketKeyword_3_4; }
+		
+		//('with' machine=Machine)?
+		public Group getGroup_4() { return cGroup_4; }
+		
 		//'with'
-		public Keyword getWithKeyword_3_0() { return cWithKeyword_3_0; }
+		public Keyword getWithKeyword_4_0() { return cWithKeyword_4_0; }
 		
 		//machine=Machine
-		public Assignment getMachineAssignment_3_1() { return cMachineAssignment_3_1; }
+		public Assignment getMachineAssignment_4_1() { return cMachineAssignment_4_1; }
 		
 		//Machine
-		public RuleCall getMachineMachineParserRuleCall_3_1_0() { return cMachineMachineParserRuleCall_3_1_0; }
+		public RuleCall getMachineMachineParserRuleCall_4_1_0() { return cMachineMachineParserRuleCall_4_1_0; }
 	}
 	public class TransitionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Transition");
@@ -299,6 +328,68 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		//ID
 		public RuleCall getSignalIDTerminalRuleCall_6_1_0() { return cSignalIDTerminalRuleCall_6_1_0; }
 	}
+	public class SafetyPropertyElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.SafetyProperty");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cDelayAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Keyword cStartupKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Keyword cDelayKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
+		private final Assignment cTimeAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final RuleCall cTimeFloatParserRuleCall_0_3_0 = (RuleCall)cTimeAssignment_0_3.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Action cMaxExecutionTimeAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Keyword cMaxKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Keyword cExecutionKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cTimeAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final RuleCall cTimeFloatParserRuleCall_1_3_0 = (RuleCall)cTimeAssignment_1_3.eContents().get(0);
+		
+		//SafetyProperty:
+		//    {Delay} 'startup' 'delay' time=Float |
+		//    {MaxExecutionTime} 'max' 'execution' time=Float
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Delay} 'startup' 'delay' time=Float |
+		//{MaxExecutionTime} 'max' 'execution' time=Float
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//{Delay} 'startup' 'delay' time=Float
+		public Group getGroup_0() { return cGroup_0; }
+		
+		//{Delay}
+		public Action getDelayAction_0_0() { return cDelayAction_0_0; }
+		
+		//'startup'
+		public Keyword getStartupKeyword_0_1() { return cStartupKeyword_0_1; }
+		
+		//'delay'
+		public Keyword getDelayKeyword_0_2() { return cDelayKeyword_0_2; }
+		
+		//time=Float
+		public Assignment getTimeAssignment_0_3() { return cTimeAssignment_0_3; }
+		
+		//Float
+		public RuleCall getTimeFloatParserRuleCall_0_3_0() { return cTimeFloatParserRuleCall_0_3_0; }
+		
+		//{MaxExecutionTime} 'max' 'execution' time=Float
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{MaxExecutionTime}
+		public Action getMaxExecutionTimeAction_1_0() { return cMaxExecutionTimeAction_1_0; }
+		
+		//'max'
+		public Keyword getMaxKeyword_1_1() { return cMaxKeyword_1_1; }
+		
+		//'execution'
+		public Keyword getExecutionKeyword_1_2() { return cExecutionKeyword_1_2; }
+		
+		//time=Float
+		public Assignment getTimeAssignment_1_3() { return cTimeAssignment_1_3; }
+		
+		//Float
+		public RuleCall getTimeFloatParserRuleCall_1_3_0() { return cTimeFloatParserRuleCall_1_3_0; }
+	}
 	public class FloatElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Float");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -349,6 +440,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	private final MachineElements pMachine;
 	private final StateElements pState;
 	private final TransitionElements pTransition;
+	private final SafetyPropertyElements pSafetyProperty;
 	private final FloatElements pFloat;
 	private final BooleanElements pBoolean;
 	
@@ -365,6 +457,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		this.pMachine = new MachineElements();
 		this.pState = new StateElements();
 		this.pTransition = new TransitionElements();
+		this.pSafetyProperty = new SafetyPropertyElements();
 		this.pFloat = new FloatElements();
 		this.pBoolean = new BooleanElements();
 	}
@@ -420,7 +513,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	}
 	
 	//State:
-	//    (fail?='fail' | end?='end')? 'state' name=ID ('with' machine=Machine)?
+	//    (fail?='fail' | end?='end')? 'state' name=ID ('safety' 'properties' '{' properties+=SafetyProperty* '}')? ('with' machine=Machine)?
 	//;
 	public StateElements getStateAccess() {
 		return pState;
@@ -443,6 +536,18 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	
 	public ParserRule getTransitionRule() {
 		return getTransitionAccess().getRule();
+	}
+	
+	//SafetyProperty:
+	//    {Delay} 'startup' 'delay' time=Float |
+	//    {MaxExecutionTime} 'max' 'execution' time=Float
+	//;
+	public SafetyPropertyElements getSafetyPropertyAccess() {
+		return pSafetyProperty;
+	}
+	
+	public ParserRule getSafetyPropertyRule() {
+		return getSafetyPropertyAccess().getRule();
 	}
 	
 	//Float returns ecore::EFloat: INT ('.' INT)?;

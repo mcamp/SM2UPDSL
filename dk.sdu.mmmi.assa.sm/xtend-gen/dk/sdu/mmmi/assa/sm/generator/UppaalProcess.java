@@ -1,5 +1,8 @@
 package dk.sdu.mmmi.assa.sm.generator;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
+import dk.sdu.mmmi.assa.sm.stateMachine.Delay;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
@@ -19,6 +22,8 @@ public class UppaalProcess {
   
   public List<UppaalTransition> transitions = CollectionLiterals.<UppaalTransition>newArrayList();
   
+  public final List<UppaalState> firstGeneratedStates = CollectionLiterals.<UppaalState>newArrayList();
+  
   public UppaalProcess(final Machine machine) {
     this.name = this.processName(machine);
     boolean _isNested = this.isNested(machine);
@@ -27,58 +32,45 @@ public class UppaalProcess {
     }
     this.fillTransitions(machine);
     this.fillStates(machine);
+    this.fillFromSafetyProperties(machine);
+    this.states.addAll(this.firstGeneratedStates);
   }
   
-  public UppaalProcess(final Transition transition) {
+  public UppaalProcess() {
+  }
+  
+  public static UppaalProcess fromSignalTransition(final Transition transition) {
+    final UppaalProcess process = new UppaalProcess();
+    String _signal = transition.getSignal();
+    String _plus = ("gen_sync_" + _signal);
+    process.name = _plus;
+    UppaalState _uppaalState = new UppaalState("initSync");
+    process.states.add(_uppaalState);
+    final UppaalTransition tx = new UppaalTransition();
+    tx.from = "initSync";
+    tx.to = "initSync";
+    String _signal_1 = transition.getSignal();
+    String _plus_1 = (_signal_1 + "?");
+    tx.sync = _plus_1;
+    process.transitions.add(tx);
+    return process;
+  }
+  
+  public static UppaalProcess fromWhenTransition(final Transition transition) {
+    final UppaalProcess process = new UppaalProcess();
     String _when = transition.getWhen();
-    boolean _tripleNotEquals = (_when != null);
-    if (_tripleNotEquals) {
-      this.createFromWhenTransition(transition);
-    } else {
-      String _signal = transition.getSignal();
-      boolean _tripleNotEquals_1 = (_signal != null);
-      if (_tripleNotEquals_1) {
-        this.createFromSignalTransition(transition);
-      }
-    }
-  }
-  
-  private boolean createFromWhenTransition(final Transition transition) {
-    boolean _xblockexpression = false;
-    {
-      String _when = transition.getWhen();
-      String _plus = ("gen_sync_" + _when);
-      this.name = _plus;
-      UppaalState _uppaalState = new UppaalState("initSync");
-      this.states.add(_uppaalState);
-      final UppaalTransition tx = new UppaalTransition();
-      tx.from = "initSync";
-      tx.to = "initSync";
-      String _when_1 = transition.getWhen();
-      String _plus_1 = (_when_1 + "!");
-      tx.sync = _plus_1;
-      _xblockexpression = this.transitions.add(tx);
-    }
-    return _xblockexpression;
-  }
-  
-  private boolean createFromSignalTransition(final Transition transition) {
-    boolean _xblockexpression = false;
-    {
-      String _signal = transition.getSignal();
-      String _plus = ("gen_sync_" + _signal);
-      this.name = _plus;
-      UppaalState _uppaalState = new UppaalState("initSync");
-      this.states.add(_uppaalState);
-      final UppaalTransition tx = new UppaalTransition();
-      tx.from = "initSync";
-      tx.to = "initSync";
-      String _signal_1 = transition.getSignal();
-      String _plus_1 = (_signal_1 + "?");
-      tx.sync = _plus_1;
-      _xblockexpression = this.transitions.add(tx);
-    }
-    return _xblockexpression;
+    String _plus = ("gen_sync_" + _when);
+    process.name = _plus;
+    UppaalState _uppaalState = new UppaalState("initSync");
+    process.states.add(_uppaalState);
+    final UppaalTransition tx = new UppaalTransition();
+    tx.from = "initSync";
+    tx.to = "initSync";
+    String _when_1 = transition.getWhen();
+    String _plus_1 = (_when_1 + "!");
+    tx.sync = _plus_1;
+    process.transitions.add(tx);
+    return process;
   }
   
   private boolean genInitNestedMachine(final Machine machine) {
@@ -144,8 +136,37 @@ public class UppaalProcess {
       if (_hasNestedMachine) {
         this.genTransitionToStartNestedMachine(transition);
       } else {
-        UppaalTransition _uppaalTransition = new UppaalTransition(transition);
-        this.transitions.add(_uppaalTransition);
+        boolean _not = (!(StringExtensions.isNullOrEmpty(transition.getSignal()) || StringExtensions.isNullOrEmpty(transition.getWhen())));
+        if (_not) {
+          this.genTransitionWithWhenSignal(transition);
+        } else {
+          UppaalTransition _uppaalTransition = new UppaalTransition(transition);
+          this.transitions.add(_uppaalTransition);
+        }
+      }
+    }
+  }
+  
+  private void fillFromSafetyProperties(final Machine machine) {
+    EList<State> _states = machine.getStates();
+    for (final State state : _states) {
+      {
+        final Delay startupDelay = IterableExtensions.<Delay>head(Iterables.<Delay>filter(state.getProperties(), Delay.class));
+        if ((startupDelay != null)) {
+          final Function1<Transition, Boolean> _function = (Transition it) -> {
+            State _to = it.getTo();
+            return Boolean.valueOf((_to == state));
+          };
+          Iterable<Transition> _filter = IterableExtensions.<Transition>filter(machine.getTransitions(), _function);
+          for (final Transition transition : _filter) {
+            {
+              final UppaalTransition tx = new UppaalTransition();
+              tx.from = transition.getFrom().getName();
+              tx.to = this.initState().name;
+              this.transitions.add(tx);
+            }
+          }
+        }
       }
     }
   }
@@ -162,6 +183,47 @@ public class UppaalProcess {
       final String newState = this.preStateName(transition.getTo());
       newTransition.to = newState;
       _xblockexpression = this.transitions.add(newTransition);
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * If a transition has a when and a signal, we need to add a new state to support multiple sync in uppaal
+   * Moreover, it creates the pre_state if needed
+   */
+  private boolean genTransitionWithWhenSignal(final Transition transition) {
+    boolean _xblockexpression = false;
+    {
+      final String newStateName = this.preStateName(transition.getTo());
+      final UppaalTransition newTransition1 = new UppaalTransition();
+      newTransition1.from = transition.getFrom().getName();
+      newTransition1.to = newStateName;
+      String _when = transition.getWhen();
+      String _plus = (_when + "?");
+      newTransition1.sync = _plus;
+      this.transitions.add(newTransition1);
+      final UppaalTransition newTransition2 = new UppaalTransition();
+      newTransition2.from = newStateName;
+      newTransition2.to = transition.getTo().getName();
+      String _signal = transition.getSignal();
+      String _plus_1 = (_signal + "!");
+      newTransition2.sync = _plus_1;
+      this.transitions.add(newTransition2);
+      final Function1<UppaalState, Boolean> _function = (UppaalState it) -> {
+        return Boolean.valueOf(Objects.equal(it.name, newStateName));
+      };
+      final UppaalState newState = IterableExtensions.<UppaalState>findFirst(this.firstGeneratedStates, _function);
+      boolean _xifexpression = false;
+      if ((newState == null)) {
+        boolean _xblockexpression_1 = false;
+        {
+          final UppaalState preState = new UppaalState(newStateName);
+          preState.committed = true;
+          _xblockexpression_1 = this.firstGeneratedStates.add(preState);
+        }
+        _xifexpression = _xblockexpression_1;
+      }
+      _xblockexpression = _xifexpression;
     }
     return _xblockexpression;
   }

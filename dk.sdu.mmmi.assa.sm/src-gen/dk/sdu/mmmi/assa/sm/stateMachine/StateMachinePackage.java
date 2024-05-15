@@ -178,13 +178,22 @@ public interface StateMachinePackage extends EPackage
   int STATE__NAME = 2;
 
   /**
+   * The feature id for the '<em><b>Properties</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__PROPERTIES = 3;
+
+  /**
    * The feature id for the '<em><b>Machine</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__MACHINE = 3;
+  int STATE__MACHINE = 4;
 
   /**
    * The number of structural features of the '<em>State</em>' class.
@@ -193,7 +202,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE_FEATURE_COUNT = 4;
+  int STATE_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl <em>Transition</em>}' class.
@@ -303,6 +312,90 @@ public interface StateMachinePackage extends EPackage
    * @ordered
    */
   int TRANSITION_FEATURE_COUNT = 10;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SafetyPropertyImpl <em>Safety Property</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.SafetyPropertyImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSafetyProperty()
+   * @generated
+   */
+  int SAFETY_PROPERTY = 4;
+
+  /**
+   * The feature id for the '<em><b>Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SAFETY_PROPERTY__TIME = 0;
+
+  /**
+   * The number of structural features of the '<em>Safety Property</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SAFETY_PROPERTY_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.DelayImpl <em>Delay</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.DelayImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getDelay()
+   * @generated
+   */
+  int DELAY = 5;
+
+  /**
+   * The feature id for the '<em><b>Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELAY__TIME = SAFETY_PROPERTY__TIME;
+
+  /**
+   * The number of structural features of the '<em>Delay</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELAY_FEATURE_COUNT = SAFETY_PROPERTY_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MaxExecutionTimeImpl <em>Max Execution Time</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.MaxExecutionTimeImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getMaxExecutionTime()
+   * @generated
+   */
+  int MAX_EXECUTION_TIME = 6;
+
+  /**
+   * The feature id for the '<em><b>Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAX_EXECUTION_TIME__TIME = SAFETY_PROPERTY__TIME;
+
+  /**
+   * The number of structural features of the '<em>Max Execution Time</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAX_EXECUTION_TIME_FEATURE_COUNT = SAFETY_PROPERTY_FEATURE_COUNT + 0;
 
 
   /**
@@ -422,6 +515,17 @@ public interface StateMachinePackage extends EPackage
    * @generated
    */
   EAttribute getState_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link dk.sdu.mmmi.assa.sm.stateMachine.State#getProperties <em>Properties</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Properties</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.State#getProperties()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_Properties();
 
   /**
    * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.State#getMachine <em>Machine</em>}'.
@@ -555,6 +659,47 @@ public interface StateMachinePackage extends EPackage
   EAttribute getTransition_Signal();
 
   /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty <em>Safety Property</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Safety Property</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty
+   * @generated
+   */
+  EClass getSafetyProperty();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty#getTime <em>Time</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Time</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty#getTime()
+   * @see #getSafetyProperty()
+   * @generated
+   */
+  EAttribute getSafetyProperty_Time();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Delay <em>Delay</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Delay</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Delay
+   * @generated
+   */
+  EClass getDelay();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime <em>Max Execution Time</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Max Execution Time</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime
+   * @generated
+   */
+  EClass getMaxExecutionTime();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -672,6 +817,14 @@ public interface StateMachinePackage extends EPackage
     EAttribute STATE__NAME = eINSTANCE.getState_Name();
 
     /**
+     * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__PROPERTIES = eINSTANCE.getState_Properties();
+
+    /**
      * The meta object literal for the '<em><b>Machine</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -768,6 +921,44 @@ public interface StateMachinePackage extends EPackage
      * @generated
      */
     EAttribute TRANSITION__SIGNAL = eINSTANCE.getTransition_Signal();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SafetyPropertyImpl <em>Safety Property</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.SafetyPropertyImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSafetyProperty()
+     * @generated
+     */
+    EClass SAFETY_PROPERTY = eINSTANCE.getSafetyProperty();
+
+    /**
+     * The meta object literal for the '<em><b>Time</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SAFETY_PROPERTY__TIME = eINSTANCE.getSafetyProperty_Time();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.DelayImpl <em>Delay</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.DelayImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getDelay()
+     * @generated
+     */
+    EClass DELAY = eINSTANCE.getDelay();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MaxExecutionTimeImpl <em>Max Execution Time</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.MaxExecutionTimeImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getMaxExecutionTime()
+     * @generated
+     */
+    EClass MAX_EXECUTION_TIME = eINSTANCE.getMaxExecutionTime();
 
   }
 

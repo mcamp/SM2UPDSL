@@ -60,6 +60,33 @@ public interface StateMachineFactory extends EFactory
   Transition createTransition();
 
   /**
+   * Returns a new object of class '<em>Safety Property</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Safety Property</em>'.
+   * @generated
+   */
+  SafetyProperty createSafetyProperty();
+
+  /**
+   * Returns a new object of class '<em>Delay</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Delay</em>'.
+   * @generated
+   */
+  Delay createDelay();
+
+  /**
+   * Returns a new object of class '<em>Max Execution Time</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Max Execution Time</em>'.
+   * @generated
+   */
+  MaxExecutionTime createMaxExecutionTime();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

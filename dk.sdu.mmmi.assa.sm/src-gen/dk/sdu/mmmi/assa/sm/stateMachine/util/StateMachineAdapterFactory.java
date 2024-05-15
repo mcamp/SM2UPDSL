@@ -96,6 +96,21 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
         return createTransitionAdapter();
       }
       @Override
+      public Adapter caseSafetyProperty(SafetyProperty object)
+      {
+        return createSafetyPropertyAdapter();
+      }
+      @Override
+      public Adapter caseDelay(Delay object)
+      {
+        return createDelayAdapter();
+      }
+      @Override
+      public Adapter caseMaxExecutionTime(MaxExecutionTime object)
+      {
+        return createMaxExecutionTimeAdapter();
+      }
+      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -173,6 +188,51 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTransitionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty <em>Safety Property</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty
+   * @generated
+   */
+  public Adapter createSafetyPropertyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Delay <em>Delay</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Delay
+   * @generated
+   */
+  public Adapter createDelayAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime <em>Max Execution Time</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime
+   * @generated
+   */
+  public Adapter createMaxExecutionTimeAdapter()
   {
     return null;
   }

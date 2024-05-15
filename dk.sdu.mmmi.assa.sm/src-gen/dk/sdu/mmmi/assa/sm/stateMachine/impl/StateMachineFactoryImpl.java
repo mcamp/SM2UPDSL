@@ -69,6 +69,9 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
       case StateMachinePackage.MACHINE: return createMachine();
       case StateMachinePackage.STATE: return createState();
       case StateMachinePackage.TRANSITION: return createTransition();
+      case StateMachinePackage.SAFETY_PROPERTY: return createSafetyProperty();
+      case StateMachinePackage.DELAY: return createDelay();
+      case StateMachinePackage.MAX_EXECUTION_TIME: return createMaxExecutionTime();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -120,6 +123,42 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
   {
     TransitionImpl transition = new TransitionImpl();
     return transition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public SafetyProperty createSafetyProperty()
+  {
+    SafetyPropertyImpl safetyProperty = new SafetyPropertyImpl();
+    return safetyProperty;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Delay createDelay()
+  {
+    DelayImpl delay = new DelayImpl();
+    return delay;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public MaxExecutionTime createMaxExecutionTime()
+  {
+    MaxExecutionTimeImpl maxExecutionTime = new MaxExecutionTimeImpl();
+    return maxExecutionTime;
   }
 
   /**

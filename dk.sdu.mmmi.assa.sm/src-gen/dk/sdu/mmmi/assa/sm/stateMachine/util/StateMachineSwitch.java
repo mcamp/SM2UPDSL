@@ -101,6 +101,29 @@ public class StateMachineSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case StateMachinePackage.SAFETY_PROPERTY:
+      {
+        SafetyProperty safetyProperty = (SafetyProperty)theEObject;
+        T result = caseSafetyProperty(safetyProperty);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case StateMachinePackage.DELAY:
+      {
+        Delay delay = (Delay)theEObject;
+        T result = caseDelay(delay);
+        if (result == null) result = caseSafetyProperty(delay);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case StateMachinePackage.MAX_EXECUTION_TIME:
+      {
+        MaxExecutionTime maxExecutionTime = (MaxExecutionTime)theEObject;
+        T result = caseMaxExecutionTime(maxExecutionTime);
+        if (result == null) result = caseSafetyProperty(maxExecutionTime);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -165,6 +188,54 @@ public class StateMachineSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseTransition(Transition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Safety Property</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Safety Property</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSafetyProperty(SafetyProperty object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Delay</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Delay</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDelay(Delay object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Max Execution Time</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Max Execution Time</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMaxExecutionTime(MaxExecutionTime object)
   {
     return null;
   }

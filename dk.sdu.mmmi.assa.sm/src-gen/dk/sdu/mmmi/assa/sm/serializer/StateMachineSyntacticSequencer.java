@@ -11,6 +11,9 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
+import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
 import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 
@@ -18,10 +21,12 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class StateMachineSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected StateMachineGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (StateMachineGrammarAccess) access;
+		match_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getSafetyKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getPropertiesKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_3_2()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_3_4()));
 	}
 	
 	@Override
@@ -36,8 +41,22 @@ public class StateMachineSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			acceptNodes(getLastNavigableState(), syntaxNodes);
+			if (match_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q.equals(syntax))
+				emit_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     ('safety' 'properties' '{' '}')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     name=ID (ambiguity) 'with' machine=Machine
+	 *     name=ID (ambiguity) (rule end)
+	 */
+	protected void emit_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 }

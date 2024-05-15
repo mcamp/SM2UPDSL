@@ -4,17 +4,25 @@
 package dk.sdu.mmmi.assa.sm.stateMachine.impl;
 
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
+import dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,6 +35,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl#isFail <em>Fail</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl#isEnd <em>End</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl#getName <em>Name</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl#getMachine <em>Machine</em>}</li>
  * </ul>
  *
@@ -93,6 +102,16 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getProperties() <em>Properties</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getProperties()
+   * @generated
+   * @ordered
+   */
+  protected EList<SafetyProperty> properties;
 
   /**
    * The cached value of the '{@link #getMachine() <em>Machine</em>}' containment reference.
@@ -206,6 +225,21 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @generated
    */
   @Override
+  public EList<SafetyProperty> getProperties()
+  {
+    if (properties == null)
+    {
+      properties = new EObjectContainmentEList<SafetyProperty>(SafetyProperty.class, this, StateMachinePackage.STATE__PROPERTIES);
+    }
+    return properties;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Machine getMachine()
   {
     return machine;
@@ -260,6 +294,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case StateMachinePackage.STATE__PROPERTIES:
+        return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
       case StateMachinePackage.STATE__MACHINE:
         return basicSetMachine(null, msgs);
     }
@@ -282,6 +318,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return isEnd();
       case StateMachinePackage.STATE__NAME:
         return getName();
+      case StateMachinePackage.STATE__PROPERTIES:
+        return getProperties();
       case StateMachinePackage.STATE__MACHINE:
         return getMachine();
     }
@@ -293,6 +331,7 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -306,6 +345,10 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return;
       case StateMachinePackage.STATE__NAME:
         setName((String)newValue);
+        return;
+      case StateMachinePackage.STATE__PROPERTIES:
+        getProperties().clear();
+        getProperties().addAll((Collection<? extends SafetyProperty>)newValue);
         return;
       case StateMachinePackage.STATE__MACHINE:
         setMachine((Machine)newValue);
@@ -333,6 +376,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case StateMachinePackage.STATE__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case StateMachinePackage.STATE__PROPERTIES:
+        getProperties().clear();
+        return;
       case StateMachinePackage.STATE__MACHINE:
         setMachine((Machine)null);
         return;
@@ -356,6 +402,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return end != END_EDEFAULT;
       case StateMachinePackage.STATE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case StateMachinePackage.STATE__PROPERTIES:
+        return properties != null && !properties.isEmpty();
       case StateMachinePackage.STATE__MACHINE:
         return machine != null;
     }

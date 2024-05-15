@@ -280,16 +280,53 @@ ruleState returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_4='with'
+			otherlv_4='safety'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getStateAccess().getWithKeyword_3_0());
+				newLeafNode(otherlv_4, grammarAccess.getStateAccess().getSafetyKeyword_3_0());
+			}
+			otherlv_5='properties'
+			{
+				newLeafNode(otherlv_5, grammarAccess.getStateAccess().getPropertiesKeyword_3_1());
+			}
+			otherlv_6='{'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_3_2());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getStateAccess().getMachineMachineParserRuleCall_3_1_0());
+						newCompositeNode(grammarAccess.getStateAccess().getPropertiesSafetyPropertyParserRuleCall_3_3_0());
 					}
-					lv_machine_5_0=ruleMachine
+					lv_properties_7_0=ruleSafetyProperty
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getStateRule());
+						}
+						add(
+							$current,
+							"properties",
+							lv_properties_7_0,
+							"dk.sdu.mmmi.assa.sm.StateMachine.SafetyProperty");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)*
+			otherlv_8='}'
+			{
+				newLeafNode(otherlv_8, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_3_4());
+			}
+		)?
+		(
+			otherlv_9='with'
+			{
+				newLeafNode(otherlv_9, grammarAccess.getStateAccess().getWithKeyword_4_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getStateAccess().getMachineMachineParserRuleCall_4_1_0());
+					}
+					lv_machine_10_0=ruleMachine
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getStateRule());
@@ -297,7 +334,7 @@ ruleState returns [EObject current=null]
 						set(
 							$current,
 							"machine",
-							lv_machine_5_0,
+							lv_machine_10_0,
 							"dk.sdu.mmmi.assa.sm.StateMachine.Machine");
 						afterParserOrEnumRuleCall();
 					}
@@ -491,6 +528,98 @@ ruleTransition returns [EObject current=null]
 				)
 			)
 		)?
+	)
+;
+
+// Entry rule entryRuleSafetyProperty
+entryRuleSafetyProperty returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getSafetyPropertyRule()); }
+	iv_ruleSafetyProperty=ruleSafetyProperty
+	{ $current=$iv_ruleSafetyProperty.current; }
+	EOF;
+
+// Rule SafetyProperty
+ruleSafetyProperty returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getSafetyPropertyAccess().getDelayAction_0_0(),
+						$current);
+				}
+			)
+			otherlv_1='startup'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getSafetyPropertyAccess().getStartupKeyword_0_1());
+			}
+			otherlv_2='delay'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getSafetyPropertyAccess().getDelayKeyword_0_2());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getSafetyPropertyAccess().getTimeFloatParserRuleCall_0_3_0());
+					}
+					lv_time_3_0=ruleFloat
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getSafetyPropertyRule());
+						}
+						set(
+							$current,
+							"time",
+							lv_time_3_0,
+							"dk.sdu.mmmi.assa.sm.StateMachine.Float");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)
+		    |
+		(
+			(
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getSafetyPropertyAccess().getMaxExecutionTimeAction_1_0(),
+						$current);
+				}
+			)
+			otherlv_5='max'
+			{
+				newLeafNode(otherlv_5, grammarAccess.getSafetyPropertyAccess().getMaxKeyword_1_1());
+			}
+			otherlv_6='execution'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getSafetyPropertyAccess().getExecutionKeyword_1_2());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getSafetyPropertyAccess().getTimeFloatParserRuleCall_1_3_0());
+					}
+					lv_time_7_0=ruleFloat
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getSafetyPropertyRule());
+						}
+						set(
+							$current,
+							"time",
+							lv_time_7_0,
+							"dk.sdu.mmmi.assa.sm.StateMachine.Float");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)
 	)
 ;
 

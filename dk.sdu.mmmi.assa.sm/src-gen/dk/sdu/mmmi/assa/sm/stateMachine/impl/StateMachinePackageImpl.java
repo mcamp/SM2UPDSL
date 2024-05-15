@@ -3,8 +3,11 @@
  */
 package dk.sdu.mmmi.assa.sm.stateMachine.impl;
 
+import dk.sdu.mmmi.assa.sm.stateMachine.Delay;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
+import dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime;
 import dk.sdu.mmmi.assa.sm.stateMachine.Root;
+import dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachineFactory;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
@@ -52,6 +55,27 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   private EClass transitionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass safetyPropertyEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass delayEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass maxExecutionTimeEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -243,9 +267,20 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EReference getState_Machine()
+  public EReference getState_Properties()
   {
     return (EReference)stateEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getState_Machine()
+  {
+    return (EReference)stateEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -375,6 +410,50 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
+  public EClass getSafetyProperty()
+  {
+    return safetyPropertyEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getSafetyProperty_Time()
+  {
+    return (EAttribute)safetyPropertyEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getDelay()
+  {
+    return delayEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getMaxExecutionTime()
+  {
+    return maxExecutionTimeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public StateMachineFactory getStateMachineFactory()
   {
     return (StateMachineFactory)getEFactoryInstance();
@@ -413,6 +492,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     createEAttribute(stateEClass, STATE__FAIL);
     createEAttribute(stateEClass, STATE__END);
     createEAttribute(stateEClass, STATE__NAME);
+    createEReference(stateEClass, STATE__PROPERTIES);
     createEReference(stateEClass, STATE__MACHINE);
 
     transitionEClass = createEClass(TRANSITION);
@@ -426,6 +506,13 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     createEAttribute(transitionEClass, TRANSITION__TIMEOUT);
     createEAttribute(transitionEClass, TRANSITION__HAS_SIGNAL);
     createEAttribute(transitionEClass, TRANSITION__SIGNAL);
+
+    safetyPropertyEClass = createEClass(SAFETY_PROPERTY);
+    createEAttribute(safetyPropertyEClass, SAFETY_PROPERTY__TIME);
+
+    delayEClass = createEClass(DELAY);
+
+    maxExecutionTimeEClass = createEClass(MAX_EXECUTION_TIME);
   }
 
   /**
@@ -457,6 +544,8 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    delayEClass.getESuperTypes().add(this.getSafetyProperty());
+    maxExecutionTimeEClass.getESuperTypes().add(this.getSafetyProperty());
 
     // Initialize classes and features; add operations and parameters
     initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -472,6 +561,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     initEAttribute(getState_Fail(), ecorePackage.getEBoolean(), "fail", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_End(), ecorePackage.getEBoolean(), "end", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_Name(), ecorePackage.getEString(), "name", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getState_Properties(), this.getSafetyProperty(), null, "properties", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Machine(), this.getMachine(), null, "machine", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -485,6 +575,13 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     initEAttribute(getTransition_Timeout(), ecorePackage.getEFloat(), "timeout", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_HasSignal(), ecorePackage.getEBoolean(), "hasSignal", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_Signal(), ecorePackage.getEString(), "signal", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(safetyPropertyEClass, SafetyProperty.class, "SafetyProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSafetyProperty_Time(), ecorePackage.getEFloat(), "time", null, 0, 1, SafetyProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(delayEClass, Delay.class, "Delay", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(maxExecutionTimeEClass, MaxExecutionTime.class, "MaxExecutionTime", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);
