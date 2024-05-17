@@ -3,6 +3,8 @@
  */
 package dk.sdu.mmmi.assa.sm.stateMachine;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -24,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getTimeout <em>Timeout</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasSignal <em>Has Signal</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getSignal <em>Signal</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getTransition()
@@ -251,5 +254,17 @@ public interface Transition extends EObject
    * @generated
    */
   void setSignal(String value);
+
+  /**
+   * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
+   * The list contents are of type {@link dk.sdu.mmmi.assa.sm.stateMachine.Statement}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Actions</em>' containment reference list.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getTransition_Actions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Statement> getActions();
 
 } // Transition

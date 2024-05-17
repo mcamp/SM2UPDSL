@@ -4,14 +4,20 @@
 package dk.sdu.mmmi.assa.sm.stateMachine.impl;
 
 import dk.sdu.mmmi.assa.sm.stateMachine.Delay;
+import dk.sdu.mmmi.assa.sm.stateMachine.Expression;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime;
 import dk.sdu.mmmi.assa.sm.stateMachine.Root;
+import dk.sdu.mmmi.assa.sm.stateMachine.SMBool;
+import dk.sdu.mmmi.assa.sm.stateMachine.SMNumber;
 import dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachineFactory;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
+import dk.sdu.mmmi.assa.sm.stateMachine.Statement;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
+import dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation;
+import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -68,6 +74,27 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass varDefinitionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass statementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass expressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass delayEClass = null;
 
   /**
@@ -76,6 +103,27 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   private EClass maxExecutionTimeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass varAssignationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass smNumberEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass smBoolEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -201,7 +249,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EReference getMachine_States()
+  public EReference getMachine_Vars()
   {
     return (EReference)machineEClass.getEStructuralFeatures().get(1);
   }
@@ -212,9 +260,20 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EReference getMachine_Transitions()
+  public EReference getMachine_States()
   {
     return (EReference)machineEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMachine_Transitions()
+  {
+    return (EReference)machineEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -410,6 +469,17 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
+  public EReference getTransition_Actions()
+  {
+    return (EReference)transitionEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getSafetyProperty()
   {
     return safetyPropertyEClass;
@@ -432,6 +502,72 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
+  public EClass getVarDefinition()
+  {
+    return varDefinitionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getVarDefinition_Type()
+  {
+    return (EAttribute)varDefinitionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getVarDefinition_Name()
+  {
+    return (EAttribute)varDefinitionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getVarDefinition_Expression()
+  {
+    return (EReference)varDefinitionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getStatement()
+  {
+    return statementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getExpression()
+  {
+    return expressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getDelay()
   {
     return delayEClass;
@@ -446,6 +582,83 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
   public EClass getMaxExecutionTime()
   {
     return maxExecutionTimeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getVarAssignation()
+  {
+    return varAssignationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getVarAssignation_Variable()
+  {
+    return (EReference)varAssignationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getVarAssignation_Expression()
+  {
+    return (EReference)varAssignationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getSMNumber()
+  {
+    return smNumberEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getSMNumber_Value()
+  {
+    return (EAttribute)smNumberEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getSMBool()
+  {
+    return smBoolEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getSMBool_Value()
+  {
+    return (EAttribute)smBoolEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -485,6 +698,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
 
     machineEClass = createEClass(MACHINE);
     createEAttribute(machineEClass, MACHINE__NAME);
+    createEReference(machineEClass, MACHINE__VARS);
     createEReference(machineEClass, MACHINE__STATES);
     createEReference(machineEClass, MACHINE__TRANSITIONS);
 
@@ -506,13 +720,33 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     createEAttribute(transitionEClass, TRANSITION__TIMEOUT);
     createEAttribute(transitionEClass, TRANSITION__HAS_SIGNAL);
     createEAttribute(transitionEClass, TRANSITION__SIGNAL);
+    createEReference(transitionEClass, TRANSITION__ACTIONS);
 
     safetyPropertyEClass = createEClass(SAFETY_PROPERTY);
     createEAttribute(safetyPropertyEClass, SAFETY_PROPERTY__TIME);
 
+    varDefinitionEClass = createEClass(VAR_DEFINITION);
+    createEAttribute(varDefinitionEClass, VAR_DEFINITION__TYPE);
+    createEAttribute(varDefinitionEClass, VAR_DEFINITION__NAME);
+    createEReference(varDefinitionEClass, VAR_DEFINITION__EXPRESSION);
+
+    statementEClass = createEClass(STATEMENT);
+
+    expressionEClass = createEClass(EXPRESSION);
+
     delayEClass = createEClass(DELAY);
 
     maxExecutionTimeEClass = createEClass(MAX_EXECUTION_TIME);
+
+    varAssignationEClass = createEClass(VAR_ASSIGNATION);
+    createEReference(varAssignationEClass, VAR_ASSIGNATION__VARIABLE);
+    createEReference(varAssignationEClass, VAR_ASSIGNATION__EXPRESSION);
+
+    smNumberEClass = createEClass(SM_NUMBER);
+    createEAttribute(smNumberEClass, SM_NUMBER__VALUE);
+
+    smBoolEClass = createEClass(SM_BOOL);
+    createEAttribute(smBoolEClass, SM_BOOL__VALUE);
   }
 
   /**
@@ -546,6 +780,9 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     // Add supertypes to classes
     delayEClass.getESuperTypes().add(this.getSafetyProperty());
     maxExecutionTimeEClass.getESuperTypes().add(this.getSafetyProperty());
+    varAssignationEClass.getESuperTypes().add(this.getStatement());
+    smNumberEClass.getESuperTypes().add(this.getExpression());
+    smBoolEClass.getESuperTypes().add(this.getExpression());
 
     // Initialize classes and features; add operations and parameters
     initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -554,6 +791,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
 
     initEClass(machineEClass, Machine.class, "Machine", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getMachine_Name(), ecorePackage.getEString(), "name", null, 0, 1, Machine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMachine_Vars(), this.getVarDefinition(), null, "vars", null, 0, -1, Machine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMachine_States(), this.getState(), null, "states", null, 0, -1, Machine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMachine_Transitions(), this.getTransition(), null, "transitions", null, 0, -1, Machine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -575,13 +813,33 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     initEAttribute(getTransition_Timeout(), ecorePackage.getEFloat(), "timeout", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_HasSignal(), ecorePackage.getEBoolean(), "hasSignal", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_Signal(), ecorePackage.getEString(), "signal", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTransition_Actions(), this.getStatement(), null, "actions", null, 0, -1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(safetyPropertyEClass, SafetyProperty.class, "SafetyProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSafetyProperty_Time(), ecorePackage.getEFloat(), "time", null, 0, 1, SafetyProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(varDefinitionEClass, VarDefinition.class, "VarDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getVarDefinition_Type(), ecorePackage.getEString(), "type", null, 0, 1, VarDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVarDefinition_Name(), ecorePackage.getEString(), "name", null, 0, 1, VarDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVarDefinition_Expression(), this.getExpression(), null, "expression", null, 0, 1, VarDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
     initEClass(delayEClass, Delay.class, "Delay", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(maxExecutionTimeEClass, MaxExecutionTime.class, "MaxExecutionTime", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(varAssignationEClass, VarAssignation.class, "VarAssignation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVarAssignation_Variable(), this.getVarDefinition(), null, "variable", null, 0, 1, VarAssignation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVarAssignation_Expression(), this.getExpression(), null, "expression", null, 0, 1, VarAssignation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(smNumberEClass, SMNumber.class, "SMNumber", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSMNumber_Value(), ecorePackage.getEInt(), "value", null, 0, 1, SMNumber.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(smBoolEClass, SMBool.class, "SMBool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSMBool_Value(), ecorePackage.getEBoolean(), "value", null, 0, 1, SMBool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

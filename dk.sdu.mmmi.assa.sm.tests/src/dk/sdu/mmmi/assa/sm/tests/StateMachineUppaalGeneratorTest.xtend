@@ -752,4 +752,38 @@ class StateMachineUppaalGeneratorTest {
 			'''
 		)
 	}
+	
+	@Test
+	def void machineWithVariables() {
+		'''
+		project test
+		machine test {
+			bool test_var := false
+			state one
+			state two
+			one -> two actions {
+				test_var := true
+			}
+			one -> two actions {
+				test_var := false
+			}
+		}
+		'''.assertUppaal('''
+		process test {
+			bool test_var := 0;
+			state
+				one,
+				two;
+			init one;
+			trans
+				one -> two {
+					assign test_var := 1;
+				},
+				one -> two {
+					assign test_var := 0;
+				};
+		}
+		system test;
+		''')
+	}
 }

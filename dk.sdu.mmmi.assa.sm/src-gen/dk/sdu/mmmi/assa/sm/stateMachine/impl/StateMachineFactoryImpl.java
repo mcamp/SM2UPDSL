@@ -70,8 +70,14 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
       case StateMachinePackage.STATE: return createState();
       case StateMachinePackage.TRANSITION: return createTransition();
       case StateMachinePackage.SAFETY_PROPERTY: return createSafetyProperty();
+      case StateMachinePackage.VAR_DEFINITION: return createVarDefinition();
+      case StateMachinePackage.STATEMENT: return createStatement();
+      case StateMachinePackage.EXPRESSION: return createExpression();
       case StateMachinePackage.DELAY: return createDelay();
       case StateMachinePackage.MAX_EXECUTION_TIME: return createMaxExecutionTime();
+      case StateMachinePackage.VAR_ASSIGNATION: return createVarAssignation();
+      case StateMachinePackage.SM_NUMBER: return createSMNumber();
+      case StateMachinePackage.SM_BOOL: return createSMBool();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -143,6 +149,42 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
    * @generated
    */
   @Override
+  public VarDefinition createVarDefinition()
+  {
+    VarDefinitionImpl varDefinition = new VarDefinitionImpl();
+    return varDefinition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Statement createStatement()
+  {
+    StatementImpl statement = new StatementImpl();
+    return statement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Expression createExpression()
+  {
+    ExpressionImpl expression = new ExpressionImpl();
+    return expression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Delay createDelay()
   {
     DelayImpl delay = new DelayImpl();
@@ -159,6 +201,42 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
   {
     MaxExecutionTimeImpl maxExecutionTime = new MaxExecutionTimeImpl();
     return maxExecutionTime;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public VarAssignation createVarAssignation()
+  {
+    VarAssignationImpl varAssignation = new VarAssignationImpl();
+    return varAssignation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public SMNumber createSMNumber()
+  {
+    SMNumberImpl smNumber = new SMNumberImpl();
+    return smNumber;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public SMBool createSMBool()
+  {
+    SMBoolImpl smBool = new SMBoolImpl();
+    return smBool;
   }
 
   /**

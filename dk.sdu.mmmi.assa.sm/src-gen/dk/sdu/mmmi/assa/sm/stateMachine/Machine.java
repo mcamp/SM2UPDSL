@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Machine#getName <em>Name</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Machine#getVars <em>Vars</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Machine#getStates <em>States</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Machine#getTransitions <em>Transitions</em>}</li>
  * </ul>
@@ -48,6 +49,18 @@ public interface Machine extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Vars</b></em>' containment reference list.
+   * The list contents are of type {@link dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Vars</em>' containment reference list.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getMachine_Vars()
+   * @model containment="true"
+   * @generated
+   */
+  EList<VarDefinition> getVars();
 
   /**
    * Returns the value of the '<em><b>States</b></em>' containment reference list.

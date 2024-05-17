@@ -114,13 +114,22 @@ public interface StateMachinePackage extends EPackage
   int MACHINE__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Vars</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MACHINE__VARS = 1;
+
+  /**
    * The feature id for the '<em><b>States</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MACHINE__STATES = 1;
+  int MACHINE__STATES = 2;
 
   /**
    * The feature id for the '<em><b>Transitions</b></em>' containment reference list.
@@ -129,7 +138,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int MACHINE__TRANSITIONS = 2;
+  int MACHINE__TRANSITIONS = 3;
 
   /**
    * The number of structural features of the '<em>Machine</em>' class.
@@ -138,7 +147,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int MACHINE_FEATURE_COUNT = 3;
+  int MACHINE_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl <em>State</em>}' class.
@@ -305,13 +314,22 @@ public interface StateMachinePackage extends EPackage
   int TRANSITION__SIGNAL = 9;
 
   /**
+   * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRANSITION__ACTIONS = 10;
+
+  /**
    * The number of structural features of the '<em>Transition</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TRANSITION_FEATURE_COUNT = 10;
+  int TRANSITION_FEATURE_COUNT = 11;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SafetyPropertyImpl <em>Safety Property</em>}' class.
@@ -342,6 +360,90 @@ public interface StateMachinePackage extends EPackage
   int SAFETY_PROPERTY_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.VarDefinitionImpl <em>Var Definition</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.VarDefinitionImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getVarDefinition()
+   * @generated
+   */
+  int VAR_DEFINITION = 5;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_DEFINITION__TYPE = 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_DEFINITION__NAME = 1;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_DEFINITION__EXPRESSION = 2;
+
+  /**
+   * The number of structural features of the '<em>Var Definition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_DEFINITION_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StatementImpl <em>Statement</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StatementImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getStatement()
+   * @generated
+   */
+  int STATEMENT = 6;
+
+  /**
+   * The number of structural features of the '<em>Statement</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.ExpressionImpl <em>Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.ExpressionImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getExpression()
+   * @generated
+   */
+  int EXPRESSION = 7;
+
+  /**
+   * The number of structural features of the '<em>Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPRESSION_FEATURE_COUNT = 0;
+
+  /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.DelayImpl <em>Delay</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -349,7 +451,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getDelay()
    * @generated
    */
-  int DELAY = 5;
+  int DELAY = 8;
 
   /**
    * The feature id for the '<em><b>Time</b></em>' attribute.
@@ -377,7 +479,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getMaxExecutionTime()
    * @generated
    */
-  int MAX_EXECUTION_TIME = 6;
+  int MAX_EXECUTION_TIME = 9;
 
   /**
    * The feature id for the '<em><b>Time</b></em>' attribute.
@@ -396,6 +498,99 @@ public interface StateMachinePackage extends EPackage
    * @ordered
    */
   int MAX_EXECUTION_TIME_FEATURE_COUNT = SAFETY_PROPERTY_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.VarAssignationImpl <em>Var Assignation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.VarAssignationImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getVarAssignation()
+   * @generated
+   */
+  int VAR_ASSIGNATION = 10;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_ASSIGNATION__VARIABLE = STATEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_ASSIGNATION__EXPRESSION = STATEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Var Assignation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_ASSIGNATION_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SMNumberImpl <em>SM Number</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.SMNumberImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSMNumber()
+   * @generated
+   */
+  int SM_NUMBER = 11;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SM_NUMBER__VALUE = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>SM Number</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SM_NUMBER_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SMBoolImpl <em>SM Bool</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.SMBoolImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSMBool()
+   * @generated
+   */
+  int SM_BOOL = 12;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SM_BOOL__VALUE = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>SM Bool</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SM_BOOL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
 
   /**
@@ -450,6 +645,17 @@ public interface StateMachinePackage extends EPackage
    * @generated
    */
   EAttribute getMachine_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link dk.sdu.mmmi.assa.sm.stateMachine.Machine#getVars <em>Vars</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Vars</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Machine#getVars()
+   * @see #getMachine()
+   * @generated
+   */
+  EReference getMachine_Vars();
 
   /**
    * Returns the meta object for the containment reference list '{@link dk.sdu.mmmi.assa.sm.stateMachine.Machine#getStates <em>States</em>}'.
@@ -659,6 +865,17 @@ public interface StateMachinePackage extends EPackage
   EAttribute getTransition_Signal();
 
   /**
+   * Returns the meta object for the containment reference list '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getActions <em>Actions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Actions</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Transition#getActions()
+   * @see #getTransition()
+   * @generated
+   */
+  EReference getTransition_Actions();
+
+  /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty <em>Safety Property</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -680,6 +897,69 @@ public interface StateMachinePackage extends EPackage
   EAttribute getSafetyProperty_Time();
 
   /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition <em>Var Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Var Definition</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition
+   * @generated
+   */
+  EClass getVarDefinition();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition#getType()
+   * @see #getVarDefinition()
+   * @generated
+   */
+  EAttribute getVarDefinition_Type();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition#getName()
+   * @see #getVarDefinition()
+   * @generated
+   */
+  EAttribute getVarDefinition_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition#getExpression()
+   * @see #getVarDefinition()
+   * @generated
+   */
+  EReference getVarDefinition_Expression();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Statement <em>Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Statement</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Statement
+   * @generated
+   */
+  EClass getStatement();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Expression</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Expression
+   * @generated
+   */
+  EClass getExpression();
+
+  /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Delay <em>Delay</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -698,6 +978,80 @@ public interface StateMachinePackage extends EPackage
    * @generated
    */
   EClass getMaxExecutionTime();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation <em>Var Assignation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Var Assignation</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation
+   * @generated
+   */
+  EClass getVarAssignation();
+
+  /**
+   * Returns the meta object for the reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation#getVariable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Variable</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation#getVariable()
+   * @see #getVarAssignation()
+   * @generated
+   */
+  EReference getVarAssignation_Variable();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation#getExpression()
+   * @see #getVarAssignation()
+   * @generated
+   */
+  EReference getVarAssignation_Expression();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.SMNumber <em>SM Number</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>SM Number</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.SMNumber
+   * @generated
+   */
+  EClass getSMNumber();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.SMNumber#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.SMNumber#getValue()
+   * @see #getSMNumber()
+   * @generated
+   */
+  EAttribute getSMNumber_Value();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.SMBool <em>SM Bool</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>SM Bool</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.SMBool
+   * @generated
+   */
+  EClass getSMBool();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.SMBool#isValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.SMBool#isValue()
+   * @see #getSMBool()
+   * @generated
+   */
+  EAttribute getSMBool_Value();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -765,6 +1119,14 @@ public interface StateMachinePackage extends EPackage
      * @generated
      */
     EAttribute MACHINE__NAME = eINSTANCE.getMachine_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Vars</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MACHINE__VARS = eINSTANCE.getMachine_Vars();
 
     /**
      * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
@@ -923,6 +1285,14 @@ public interface StateMachinePackage extends EPackage
     EAttribute TRANSITION__SIGNAL = eINSTANCE.getTransition_Signal();
 
     /**
+     * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TRANSITION__ACTIONS = eINSTANCE.getTransition_Actions();
+
+    /**
      * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SafetyPropertyImpl <em>Safety Property</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -939,6 +1309,60 @@ public interface StateMachinePackage extends EPackage
      * @generated
      */
     EAttribute SAFETY_PROPERTY__TIME = eINSTANCE.getSafetyProperty_Time();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.VarDefinitionImpl <em>Var Definition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.VarDefinitionImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getVarDefinition()
+     * @generated
+     */
+    EClass VAR_DEFINITION = eINSTANCE.getVarDefinition();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VAR_DEFINITION__TYPE = eINSTANCE.getVarDefinition_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VAR_DEFINITION__NAME = eINSTANCE.getVarDefinition_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VAR_DEFINITION__EXPRESSION = eINSTANCE.getVarDefinition_Expression();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StatementImpl <em>Statement</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StatementImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getStatement()
+     * @generated
+     */
+    EClass STATEMENT = eINSTANCE.getStatement();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.ExpressionImpl <em>Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.ExpressionImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getExpression()
+     * @generated
+     */
+    EClass EXPRESSION = eINSTANCE.getExpression();
 
     /**
      * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.DelayImpl <em>Delay</em>}' class.
@@ -959,6 +1383,68 @@ public interface StateMachinePackage extends EPackage
      * @generated
      */
     EClass MAX_EXECUTION_TIME = eINSTANCE.getMaxExecutionTime();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.VarAssignationImpl <em>Var Assignation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.VarAssignationImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getVarAssignation()
+     * @generated
+     */
+    EClass VAR_ASSIGNATION = eINSTANCE.getVarAssignation();
+
+    /**
+     * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VAR_ASSIGNATION__VARIABLE = eINSTANCE.getVarAssignation_Variable();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VAR_ASSIGNATION__EXPRESSION = eINSTANCE.getVarAssignation_Expression();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SMNumberImpl <em>SM Number</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.SMNumberImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSMNumber()
+     * @generated
+     */
+    EClass SM_NUMBER = eINSTANCE.getSMNumber();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SM_NUMBER__VALUE = eINSTANCE.getSMNumber_Value();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SMBoolImpl <em>SM Bool</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.SMBoolImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSMBool()
+     * @generated
+     */
+    EClass SM_BOOL = eINSTANCE.getSMBool();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SM_BOOL__VALUE = eINSTANCE.getSMBool_Value();
 
   }
 

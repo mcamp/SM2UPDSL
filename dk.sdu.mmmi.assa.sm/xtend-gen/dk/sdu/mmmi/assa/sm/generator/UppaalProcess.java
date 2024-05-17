@@ -6,6 +6,7 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Delay;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
+import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.EcoreUtil2;
@@ -20,11 +21,14 @@ public class UppaalProcess {
   
   public final List<UppaalState> states = CollectionLiterals.<UppaalState>newArrayList();
   
-  public List<UppaalTransition> transitions = CollectionLiterals.<UppaalTransition>newArrayList();
+  public final List<UppaalTransition> transitions = CollectionLiterals.<UppaalTransition>newArrayList();
   
   public final List<UppaalState> firstGeneratedStates = CollectionLiterals.<UppaalState>newArrayList();
   
+  public Machine originalMachine;
+  
   public UppaalProcess(final Machine machine) {
+    this.originalMachine = machine;
     this.name = this.processName(machine);
     boolean _isNested = this.isNested(machine);
     if (_isNested) {
@@ -71,6 +75,13 @@ public class UppaalProcess {
     tx.sync = _plus_1;
     process.transitions.add(tx);
     return process;
+  }
+  
+  public List<VarDefinition> vars() {
+    if ((this.originalMachine == null)) {
+      return CollectionLiterals.<VarDefinition>newArrayList();
+    }
+    return this.originalMachine.getVars();
   }
   
   private boolean genInitNestedMachine(final Machine machine) {

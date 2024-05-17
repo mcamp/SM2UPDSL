@@ -7,6 +7,7 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
+import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition;
 
 import java.util.Collection;
 
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl#getName <em>Name</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl#getVars <em>Vars</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl#getStates <em>States</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl#getTransitions <em>Transitions</em>}</li>
  * </ul>
@@ -60,6 +62,16 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getVars() <em>Vars</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVars()
+   * @generated
+   * @ordered
+   */
+  protected EList<VarDefinition> vars;
 
   /**
    * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
@@ -133,6 +145,21 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
    * @generated
    */
   @Override
+  public EList<VarDefinition> getVars()
+  {
+    if (vars == null)
+    {
+      vars = new EObjectContainmentEList<VarDefinition>(VarDefinition.class, this, StateMachinePackage.MACHINE__VARS);
+    }
+    return vars;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<State> getStates()
   {
     if (states == null)
@@ -167,6 +194,8 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
   {
     switch (featureID)
     {
+      case StateMachinePackage.MACHINE__VARS:
+        return ((InternalEList<?>)getVars()).basicRemove(otherEnd, msgs);
       case StateMachinePackage.MACHINE__STATES:
         return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
       case StateMachinePackage.MACHINE__TRANSITIONS:
@@ -187,6 +216,8 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
     {
       case StateMachinePackage.MACHINE__NAME:
         return getName();
+      case StateMachinePackage.MACHINE__VARS:
+        return getVars();
       case StateMachinePackage.MACHINE__STATES:
         return getStates();
       case StateMachinePackage.MACHINE__TRANSITIONS:
@@ -208,6 +239,10 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
     {
       case StateMachinePackage.MACHINE__NAME:
         setName((String)newValue);
+        return;
+      case StateMachinePackage.MACHINE__VARS:
+        getVars().clear();
+        getVars().addAll((Collection<? extends VarDefinition>)newValue);
         return;
       case StateMachinePackage.MACHINE__STATES:
         getStates().clear();
@@ -234,6 +269,9 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
       case StateMachinePackage.MACHINE__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case StateMachinePackage.MACHINE__VARS:
+        getVars().clear();
+        return;
       case StateMachinePackage.MACHINE__STATES:
         getStates().clear();
         return;
@@ -256,6 +294,8 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
     {
       case StateMachinePackage.MACHINE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case StateMachinePackage.MACHINE__VARS:
+        return vars != null && !vars.isEmpty();
       case StateMachinePackage.MACHINE__STATES:
         return states != null && !states.isEmpty();
       case StateMachinePackage.MACHINE__TRANSITIONS:

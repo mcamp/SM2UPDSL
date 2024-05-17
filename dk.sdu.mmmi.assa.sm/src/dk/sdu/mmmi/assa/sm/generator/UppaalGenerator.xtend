@@ -1,10 +1,16 @@
 package dk.sdu.mmmi.assa.sm.generator
 
 import dk.sdu.mmmi.assa.sm.stateMachine.Delay
+import dk.sdu.mmmi.assa.sm.stateMachine.Expression
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine
 import dk.sdu.mmmi.assa.sm.stateMachine.Root
+import dk.sdu.mmmi.assa.sm.stateMachine.SMBool
+import dk.sdu.mmmi.assa.sm.stateMachine.SMNumber
 import dk.sdu.mmmi.assa.sm.stateMachine.State
+import dk.sdu.mmmi.assa.sm.stateMachine.Statement
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition
+import dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation
+import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition
 import dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl
 import dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl
 import java.util.List
@@ -64,6 +70,9 @@ class UppaalGenerator {
 	
 	def dispatch compile(UppaalProcess process)'''
 	process «process.name» {
+		«FOR variable: process.vars»
+		«variable.type» «variable.name» := «variable.expression.compileExpression»;
+		«ENDFOR»
 		«IF !process.states.isEmpty»
 		state
 			«FOR state:process.states SEPARATOR ",\n" AFTER ';'»«state.name»«state.compileBody»«ENDFOR»
@@ -80,6 +89,13 @@ class UppaalGenerator {
 		«ENDIF»		
 	}
 	'''
+	
+	def compileExpression(Expression expression) {
+		switch expression {
+			SMNumber: expression.value
+			SMBool: expression.value ? 1 : 0
+		}
+	}
 	
 	/*
 	 * Notes:
@@ -149,7 +165,17 @@ class UppaalGenerator {
 	«IF transition.isTime»
 	assign gen_clock := 0;
 	«ENDIF»
+	«FOR action: transition.actions»
+	«action.compileAction»
+	«ENDFOR»
 	'''
+	
+	def compileAction(Statement statement) {
+		switch statement {
+			VarAssignation: '''assign «statement.variable.name» := «statement.expression.compileExpression»;'''	
+		}
+		
+	}
 	
 	def CharSequence toClockString(float seconds) {
 		val clock = seconds
@@ -243,11 +269,12 @@ class AuxiliarState extends StateImpl {
 class UppaalProcess {
 	var public String name
 	val public List<UppaalState> states = newArrayList
-	var public List<UppaalTransition> transitions = newArrayList
+	val public List<UppaalTransition> transitions = newArrayList
 	val public List<UppaalState> firstGeneratedStates = newArrayList
+	var public Machine originalMachine
 	
 	new(Machine machine) {
-		
+		this.originalMachine = machine
 		this.name = machine.processName
 		
 		// If machine is nested, it has an aux init state and an extra transition (if it has states)
@@ -304,6 +331,11 @@ class UppaalProcess {
 		process.transitions.add(tx)
 		
 		return process
+	}
+	
+	def List<VarDefinition> vars() {
+		if(originalMachine === null) return newArrayList
+		return originalMachine.vars
 	}
 	
 	def private genInitNestedMachine(Machine machine) {
@@ -553,6 +585,11 @@ class UppaalTransition {
 	
 	def guard() {
 		return originalTx.guard
+	}
+	
+	def actions() {
+		if(originalTx===null) return newArrayList
+		return originalTx.actions
 	}
 }
 

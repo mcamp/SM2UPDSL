@@ -69,6 +69,33 @@ public interface StateMachineFactory extends EFactory
   SafetyProperty createSafetyProperty();
 
   /**
+   * Returns a new object of class '<em>Var Definition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Var Definition</em>'.
+   * @generated
+   */
+  VarDefinition createVarDefinition();
+
+  /**
+   * Returns a new object of class '<em>Statement</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Statement</em>'.
+   * @generated
+   */
+  Statement createStatement();
+
+  /**
+   * Returns a new object of class '<em>Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expression</em>'.
+   * @generated
+   */
+  Expression createExpression();
+
+  /**
    * Returns a new object of class '<em>Delay</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -85,6 +112,33 @@ public interface StateMachineFactory extends EFactory
    * @generated
    */
   MaxExecutionTime createMaxExecutionTime();
+
+  /**
+   * Returns a new object of class '<em>Var Assignation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Var Assignation</em>'.
+   * @generated
+   */
+  VarAssignation createVarAssignation();
+
+  /**
+   * Returns a new object of class '<em>SM Number</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>SM Number</em>'.
+   * @generated
+   */
+  SMNumber createSMNumber();
+
+  /**
+   * Returns a new object of class '<em>SM Bool</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>SM Bool</em>'.
+   * @generated
+   */
+  SMBool createSMBool();
 
   /**
    * Returns the package supported by this factory.

@@ -108,6 +108,27 @@ public class StateMachineSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case StateMachinePackage.VAR_DEFINITION:
+      {
+        VarDefinition varDefinition = (VarDefinition)theEObject;
+        T result = caseVarDefinition(varDefinition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case StateMachinePackage.STATEMENT:
+      {
+        Statement statement = (Statement)theEObject;
+        T result = caseStatement(statement);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case StateMachinePackage.EXPRESSION:
+      {
+        Expression expression = (Expression)theEObject;
+        T result = caseExpression(expression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case StateMachinePackage.DELAY:
       {
         Delay delay = (Delay)theEObject;
@@ -121,6 +142,30 @@ public class StateMachineSwitch<T> extends Switch<T>
         MaxExecutionTime maxExecutionTime = (MaxExecutionTime)theEObject;
         T result = caseMaxExecutionTime(maxExecutionTime);
         if (result == null) result = caseSafetyProperty(maxExecutionTime);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case StateMachinePackage.VAR_ASSIGNATION:
+      {
+        VarAssignation varAssignation = (VarAssignation)theEObject;
+        T result = caseVarAssignation(varAssignation);
+        if (result == null) result = caseStatement(varAssignation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case StateMachinePackage.SM_NUMBER:
+      {
+        SMNumber smNumber = (SMNumber)theEObject;
+        T result = caseSMNumber(smNumber);
+        if (result == null) result = caseExpression(smNumber);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case StateMachinePackage.SM_BOOL:
+      {
+        SMBool smBool = (SMBool)theEObject;
+        T result = caseSMBool(smBool);
+        if (result == null) result = caseExpression(smBool);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -209,6 +254,54 @@ public class StateMachineSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Var Definition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Var Definition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVarDefinition(VarDefinition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Statement</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Statement</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStatement(Statement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExpression(Expression object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Delay</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -236,6 +329,54 @@ public class StateMachineSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseMaxExecutionTime(MaxExecutionTime object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Var Assignation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Var Assignation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVarAssignation(VarAssignation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>SM Number</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>SM Number</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSMNumber(SMNumber object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>SM Bool</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>SM Bool</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSMBool(SMBool object)
   {
     return null;
   }

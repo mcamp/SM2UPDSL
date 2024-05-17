@@ -1,6 +1,9 @@
 package dk.sdu.mmmi.assa.sm.generator;
 
+import dk.sdu.mmmi.assa.sm.stateMachine.Statement;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
+import java.util.List;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
@@ -60,5 +63,12 @@ public class UppaalTransition {
   
   public boolean guard() {
     return this.originalTx.isGuard();
+  }
+  
+  public List<Statement> actions() {
+    if ((this.originalTx == null)) {
+      return CollectionLiterals.<Statement>newArrayList();
+    }
+    return this.originalTx.getActions();
   }
 }

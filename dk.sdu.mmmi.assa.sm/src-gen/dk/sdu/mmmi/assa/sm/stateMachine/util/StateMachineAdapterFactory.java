@@ -101,6 +101,21 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
         return createSafetyPropertyAdapter();
       }
       @Override
+      public Adapter caseVarDefinition(VarDefinition object)
+      {
+        return createVarDefinitionAdapter();
+      }
+      @Override
+      public Adapter caseStatement(Statement object)
+      {
+        return createStatementAdapter();
+      }
+      @Override
+      public Adapter caseExpression(Expression object)
+      {
+        return createExpressionAdapter();
+      }
+      @Override
       public Adapter caseDelay(Delay object)
       {
         return createDelayAdapter();
@@ -109,6 +124,21 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
       public Adapter caseMaxExecutionTime(MaxExecutionTime object)
       {
         return createMaxExecutionTimeAdapter();
+      }
+      @Override
+      public Adapter caseVarAssignation(VarAssignation object)
+      {
+        return createVarAssignationAdapter();
+      }
+      @Override
+      public Adapter caseSMNumber(SMNumber object)
+      {
+        return createSMNumberAdapter();
+      }
+      @Override
+      public Adapter caseSMBool(SMBool object)
+      {
+        return createSMBoolAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -208,6 +238,51 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition <em>Var Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition
+   * @generated
+   */
+  public Adapter createVarDefinitionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Statement <em>Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Statement
+   * @generated
+   */
+  public Adapter createStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Expression
+   * @generated
+   */
+  public Adapter createExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Delay <em>Delay</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -233,6 +308,51 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMaxExecutionTimeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation <em>Var Assignation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation
+   * @generated
+   */
+  public Adapter createVarAssignationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.SMNumber <em>SM Number</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.SMNumber
+   * @generated
+   */
+  public Adapter createSMNumberAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.SMBool <em>SM Bool</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.SMBool
+   * @generated
+   */
+  public Adapter createSMBoolAdapter()
   {
     return null;
   }

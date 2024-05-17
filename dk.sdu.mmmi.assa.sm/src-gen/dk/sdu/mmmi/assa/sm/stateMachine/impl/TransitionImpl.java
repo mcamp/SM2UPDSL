@@ -5,15 +5,24 @@ package dk.sdu.mmmi.assa.sm.stateMachine.impl;
 
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
+import dk.sdu.mmmi.assa.sm.stateMachine.Statement;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,6 +42,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getTimeout <em>Timeout</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#isHasSignal <em>Has Signal</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getSignal <em>Signal</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @generated
@@ -218,6 +228,16 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
    * @ordered
    */
   protected String signal = SIGNAL_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getActions()
+   * @generated
+   * @ordered
+   */
+  protected EList<Statement> actions;
 
   /**
    * <!-- begin-user-doc -->
@@ -536,6 +556,37 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
    * @generated
    */
   @Override
+  public EList<Statement> getActions()
+  {
+    if (actions == null)
+    {
+      actions = new EObjectContainmentEList<Statement>(Statement.class, this, StateMachinePackage.TRANSITION__ACTIONS);
+    }
+    return actions;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case StateMachinePackage.TRANSITION__ACTIONS:
+        return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -562,6 +613,8 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
         return isHasSignal();
       case StateMachinePackage.TRANSITION__SIGNAL:
         return getSignal();
+      case StateMachinePackage.TRANSITION__ACTIONS:
+        return getActions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -571,6 +624,7 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -605,6 +659,10 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
         return;
       case StateMachinePackage.TRANSITION__SIGNAL:
         setSignal((String)newValue);
+        return;
+      case StateMachinePackage.TRANSITION__ACTIONS:
+        getActions().clear();
+        getActions().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -650,6 +708,9 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
       case StateMachinePackage.TRANSITION__SIGNAL:
         setSignal(SIGNAL_EDEFAULT);
         return;
+      case StateMachinePackage.TRANSITION__ACTIONS:
+        getActions().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -684,6 +745,8 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
         return hasSignal != HAS_SIGNAL_EDEFAULT;
       case StateMachinePackage.TRANSITION__SIGNAL:
         return SIGNAL_EDEFAULT == null ? signal != null : !SIGNAL_EDEFAULT.equals(signal);
+      case StateMachinePackage.TRANSITION__ACTIONS:
+        return actions != null && !actions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

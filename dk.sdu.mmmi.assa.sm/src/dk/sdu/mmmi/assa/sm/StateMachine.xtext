@@ -11,7 +11,7 @@ Root:
 	)?;
 	
 Machine:
-	'machine' name=ID '{' (states+=State | transitions+=Transition)* '}';
+	'machine' name=ID '{' (vars+=VarDefinition | states+=State | transitions+=Transition)* '}';
 	
 State:
 	(fail?='fail' | end?='end')? 'state' name=ID ('safety' 'properties' '{' properties+=SafetyProperty* '}')? ('with' machine=Machine)?
@@ -23,12 +23,29 @@ Transition:
 		(hasWhen?='when' when=ID)?
 		(time?='after' timeout=Float)?
 		(hasSignal?='signal' signal=ID)?
+		('actions' '{' actions+=Statement* '}')?
 ;
 
 SafetyProperty: 
 	{Delay} 'startup' 'delay' time=Float |
 	{MaxExecutionTime} 'max' 'execution' time=Float
+
 ;
+
+VarDefinition: 
+	type=Type name=ID ':=' expression=Expression
+;
+
+Statement:
+	{VarAssignation} variable=[VarDefinition] ':=' expression=Expression
+;
+
+Expression:
+	{SMNumber} value=INT |
+	{SMBool} value=Boolean
+;
+
+Type: 'bool';
 
 Float returns ecore::EFloat: INT ('.' INT)?;
 Boolean returns ecore::EBoolean: 'true' | 'false';
