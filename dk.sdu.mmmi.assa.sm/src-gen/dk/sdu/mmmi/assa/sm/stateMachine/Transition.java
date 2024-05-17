@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getFrom <em>From</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getTo <em>To</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasGuard <em>Has Guard</em>}</li>
- *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isGuard <em>Guard</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getGuard <em>Guard</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasWhen <em>Has When</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getWhen <em>When</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isTime <em>Time</em>}</li>
@@ -102,26 +102,26 @@ public interface Transition extends EObject
   void setHasGuard(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Guard</b></em>' attribute.
+   * Returns the value of the '<em><b>Guard</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Guard</em>' attribute.
-   * @see #setGuard(boolean)
+   * @return the value of the '<em>Guard</em>' containment reference.
+   * @see #setGuard(Expression)
    * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getTransition_Guard()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  boolean isGuard();
+  Expression getGuard();
 
   /**
-   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isGuard <em>Guard</em>}' attribute.
+   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getGuard <em>Guard</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Guard</em>' attribute.
-   * @see #isGuard()
+   * @param value the new value of the '<em>Guard</em>' containment reference.
+   * @see #getGuard()
    * @generated
    */
-  void setGuard(boolean value);
+  void setGuard(Expression value);
 
   /**
    * Returns the value of the '<em><b>Has When</b></em>' attribute.

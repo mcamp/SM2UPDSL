@@ -222,7 +222,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final Assignment cHasGuardAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
 		private final Keyword cHasGuardGuardKeyword_3_0_0 = (Keyword)cHasGuardAssignment_3_0.eContents().get(0);
 		private final Assignment cGuardAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cGuardBooleanParserRuleCall_3_1_0 = (RuleCall)cGuardAssignment_3_1.eContents().get(0);
+		private final RuleCall cGuardExpressionParserRuleCall_3_1_0 = (RuleCall)cGuardAssignment_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Assignment cHasWhenAssignment_4_0 = (Assignment)cGroup_4.eContents().get(0);
 		private final Keyword cHasWhenWhenKeyword_4_0_0 = (Keyword)cHasWhenAssignment_4_0.eContents().get(0);
@@ -247,7 +247,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		
 		//Transition:
 		//    from=[State] '->' to=[State]
-		//        (hasGuard?='guard' guard=Boolean)?
+		//        (hasGuard?='guard' guard=Expression)?
 		//        (hasWhen?='when' when=ID)?
 		//        (time?='after' timeout=Float)?
 		//        (hasSignal?='signal' signal=ID)?
@@ -256,7 +256,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		@Override public ParserRule getRule() { return rule; }
 		
 		//from=[State] '->' to=[State]
-		//    (hasGuard?='guard' guard=Boolean)?
+		//    (hasGuard?='guard' guard=Expression)?
 		//    (hasWhen?='when' when=ID)?
 		//    (time?='after' timeout=Float)?
 		//    (hasSignal?='signal' signal=ID)?
@@ -284,7 +284,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		//ID
 		public RuleCall getToStateIDTerminalRuleCall_2_0_1() { return cToStateIDTerminalRuleCall_2_0_1; }
 		
-		//(hasGuard?='guard' guard=Boolean)?
+		//(hasGuard?='guard' guard=Expression)?
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//hasGuard?='guard'
@@ -293,11 +293,11 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		//'guard'
 		public Keyword getHasGuardGuardKeyword_3_0_0() { return cHasGuardGuardKeyword_3_0_0; }
 		
-		//guard=Boolean
+		//guard=Expression
 		public Assignment getGuardAssignment_3_1() { return cGuardAssignment_3_1; }
 		
-		//Boolean
-		public RuleCall getGuardBooleanParserRuleCall_3_1_0() { return cGuardBooleanParserRuleCall_3_1_0; }
+		//Expression
+		public RuleCall getGuardExpressionParserRuleCall_3_1_0() { return cGuardExpressionParserRuleCall_3_1_0; }
 		
 		//(hasWhen?='when' when=ID)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -506,6 +506,74 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	}
 	public class ExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Expression");
+		private final RuleCall cEqualityParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//Expression:
+		//    Equality
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Equality
+		public RuleCall getEqualityParserRuleCall() { return cEqualityParserRuleCall; }
+	}
+	public class EqualityElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Equality");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cPrimaryParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cEqualityLeftAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOpAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final Alternatives cOpAlternatives_1_1_0 = (Alternatives)cOpAssignment_1_1.eContents().get(0);
+		private final Keyword cOpLessThanSignKeyword_1_1_0_0 = (Keyword)cOpAlternatives_1_1_0.eContents().get(0);
+		private final Keyword cOpLessThanSignEqualsSignKeyword_1_1_0_1 = (Keyword)cOpAlternatives_1_1_0.eContents().get(1);
+		private final Keyword cOpGreaterThanSignKeyword_1_1_0_2 = (Keyword)cOpAlternatives_1_1_0.eContents().get(2);
+		private final Keyword cOpGreaterThanSignEqualsSignKeyword_1_1_0_3 = (Keyword)cOpAlternatives_1_1_0.eContents().get(3);
+		private final Assignment cRightAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cRightPrimaryParserRuleCall_1_2_0 = (RuleCall)cRightAssignment_1_2.eContents().get(0);
+		
+		//Equality returns Expression:
+		//    Primary ({Equality.left = current} op=('<'| '<=' | '>' | '>=') right=Primary)*
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Primary ({Equality.left = current} op=('<'| '<=' | '>' | '>=') right=Primary)*
+		public Group getGroup() { return cGroup; }
+		
+		//Primary
+		public RuleCall getPrimaryParserRuleCall_0() { return cPrimaryParserRuleCall_0; }
+		
+		//({Equality.left = current} op=('<'| '<=' | '>' | '>=') right=Primary)*
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{Equality.left = current}
+		public Action getEqualityLeftAction_1_0() { return cEqualityLeftAction_1_0; }
+		
+		//op=('<'| '<=' | '>' | '>=')
+		public Assignment getOpAssignment_1_1() { return cOpAssignment_1_1; }
+		
+		//('<'| '<=' | '>' | '>=')
+		public Alternatives getOpAlternatives_1_1_0() { return cOpAlternatives_1_1_0; }
+		
+		//'<'
+		public Keyword getOpLessThanSignKeyword_1_1_0_0() { return cOpLessThanSignKeyword_1_1_0_0; }
+		
+		//'<='
+		public Keyword getOpLessThanSignEqualsSignKeyword_1_1_0_1() { return cOpLessThanSignEqualsSignKeyword_1_1_0_1; }
+		
+		//'>'
+		public Keyword getOpGreaterThanSignKeyword_1_1_0_2() { return cOpGreaterThanSignKeyword_1_1_0_2; }
+		
+		//'>='
+		public Keyword getOpGreaterThanSignEqualsSignKeyword_1_1_0_3() { return cOpGreaterThanSignEqualsSignKeyword_1_1_0_3; }
+		
+		//right=Primary
+		public Assignment getRightAssignment_1_2() { return cRightAssignment_1_2; }
+		
+		//Primary
+		public RuleCall getRightPrimaryParserRuleCall_1_2_0() { return cRightPrimaryParserRuleCall_1_2_0; }
+	}
+	public class PrimaryElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Primary");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Action cSMNumberAction_0_0 = (Action)cGroup_0.eContents().get(0);
@@ -516,7 +584,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final Assignment cValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cValueBooleanParserRuleCall_1_1_0 = (RuleCall)cValueAssignment_1_1.eContents().get(0);
 		
-		//Expression:
+		//Primary returns Expression:
 		//    {SMNumber} value=INT |
 		//    {SMBool} value=Boolean
 		//;
@@ -614,6 +682,8 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	private final VarDefinitionElements pVarDefinition;
 	private final StatementElements pStatement;
 	private final ExpressionElements pExpression;
+	private final EqualityElements pEquality;
+	private final PrimaryElements pPrimary;
 	private final TypeElements pType;
 	private final FloatElements pFloat;
 	private final BooleanElements pBoolean;
@@ -635,6 +705,8 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		this.pVarDefinition = new VarDefinitionElements();
 		this.pStatement = new StatementElements();
 		this.pExpression = new ExpressionElements();
+		this.pEquality = new EqualityElements();
+		this.pPrimary = new PrimaryElements();
 		this.pType = new TypeElements();
 		this.pFloat = new FloatElements();
 		this.pBoolean = new BooleanElements();
@@ -703,7 +775,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	
 	//Transition:
 	//    from=[State] '->' to=[State]
-	//        (hasGuard?='guard' guard=Boolean)?
+	//        (hasGuard?='guard' guard=Expression)?
 	//        (hasWhen?='when' when=ID)?
 	//        (time?='after' timeout=Float)?
 	//        (hasSignal?='signal' signal=ID)?
@@ -752,8 +824,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	}
 	
 	//Expression:
-	//    {SMNumber} value=INT |
-	//    {SMBool} value=Boolean
+	//    Equality
 	//;
 	public ExpressionElements getExpressionAccess() {
 		return pExpression;
@@ -761,6 +832,29 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	
 	public ParserRule getExpressionRule() {
 		return getExpressionAccess().getRule();
+	}
+	
+	//Equality returns Expression:
+	//    Primary ({Equality.left = current} op=('<'| '<=' | '>' | '>=') right=Primary)*
+	//;
+	public EqualityElements getEqualityAccess() {
+		return pEquality;
+	}
+	
+	public ParserRule getEqualityRule() {
+		return getEqualityAccess().getRule();
+	}
+	
+	//Primary returns Expression:
+	//    {SMNumber} value=INT |
+	//    {SMBool} value=Boolean
+	//;
+	public PrimaryElements getPrimaryAccess() {
+		return pPrimary;
+	}
+	
+	public ParserRule getPrimaryRule() {
+		return getPrimaryAccess().getRule();
 	}
 	
 	//Type: 'bool';

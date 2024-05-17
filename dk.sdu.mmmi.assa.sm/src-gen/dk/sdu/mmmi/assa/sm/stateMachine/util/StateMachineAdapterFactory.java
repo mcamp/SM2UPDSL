@@ -131,6 +131,11 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
         return createVarAssignationAdapter();
       }
       @Override
+      public Adapter caseEquality(Equality object)
+      {
+        return createEqualityAdapter();
+      }
+      @Override
       public Adapter caseSMNumber(SMNumber object)
       {
         return createSMNumberAdapter();
@@ -323,6 +328,21 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVarAssignationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Equality <em>Equality</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Equality
+   * @generated
+   */
+  public Adapter createEqualityAdapter()
   {
     return null;
   }

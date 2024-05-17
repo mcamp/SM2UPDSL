@@ -151,8 +151,13 @@ public class UppaalProcess {
         if (_not) {
           this.genTransitionWithWhenSignal(transition);
         } else {
-          UppaalTransition _uppaalTransition = new UppaalTransition(transition);
-          this.transitions.add(_uppaalTransition);
+          boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(transition.getTo().getProperties());
+          boolean _not_1 = (!_isNullOrEmpty);
+          if (_not_1) {
+          } else {
+            UppaalTransition _uppaalTransition = new UppaalTransition(transition);
+            this.transitions.add(_uppaalTransition);
+          }
         }
       }
     }
@@ -164,6 +169,10 @@ public class UppaalProcess {
       {
         final Delay startupDelay = IterableExtensions.<Delay>head(Iterables.<Delay>filter(state.getProperties(), Delay.class));
         if ((startupDelay != null)) {
+          final String preStateName = this.preStateName(state);
+          final UppaalState preState = new UppaalState(preStateName);
+          preState.committed = true;
+          this.states.add(preState);
           final Function1<Transition, Boolean> _function = (Transition it) -> {
             State _to = it.getTo();
             return Boolean.valueOf((_to == state));
@@ -171,12 +180,26 @@ public class UppaalProcess {
           Iterable<Transition> _filter = IterableExtensions.<Transition>filter(machine.getTransitions(), _function);
           for (final Transition transition : _filter) {
             {
-              final UppaalTransition tx = new UppaalTransition();
-              tx.from = transition.getFrom().getName();
-              tx.to = this.initState().name;
+              final UppaalTransition tx = new UppaalTransition(transition);
+              tx.to = preStateName;
               this.transitions.add(tx);
             }
           }
+          UppaalTransition tx = new UppaalTransition();
+          tx.from = preStateName;
+          tx.to = state.getName();
+          CharSequence _clockString = this.toClockString(startupDelay.getTime());
+          String _plus = ("startup_clock >= " + _clockString);
+          tx.setGuard(_plus);
+          this.transitions.add(tx);
+          UppaalTransition _uppaalTransition = new UppaalTransition();
+          tx = _uppaalTransition;
+          tx.from = preStateName;
+          tx.to = this.initState().name;
+          CharSequence _clockString_1 = this.toClockString(startupDelay.getTime());
+          String _plus_1 = ("startup_clock < " + _clockString_1);
+          tx.setGuard(_plus_1);
+          this.transitions.add(tx);
         }
       }
     }
@@ -346,5 +369,15 @@ public class UppaalProcess {
     };
     UppaalState _findFirst = IterableExtensions.<UppaalState>findFirst(this.states, _function);
     return (_findFirst != null);
+  }
+  
+  public CharSequence toClockString(final float seconds) {
+    final float clock = seconds;
+    int _int = this.toInt(clock);
+    return (Integer.valueOf(_int) + "");
+  }
+  
+  public int toInt(final float number) {
+    return Math.round(number);
   }
 }

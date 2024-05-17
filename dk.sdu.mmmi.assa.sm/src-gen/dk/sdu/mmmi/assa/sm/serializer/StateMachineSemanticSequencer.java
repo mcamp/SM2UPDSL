@@ -6,6 +6,7 @@ package dk.sdu.mmmi.assa.sm.serializer;
 import com.google.inject.Inject;
 import dk.sdu.mmmi.assa.sm.services.StateMachineGrammarAccess;
 import dk.sdu.mmmi.assa.sm.stateMachine.Delay;
+import dk.sdu.mmmi.assa.sm.stateMachine.Equality;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime;
 import dk.sdu.mmmi.assa.sm.stateMachine.Root;
@@ -44,6 +45,9 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 			case StateMachinePackage.DELAY:
 				sequence_SafetyProperty(context, (Delay) semanticObject); 
 				return; 
+			case StateMachinePackage.EQUALITY:
+				sequence_Equality(context, (Equality) semanticObject); 
+				return; 
 			case StateMachinePackage.MACHINE:
 				sequence_Machine(context, (Machine) semanticObject); 
 				return; 
@@ -54,10 +58,10 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 				sequence_Root(context, (Root) semanticObject); 
 				return; 
 			case StateMachinePackage.SM_BOOL:
-				sequence_Expression(context, (SMBool) semanticObject); 
+				sequence_Primary(context, (SMBool) semanticObject); 
 				return; 
 			case StateMachinePackage.SM_NUMBER:
-				sequence_Expression(context, (SMNumber) semanticObject); 
+				sequence_Primary(context, (SMNumber) semanticObject); 
 				return; 
 			case StateMachinePackage.STATE:
 				sequence_State(context, (State) semanticObject); 
@@ -78,37 +82,15 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	
 	/**
 	 * Contexts:
-	 *     Expression returns SMBool
+	 *     Expression returns Equality
+	 *     Equality returns Equality
+	 *     Equality.Equality_1_0 returns Equality
 	 *
 	 * Constraint:
-	 *     value=Boolean
+	 *     (left=Equality_Equality_1_0 (op='<' | op='<=' | op='>' | op='>=') right=Primary)
 	 */
-	protected void sequence_Expression(ISerializationContext context, SMBool semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.SM_BOOL__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.SM_BOOL__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getExpressionAccess().getValueBooleanParserRuleCall_1_1_0(), semanticObject.isValue());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Expression returns SMNumber
-	 *
-	 * Constraint:
-	 *     value=INT
-	 */
-	protected void sequence_Expression(ISerializationContext context, SMNumber semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.SM_NUMBER__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.SM_NUMBER__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getExpressionAccess().getValueINTTerminalRuleCall_0_1_0(), semanticObject.getValue());
-		feeder.finish();
+	protected void sequence_Equality(ISerializationContext context, Equality semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -121,6 +103,48 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	 */
 	protected void sequence_Machine(ISerializationContext context, Machine semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns SMBool
+	 *     Equality returns SMBool
+	 *     Equality.Equality_1_0 returns SMBool
+	 *     Primary returns SMBool
+	 *
+	 * Constraint:
+	 *     value=Boolean
+	 */
+	protected void sequence_Primary(ISerializationContext context, SMBool semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.SM_BOOL__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.SM_BOOL__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPrimaryAccess().getValueBooleanParserRuleCall_1_1_0(), semanticObject.isValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns SMNumber
+	 *     Equality returns SMNumber
+	 *     Equality.Equality_1_0 returns SMNumber
+	 *     Primary returns SMNumber
+	 *
+	 * Constraint:
+	 *     value=INT
+	 */
+	protected void sequence_Primary(ISerializationContext context, SMNumber semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.SM_NUMBER__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.SM_NUMBER__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPrimaryAccess().getValueINTTerminalRuleCall_0_1_0(), semanticObject.getValue());
+		feeder.finish();
 	}
 	
 	
@@ -213,7 +237,7 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	 *     (
 	 *         from=[State|ID] 
 	 *         to=[State|ID] 
-	 *         (hasGuard?='guard' guard=Boolean)? 
+	 *         (hasGuard?='guard' guard=Expression)? 
 	 *         (hasWhen?='when' when=ID)? 
 	 *         (time?='after' timeout=Float)? 
 	 *         (hasSignal?='signal' signal=ID)? 

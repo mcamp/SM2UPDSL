@@ -29,7 +29,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//State"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//State"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasGuard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="guard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guard" eType="#//Expression"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasWhen" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="when" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -55,6 +56,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="VarAssignation" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VarDefinition"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Equality" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SMNumber" eSuperTypes="#//Expression">

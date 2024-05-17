@@ -19,7 +19,7 @@ State:
 
 Transition:
 	from=[State] '->' to=[State]
-		(hasGuard?='guard' guard=Boolean)?
+		(hasGuard?='guard' guard=Expression)?
 		(hasWhen?='when' when=ID)?
 		(time?='after' timeout=Float)?
 		(hasSignal?='signal' signal=ID)?
@@ -41,6 +41,14 @@ Statement:
 ;
 
 Expression:
+	Equality
+;
+
+Equality returns Expression:
+	Primary ({Equality.left = current} op=('<'| '<=' | '>' | '>=') right=Primary)*
+;
+
+Primary returns Expression:
 	{SMNumber} value=INT |
 	{SMBool} value=Boolean
 ;

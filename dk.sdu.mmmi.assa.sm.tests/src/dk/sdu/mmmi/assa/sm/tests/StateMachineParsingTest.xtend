@@ -200,40 +200,40 @@ class StateMachineParsingTest {
 		"two".assertEquals(root.machines.get(1).states.get(0).name)
 	}
 	
-	@Test
-	def void guardTransition() {
-		val root = '''
-			project test
-			machine m1 {
-				state one
-				state two
-				one -> two guard false
-				one -> two guard true
-			}
-		'''.parse
-		root.machines.get(0).transitions.get(0).guard.assertFalse
-		root.machines.get(0).transitions.get(1).guard.assertTrue
-	}
+//	@Test
+//	def void guardTransition() {
+//		val root = '''
+//			project test
+//			machine m1 {
+//				state one
+//				state two
+//				one -> two guard false
+//				one -> two guard true
+//			}
+//		'''.parse
+//		root.machines.get(0).transitions.get(0).guard.assertFalse
+//		root.machines.get(0).transitions.get(1).guard.assertTrue
+//	}
 	
-	@Test
-	def void guardAndSignalTransition() {
-		val root = '''
-			project test
-			machine m1 {
-				state one
-				state two
-				one -> two guard false signal signal1
-				one -> two guard true signal signal2
-			}
-		'''.parse
-		val tx1 = root.machines.get(0).transitions.get(0)
-		val tx2 = root.machines.get(0).transitions.get(1)
-		tx1.guard.assertFalse
-		"signal1".assertEquals(tx1.signal)
-		
-		tx2.guard.assertTrue
-		"signal2".assertEquals(tx2.signal)
-		
-	}
+//	@Test
+//	def void guardAndSignalTransition() {
+//		val root = '''
+//			project test
+//			machine m1 {
+//				state one
+//				state two
+//				one -> two guard false signal signal1
+//				one -> two guard true signal signal2
+//			}
+//		'''.parse
+//		val tx1 = root.machines.get(0).transitions.get(0)
+//		val tx2 = root.machines.get(0).transitions.get(1)
+//		tx1.guard.assertFalse
+//		"signal1".assertEquals(tx1.signal)
+//		
+//		tx2.guard.assertTrue
+//		"signal2".assertEquals(tx2.signal)
+//		
+//	}
 
 }

@@ -76,6 +76,7 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
       case StateMachinePackage.DELAY: return createDelay();
       case StateMachinePackage.MAX_EXECUTION_TIME: return createMaxExecutionTime();
       case StateMachinePackage.VAR_ASSIGNATION: return createVarAssignation();
+      case StateMachinePackage.EQUALITY: return createEquality();
       case StateMachinePackage.SM_NUMBER: return createSMNumber();
       case StateMachinePackage.SM_BOOL: return createSMBool();
       default:
@@ -213,6 +214,18 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
   {
     VarAssignationImpl varAssignation = new VarAssignationImpl();
     return varAssignation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Equality createEquality()
+  {
+    EqualityImpl equality = new EqualityImpl();
+    return equality;
   }
 
   /**

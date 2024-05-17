@@ -3,6 +3,7 @@
  */
 package dk.sdu.mmmi.assa.sm.stateMachine.impl;
 
+import dk.sdu.mmmi.assa.sm.stateMachine.Expression;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
 import dk.sdu.mmmi.assa.sm.stateMachine.Statement;
@@ -35,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getFrom <em>From</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getTo <em>To</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#isHasGuard <em>Has Guard</em>}</li>
- *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#isGuard <em>Guard</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getGuard <em>Guard</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#isHasWhen <em>Has When</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#getWhen <em>When</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TransitionImpl#isTime <em>Time</em>}</li>
@@ -90,24 +91,14 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
   protected boolean hasGuard = HAS_GUARD_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isGuard() <em>Guard</em>}' attribute.
+   * The cached value of the '{@link #getGuard() <em>Guard</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isGuard()
+   * @see #getGuard()
    * @generated
    * @ordered
    */
-  protected static final boolean GUARD_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isGuard() <em>Guard</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isGuard()
-   * @generated
-   * @ordered
-   */
-  protected boolean guard = GUARD_EDEFAULT;
+  protected Expression guard;
 
   /**
    * The default value of the '{@link #isHasWhen() <em>Has When</em>}' attribute.
@@ -381,7 +372,7 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
    * @generated
    */
   @Override
-  public boolean isGuard()
+  public Expression getGuard()
   {
     return guard;
   }
@@ -391,13 +382,38 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public void setGuard(boolean newGuard)
+  public NotificationChain basicSetGuard(Expression newGuard, NotificationChain msgs)
   {
-    boolean oldGuard = guard;
+    Expression oldGuard = guard;
     guard = newGuard;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.TRANSITION__GUARD, oldGuard, guard));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, StateMachinePackage.TRANSITION__GUARD, oldGuard, newGuard);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setGuard(Expression newGuard)
+  {
+    if (newGuard != guard)
+    {
+      NotificationChain msgs = null;
+      if (guard != null)
+        msgs = ((InternalEObject)guard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - StateMachinePackage.TRANSITION__GUARD, null, msgs);
+      if (newGuard != null)
+        msgs = ((InternalEObject)newGuard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - StateMachinePackage.TRANSITION__GUARD, null, msgs);
+      msgs = basicSetGuard(newGuard, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.TRANSITION__GUARD, newGuard, newGuard));
   }
 
   /**
@@ -575,6 +591,8 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
   {
     switch (featureID)
     {
+      case StateMachinePackage.TRANSITION__GUARD:
+        return basicSetGuard(null, msgs);
       case StateMachinePackage.TRANSITION__ACTIONS:
         return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
     }
@@ -600,7 +618,7 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
       case StateMachinePackage.TRANSITION__HAS_GUARD:
         return isHasGuard();
       case StateMachinePackage.TRANSITION__GUARD:
-        return isGuard();
+        return getGuard();
       case StateMachinePackage.TRANSITION__HAS_WHEN:
         return isHasWhen();
       case StateMachinePackage.TRANSITION__WHEN:
@@ -640,7 +658,7 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
         setHasGuard((Boolean)newValue);
         return;
       case StateMachinePackage.TRANSITION__GUARD:
-        setGuard((Boolean)newValue);
+        setGuard((Expression)newValue);
         return;
       case StateMachinePackage.TRANSITION__HAS_WHEN:
         setHasWhen((Boolean)newValue);
@@ -688,7 +706,7 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
         setHasGuard(HAS_GUARD_EDEFAULT);
         return;
       case StateMachinePackage.TRANSITION__GUARD:
-        setGuard(GUARD_EDEFAULT);
+        setGuard((Expression)null);
         return;
       case StateMachinePackage.TRANSITION__HAS_WHEN:
         setHasWhen(HAS_WHEN_EDEFAULT);
@@ -732,7 +750,7 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
       case StateMachinePackage.TRANSITION__HAS_GUARD:
         return hasGuard != HAS_GUARD_EDEFAULT;
       case StateMachinePackage.TRANSITION__GUARD:
-        return guard != GUARD_EDEFAULT;
+        return guard != null;
       case StateMachinePackage.TRANSITION__HAS_WHEN:
         return hasWhen != HAS_WHEN_EDEFAULT;
       case StateMachinePackage.TRANSITION__WHEN:
@@ -764,8 +782,6 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (hasGuard: ");
     result.append(hasGuard);
-    result.append(", guard: ");
-    result.append(guard);
     result.append(", hasWhen: ");
     result.append(hasWhen);
     result.append(", when: ");

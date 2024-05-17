@@ -1,7 +1,11 @@
 package dk.sdu.mmmi.assa.sm.generator
 
+import dk.sdu.mmmi.assa.sm.stateMachine.Equality
+import dk.sdu.mmmi.assa.sm.stateMachine.Expression
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine
 import dk.sdu.mmmi.assa.sm.stateMachine.Root
+import dk.sdu.mmmi.assa.sm.stateMachine.SMBool
+import dk.sdu.mmmi.assa.sm.stateMachine.SMNumber
 import dk.sdu.mmmi.assa.sm.stateMachine.State
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition
 import org.eclipse.xtext.EcoreUtil2
@@ -52,10 +56,18 @@ class PlantUMLGenerator {
 		var ret = " :"
 		if(transition.hasWhen) ret += " "+transition.when+"?"
 		if(transition.isTime) ret += " [after "+transition.timeout.toMillisecondsString+"ms]"
-		if(transition.hasGuard) ret += " ["+transition.guard+"]"
+		if(transition.hasGuard) ret += " ["+transition.guard.compileExpression+"]"
 		if(transition.hasSignal) ret += " / "+transition.signal+"!"
 
 		return ret
+	}
+	
+	def String compileExpression(Expression expression){
+		switch expression{
+			Equality: expression.left.compileExpression +" "+ expression.op +" "+ expression.right.compileExpression
+			SMNumber: expression.value.toString
+			SMBool: expression.value ? "true" : "false"
+		}
 	}
 	
 	def CharSequence toMillisecondsString(float seconds) {

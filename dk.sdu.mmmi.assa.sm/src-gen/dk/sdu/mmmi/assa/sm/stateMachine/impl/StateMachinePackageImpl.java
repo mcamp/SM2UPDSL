@@ -4,6 +4,7 @@
 package dk.sdu.mmmi.assa.sm.stateMachine.impl;
 
 import dk.sdu.mmmi.assa.sm.stateMachine.Delay;
+import dk.sdu.mmmi.assa.sm.stateMachine.Equality;
 import dk.sdu.mmmi.assa.sm.stateMachine.Expression;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime;
@@ -110,6 +111,13 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   private EClass varAssignationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass equalityEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -392,9 +400,9 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EAttribute getTransition_Guard()
+  public EReference getTransition_Guard()
   {
-    return (EAttribute)transitionEClass.getEStructuralFeatures().get(3);
+    return (EReference)transitionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -623,6 +631,50 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
+  public EClass getEquality()
+  {
+    return equalityEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getEquality_Left()
+  {
+    return (EReference)equalityEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getEquality_Op()
+  {
+    return (EAttribute)equalityEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getEquality_Right()
+  {
+    return (EReference)equalityEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getSMNumber()
   {
     return smNumberEClass;
@@ -713,7 +765,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     createEReference(transitionEClass, TRANSITION__FROM);
     createEReference(transitionEClass, TRANSITION__TO);
     createEAttribute(transitionEClass, TRANSITION__HAS_GUARD);
-    createEAttribute(transitionEClass, TRANSITION__GUARD);
+    createEReference(transitionEClass, TRANSITION__GUARD);
     createEAttribute(transitionEClass, TRANSITION__HAS_WHEN);
     createEAttribute(transitionEClass, TRANSITION__WHEN);
     createEAttribute(transitionEClass, TRANSITION__TIME);
@@ -741,6 +793,11 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     varAssignationEClass = createEClass(VAR_ASSIGNATION);
     createEReference(varAssignationEClass, VAR_ASSIGNATION__VARIABLE);
     createEReference(varAssignationEClass, VAR_ASSIGNATION__EXPRESSION);
+
+    equalityEClass = createEClass(EQUALITY);
+    createEReference(equalityEClass, EQUALITY__LEFT);
+    createEAttribute(equalityEClass, EQUALITY__OP);
+    createEReference(equalityEClass, EQUALITY__RIGHT);
 
     smNumberEClass = createEClass(SM_NUMBER);
     createEAttribute(smNumberEClass, SM_NUMBER__VALUE);
@@ -781,6 +838,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     delayEClass.getESuperTypes().add(this.getSafetyProperty());
     maxExecutionTimeEClass.getESuperTypes().add(this.getSafetyProperty());
     varAssignationEClass.getESuperTypes().add(this.getStatement());
+    equalityEClass.getESuperTypes().add(this.getExpression());
     smNumberEClass.getESuperTypes().add(this.getExpression());
     smBoolEClass.getESuperTypes().add(this.getExpression());
 
@@ -806,7 +864,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     initEReference(getTransition_From(), this.getState(), null, "from", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTransition_To(), this.getState(), null, "to", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_HasGuard(), ecorePackage.getEBoolean(), "hasGuard", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTransition_Guard(), ecorePackage.getEBoolean(), "guard", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTransition_Guard(), this.getExpression(), null, "guard", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_HasWhen(), ecorePackage.getEBoolean(), "hasWhen", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_When(), ecorePackage.getEString(), "when", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_Time(), ecorePackage.getEBoolean(), "time", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -834,6 +892,11 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     initEClass(varAssignationEClass, VarAssignation.class, "VarAssignation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getVarAssignation_Variable(), this.getVarDefinition(), null, "variable", null, 0, 1, VarAssignation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVarAssignation_Expression(), this.getExpression(), null, "expression", null, 0, 1, VarAssignation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(equalityEClass, Equality.class, "Equality", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEquality_Left(), this.getExpression(), null, "left", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEquality_Op(), ecorePackage.getEString(), "op", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEquality_Right(), this.getExpression(), null, "right", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(smNumberEClass, SMNumber.class, "SMNumber", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSMNumber_Value(), ecorePackage.getEInt(), "value", null, 0, 1, SMNumber.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

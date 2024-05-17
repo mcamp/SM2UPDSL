@@ -546,10 +546,10 @@ class StateMachineUppaalGeneratorTest {
 				init one;
 				trans
 					one -> two {
-						guard false;
+						guard 0;
 					},
 					one -> two {
-						guard true;
+						guard 1;
 					};
 			}
 			system m1;
@@ -575,11 +575,11 @@ class StateMachineUppaalGeneratorTest {
 				init one;
 				trans
 					one -> two {
-						guard false;
+						guard 0;
 						sync signal1!;
 					},
 					one -> two {
-						guard true;
+						guard 1;
 						sync signal2!;
 					};
 			}
@@ -643,11 +643,11 @@ class StateMachineUppaalGeneratorTest {
 				init m21;
 				trans
 					m21 -> m21 {
-						guard false;
+						guard 0;
 						sync signal1!;
 					},
 					m21 -> m21 {
-						guard true;
+						guard 1;
 						sync signal2!;
 					};
 			}
@@ -680,15 +680,13 @@ class StateMachineUppaalGeneratorTest {
 						gen_clock <= 5
 					},
 					three {
-						startup_clock > 50 && gen_clock <= 5
-					};
+						gen_clock <= 5
+					},
+					gen_pre_three;
+				commit gen_pre_three;
 				init one;
 				trans
 					one -> two {
-						guard gen_clock >= 5;
-						assign gen_clock := 0;
-					},
-					two -> three {
 						guard gen_clock >= 5;
 						assign gen_clock := 0;
 					},
@@ -696,7 +694,15 @@ class StateMachineUppaalGeneratorTest {
 						guard gen_clock >= 5;
 						assign gen_clock := 0;
 					},
-					two -> one {
+					two -> gen_pre_three {
+						guard gen_clock >= 5;
+						assign gen_clock := 0;
+					},
+					gen_pre_three -> three {
+						guard startup_clock >= 50;
+					},
+					gen_pre_three -> one {
+						guard startup_clock < 50;
 					};
 			}
 			system m1;

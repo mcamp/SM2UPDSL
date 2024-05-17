@@ -123,6 +123,15 @@ public interface StateMachineFactory extends EFactory
   VarAssignation createVarAssignation();
 
   /**
+   * Returns a new object of class '<em>Equality</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Equality</em>'.
+   * @generated
+   */
+  Equality createEquality();
+
+  /**
    * Returns a new object of class '<em>SM Number</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

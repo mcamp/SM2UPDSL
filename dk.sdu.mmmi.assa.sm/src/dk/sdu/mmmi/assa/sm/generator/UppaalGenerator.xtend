@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.assa.sm.generator
 
+import com.google.inject.Inject
 import dk.sdu.mmmi.assa.sm.stateMachine.Delay
 import dk.sdu.mmmi.assa.sm.stateMachine.Expression
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine
@@ -11,11 +12,13 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Statement
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition
 import dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation
 import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition
+import dk.sdu.mmmi.assa.sm.stateMachine.impl.ExpressionImpl
 import dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl
 import dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.generator.IFileSystemAccess2
+import org.eclipse.xtext.parser.IParser
 
 class UppaalGenerator {
 	
@@ -157,7 +160,7 @@ class UppaalGenerator {
 	guard gen_clock >= «transition.timeout.toClockString»;
 	«ENDIF»
 	«IF transition.hasGuard»
-	guard «transition.guard»;
+	guard «transition.guard.compileGuard»;
 	«ENDIF»
 	«IF !transition.sync.isNullOrEmpty»
 	sync «transition.sync»;
@@ -169,6 +172,13 @@ class UppaalGenerator {
 	«action.compileAction»
 	«ENDFOR»
 	'''
+	
+	def compileGuard(Object guard) {
+		switch guard {
+			Expression: guard.compileExpression
+			String: guard
+		}
+	}
 	
 	def compileAction(Statement statement) {
 		switch statement {
@@ -194,9 +204,6 @@ class UppaalGenerator {
 	
 	def compileBody(State state){
 		var conditions = newArrayList
-		val delayProperty = state.properties.filter(Delay).head
-		if (delayProperty !== null)
-			conditions.add("startup_clock > "+delayProperty.time.toClockString)
 		if (state.hasTimeoutTransition)
 			conditions.add("gen_clock <= "+state.timeoutTransition.timeout.toClockString)
 		if (conditions.isEmpty) return ""
@@ -398,6 +405,10 @@ class UppaalProcess {
 				this.genTransitionWithWhenSignal(transition)
 			}
 			
+			// Do not fill tx when outgoing state has a delay startup
+			else if(!transition.to.properties.nullOrEmpty) {
+				
+			}
 			// If not, add transition like normal
 			else {
 				this.transitions.add(new UppaalTransition(transition))
@@ -410,12 +421,30 @@ class UppaalProcess {
 		for(state: machine.states) {
 			val startupDelay = state.properties.filter(Delay).head
 			if(startupDelay !== null) {
+				val preStateName = state.preStateName
+				val preState = new UppaalState(preStateName)
+				preState.committed = true
+				this.states.add(preState)
+
+				// Modify every transition that comes to a delay state
 				for(transition : machine.transitions.filter[to === state]){
-					val tx = new UppaalTransition
-					tx.from = transition.from.name
-					tx.to = this.initState.name
+					val tx = new UppaalTransition(transition)
+					tx.to = preStateName
 					this.transitions.add(tx)	
 				}
+				
+				// two new transitions: one to the state when delay is correct, one to init when delay is not correct
+				var tx = new UppaalTransition
+				tx.from = preStateName
+				tx.to = state.name
+				tx.setGuard("startup_clock >= "+startupDelay.time.toClockString)
+				this.transitions.add(tx)
+				
+				tx = new UppaalTransition
+				tx.from = preStateName
+				tx.to = this.initState.name
+				tx.setGuard("startup_clock < "+startupDelay.time.toClockString)
+				this.transitions.add(tx)
 			}
 		}
 	}
@@ -541,6 +570,18 @@ class UppaalProcess {
 	def hasCommittedState(){
 		states.findFirst[committed] !== null
 	}
+	
+	
+	//TODO: repeated code, build utils
+	def CharSequence toClockString(float seconds) {
+		val clock = seconds
+		return clock.toInt +""
+	}
+	
+	//TODO: repeated code, build utils
+	def int toInt(float number) {
+		return Math.round(number)
+	}
 }
 
 class UppaalTransition {
@@ -550,6 +591,7 @@ class UppaalTransition {
 	var public String channel
 	var public float timeout
 	var public boolean isTime
+	var String guard
 	
 	var Transition originalTx
 	
@@ -579,12 +621,16 @@ class UppaalTransition {
 	}
 	
 	def hasGuard(){
-		if (originalTx === null) return false
+		if (originalTx === null) return !(this.guard === null)
 		return originalTx.hasGuard
 	}
 	
-	def guard() {
-		return originalTx.guard
+	def Object getGuard() {
+		return  originalTx === null ? this.guard : originalTx.guard 
+	}
+	
+	def void setGuard(String guard) {
+		this.guard = guard
 	}
 	
 	def actions() {

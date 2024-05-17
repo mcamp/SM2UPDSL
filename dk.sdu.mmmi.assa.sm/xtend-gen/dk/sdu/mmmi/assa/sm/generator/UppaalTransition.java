@@ -20,6 +20,8 @@ public class UppaalTransition {
   
   public boolean isTime;
   
+  private String guard;
+  
   private Transition originalTx;
   
   public UppaalTransition() {
@@ -56,13 +58,23 @@ public class UppaalTransition {
   
   public boolean hasGuard() {
     if ((this.originalTx == null)) {
-      return false;
+      return (!(this.guard == null));
     }
     return this.originalTx.isHasGuard();
   }
   
-  public boolean guard() {
-    return this.originalTx.isGuard();
+  public Object getGuard() {
+    Object _xifexpression = null;
+    if ((this.originalTx == null)) {
+      _xifexpression = this.guard;
+    } else {
+      _xifexpression = this.originalTx.getGuard();
+    }
+    return _xifexpression;
+  }
+  
+  public void setGuard(final String guard) {
+    this.guard = guard;
   }
   
   public List<Statement> actions() {

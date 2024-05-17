@@ -251,7 +251,7 @@ public interface StateMachinePackage extends EPackage
   int TRANSITION__HAS_GUARD = 2;
 
   /**
-   * The feature id for the '<em><b>Guard</b></em>' attribute.
+   * The feature id for the '<em><b>Guard</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -537,6 +537,52 @@ public interface StateMachinePackage extends EPackage
   int VAR_ASSIGNATION_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.EqualityImpl <em>Equality</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.EqualityImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getEquality()
+   * @generated
+   */
+  int EQUALITY = 11;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUALITY__LEFT = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUALITY__OP = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUALITY__RIGHT = EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Equality</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUALITY_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SMNumberImpl <em>SM Number</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -544,7 +590,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSMNumber()
    * @generated
    */
-  int SM_NUMBER = 11;
+  int SM_NUMBER = 12;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -572,7 +618,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSMBool()
    * @generated
    */
-  int SM_BOOL = 12;
+  int SM_BOOL = 13;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -788,15 +834,15 @@ public interface StateMachinePackage extends EPackage
   EAttribute getTransition_HasGuard();
 
   /**
-   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isGuard <em>Guard</em>}'.
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#getGuard <em>Guard</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Guard</em>'.
-   * @see dk.sdu.mmmi.assa.sm.stateMachine.Transition#isGuard()
+   * @return the meta object for the containment reference '<em>Guard</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Transition#getGuard()
    * @see #getTransition()
    * @generated
    */
-  EAttribute getTransition_Guard();
+  EReference getTransition_Guard();
 
   /**
    * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Transition#isHasWhen <em>Has When</em>}'.
@@ -1010,6 +1056,49 @@ public interface StateMachinePackage extends EPackage
    * @generated
    */
   EReference getVarAssignation_Expression();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Equality <em>Equality</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Equality</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Equality
+   * @generated
+   */
+  EClass getEquality();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.Equality#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Equality#getLeft()
+   * @see #getEquality()
+   * @generated
+   */
+  EReference getEquality_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Equality#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Equality#getOp()
+   * @see #getEquality()
+   * @generated
+   */
+  EAttribute getEquality_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.Equality#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Equality#getRight()
+   * @see #getEquality()
+   * @generated
+   */
+  EReference getEquality_Right();
 
   /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.SMNumber <em>SM Number</em>}'.
@@ -1229,12 +1318,12 @@ public interface StateMachinePackage extends EPackage
     EAttribute TRANSITION__HAS_GUARD = eINSTANCE.getTransition_HasGuard();
 
     /**
-     * The meta object literal for the '<em><b>Guard</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute TRANSITION__GUARD = eINSTANCE.getTransition_Guard();
+    EReference TRANSITION__GUARD = eINSTANCE.getTransition_Guard();
 
     /**
      * The meta object literal for the '<em><b>Has When</b></em>' attribute feature.
@@ -1409,6 +1498,40 @@ public interface StateMachinePackage extends EPackage
      * @generated
      */
     EReference VAR_ASSIGNATION__EXPRESSION = eINSTANCE.getVarAssignation_Expression();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.EqualityImpl <em>Equality</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.EqualityImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getEquality()
+     * @generated
+     */
+    EClass EQUALITY = eINSTANCE.getEquality();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EQUALITY__LEFT = eINSTANCE.getEquality_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EQUALITY__OP = eINSTANCE.getEquality_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EQUALITY__RIGHT = eINSTANCE.getEquality_Right();
 
     /**
      * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SMNumberImpl <em>SM Number</em>}' class.

@@ -68,7 +68,7 @@ public class StateMachineSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('actions' '{' '}')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     guard=Boolean (ambiguity) (rule end)
+	 *     guard=Expression (ambiguity) (rule end)
 	 *     signal=ID (ambiguity) (rule end)
 	 *     timeout=Float (ambiguity) (rule end)
 	 *     to=[State|ID] (ambiguity) (rule end)
