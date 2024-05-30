@@ -50,7 +50,8 @@ public class UppaalProcess {
     process.name = _plus;
     UppaalState _uppaalState = new UppaalState("initSync");
     process.states.add(_uppaalState);
-    final UppaalTransition tx = new UppaalTransition();
+    Machine _containerOfType = EcoreUtil2.<Machine>getContainerOfType(transition, Machine.class);
+    final UppaalTransition tx = new UppaalTransition(_containerOfType);
     tx.from = "initSync";
     tx.to = "initSync";
     String _signal_1 = transition.getSignal();
@@ -67,7 +68,8 @@ public class UppaalProcess {
     process.name = _plus;
     UppaalState _uppaalState = new UppaalState("initSync");
     process.states.add(_uppaalState);
-    final UppaalTransition tx = new UppaalTransition();
+    Machine _containerOfType = EcoreUtil2.<Machine>getContainerOfType(transition, Machine.class);
+    final UppaalTransition tx = new UppaalTransition(_containerOfType);
     tx.from = "initSync";
     tx.to = "initSync";
     String _when_1 = transition.getWhen();
@@ -96,9 +98,15 @@ public class UppaalProcess {
       if (_not) {
         boolean _xblockexpression_1 = false;
         {
-          final UppaalTransition newTransition = new UppaalTransition();
+          final UppaalTransition newTransition = new UppaalTransition(machine);
           newTransition.from = genInit;
-          newTransition.to = machine.getStates().get(0).getName();
+          final State toState = machine.getStates().get(0);
+          boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(toState.getProperties());
+          if (_isNullOrEmpty) {
+            newTransition.to = toState.getName();
+          } else {
+            newTransition.to = this.preStateName(toState);
+          }
           newTransition.channel = this.startMachineChannel(machine);
           newTransition.sync = (newTransition.channel + "?");
           _xblockexpression_1 = this.transitions.add(newTransition);
@@ -120,7 +128,7 @@ public class UppaalProcess {
           final UppaalState preState = new UppaalState(preStateName);
           preState.committed = true;
           this.states.add(preState);
-          final UppaalTransition newTransition = new UppaalTransition();
+          final UppaalTransition newTransition = new UppaalTransition(machine);
           newTransition.from = preStateName;
           newTransition.to = state.getName();
           newTransition.channel = this.startMachineChannel(state.getMachine());
@@ -129,7 +137,7 @@ public class UppaalProcess {
         }
         boolean _isFinal = this.isFinal(state);
         if (_isFinal) {
-          final UppaalTransition newTransition_1 = new UppaalTransition();
+          final UppaalTransition newTransition_1 = new UppaalTransition(machine);
           newTransition_1.from = state.getName();
           newTransition_1.to = "gen_init";
           this.transitions.add(newTransition_1);
@@ -185,14 +193,14 @@ public class UppaalProcess {
               this.transitions.add(tx);
             }
           }
-          UppaalTransition tx = new UppaalTransition();
+          UppaalTransition tx = new UppaalTransition(machine);
           tx.from = preStateName;
           tx.to = state.getName();
           CharSequence _clockString = this.toClockString(startupDelay.getTime());
           String _plus = ("startup_clock >= " + _clockString);
           tx.setGuard(_plus);
           this.transitions.add(tx);
-          UppaalTransition _uppaalTransition = new UppaalTransition();
+          UppaalTransition _uppaalTransition = new UppaalTransition(machine);
           tx = _uppaalTransition;
           tx.from = preStateName;
           tx.to = this.initState().name;
@@ -229,14 +237,16 @@ public class UppaalProcess {
     boolean _xblockexpression = false;
     {
       final String newStateName = this.preStateName(transition.getTo());
-      final UppaalTransition newTransition1 = new UppaalTransition();
+      Machine _containerOfType = EcoreUtil2.<Machine>getContainerOfType(transition, Machine.class);
+      final UppaalTransition newTransition1 = new UppaalTransition(_containerOfType);
       newTransition1.from = transition.getFrom().getName();
       newTransition1.to = newStateName;
       String _when = transition.getWhen();
       String _plus = (_when + "?");
       newTransition1.sync = _plus;
       this.transitions.add(newTransition1);
-      final UppaalTransition newTransition2 = new UppaalTransition();
+      Machine _containerOfType_1 = EcoreUtil2.<Machine>getContainerOfType(transition, Machine.class);
+      final UppaalTransition newTransition2 = new UppaalTransition(_containerOfType_1);
       newTransition2.from = newStateName;
       newTransition2.to = transition.getTo().getName();
       String _signal = transition.getSignal();

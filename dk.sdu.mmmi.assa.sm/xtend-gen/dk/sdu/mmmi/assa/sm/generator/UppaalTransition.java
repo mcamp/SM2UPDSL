@@ -1,9 +1,15 @@
 package dk.sdu.mmmi.assa.sm.generator;
 
+import com.google.common.base.Objects;
+import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
+import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.Statement;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
 import java.util.List;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
@@ -24,11 +30,15 @@ public class UppaalTransition {
   
   private Transition originalTx;
   
-  public UppaalTransition() {
+  private Machine originalMachine;
+  
+  public UppaalTransition(final Machine machine) {
+    this.originalMachine = machine;
   }
   
   public UppaalTransition(final Transition transition) {
     this.originalTx = transition;
+    this.originalMachine = EcoreUtil2.<Machine>getContainerOfType(transition, Machine.class);
     this.from = transition.getFrom().getName();
     this.to = transition.getTo().getName();
     boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(transition.getWhen());
@@ -82,5 +92,28 @@ public class UppaalTransition {
       return CollectionLiterals.<Statement>newArrayList();
     }
     return this.originalTx.getActions();
+  }
+  
+  public boolean toStateWithTimeTransition() {
+    final Function1<State, Boolean> _function = (State it) -> {
+      String _name = it.getName();
+      return Boolean.valueOf(Objects.equal(_name, this.to));
+    };
+    final State state = IterableExtensions.<State>findFirst(this.originalMachine.getStates(), _function);
+    if ((state == null)) {
+      return false;
+    }
+    final Function1<Transition, Boolean> _function_1 = (Transition it) -> {
+      return Boolean.valueOf(it.isTime());
+    };
+    return IterableExtensions.<Transition>exists(this.getOutgoingTransitions(state), _function_1);
+  }
+  
+  public Iterable<Transition> getOutgoingTransitions(final State state) {
+    final Function1<Transition, Boolean> _function = (Transition it) -> {
+      State _from = it.getFrom();
+      return Boolean.valueOf(Objects.equal(_from, state));
+    };
+    return IterableExtensions.<Transition>filter(EcoreUtil2.<Machine>getContainerOfType(state, Machine.class).getTransitions(), _function);
   }
 }

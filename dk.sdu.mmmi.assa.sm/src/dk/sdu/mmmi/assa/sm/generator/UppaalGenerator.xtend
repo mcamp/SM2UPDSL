@@ -165,7 +165,7 @@ class UppaalGenerator {
 	«IF !transition.sync.isNullOrEmpty»
 	sync «transition.sync»;
 	«ENDIF»
-	«IF transition.isTime»
+	«IF transition.toStateWithTimeTransition»
 	assign gen_clock := 0;
 	«ENDIF»
 	«FOR action: transition.actions»
@@ -313,7 +313,7 @@ class UppaalProcess {
 		process.states.add(new UppaalState("initSync"))
 		
 		//Create transition
-		val tx = new UppaalTransition
+		val tx = new UppaalTransition(EcoreUtil2.getContainerOfType(transition, Machine))
 		tx.from = "initSync"
 		tx.to = "initSync"
 		tx.sync = transition.signal+"?"
@@ -331,7 +331,7 @@ class UppaalProcess {
 		process.states.add(new UppaalState("initSync"))
 		
 		//Create transition
-		val tx = new UppaalTransition
+		val tx = new UppaalTransition(EcoreUtil2.getContainerOfType(transition, Machine))
 		tx.from = "initSync"
 		tx.to = "initSync"
 		tx.sync = transition.when+"!"
@@ -349,9 +349,14 @@ class UppaalProcess {
 		val genInit = "gen_init"
 		this.states.add(new UppaalState("gen_init"))
 		if(!machine.states.empty) {
-			val newTransition = new UppaalTransition
+			val newTransition = new UppaalTransition(machine)
 			newTransition.from = genInit
-			newTransition.to = machine.states.get(0).name
+			val toState = machine.states.get(0)
+			// TODO: Hack, when safety property, we created a pre state, here this is hardcoded to make it work with init state of nested machine
+			if (toState.properties.isNullOrEmpty)
+				newTransition.to = toState.name
+			else
+				newTransition.to = toState.preStateName
 			// synchronization channel, waiting for starting nested machine
 			newTransition.channel = machine.startMachineChannel
 			newTransition.sync = newTransition.channel+"?"
@@ -370,7 +375,7 @@ class UppaalProcess {
 				this.states.add(preState)
 				
 				// Create tx from auxiliar state to original state, activating the nested machine
-				val newTransition = new UppaalTransition
+				val newTransition = new UppaalTransition(machine)
 				newTransition.from = preStateName
 				newTransition.to = state.name
 				// synchronization channel, signaling the start of the nested machine
@@ -382,7 +387,7 @@ class UppaalProcess {
 			
 			// If state is "final" in nested machine: 
 			if(state.isFinal) {
-				val newTransition = new UppaalTransition
+				val newTransition = new UppaalTransition(machine)
 				newTransition.from = state.name
 				newTransition.to = "gen_init"
 				this.transitions.add(newTransition)
@@ -434,13 +439,13 @@ class UppaalProcess {
 				}
 				
 				// two new transitions: one to the state when delay is correct, one to init when delay is not correct
-				var tx = new UppaalTransition
+				var tx = new UppaalTransition(machine)
 				tx.from = preStateName
 				tx.to = state.name
 				tx.setGuard("startup_clock >= "+startupDelay.time.toClockString)
 				this.transitions.add(tx)
 				
-				tx = new UppaalTransition
+				tx = new UppaalTransition(machine)
 				tx.from = preStateName
 				tx.to = this.initState.name
 				tx.setGuard("startup_clock < "+startupDelay.time.toClockString)
@@ -473,13 +478,13 @@ class UppaalProcess {
 		// Use previous code to create transition
 		val newStateName = transition.to.preStateName
 		
-		val newTransition1 = new UppaalTransition()
+		val newTransition1 = new UppaalTransition(EcoreUtil2.getContainerOfType(transition, Machine))
 		newTransition1.from = transition.from.name
 		newTransition1.to = newStateName
 		newTransition1.sync = transition.when + "?"
 		this.transitions.add(newTransition1)
 		
-		val newTransition2 = new UppaalTransition()
+		val newTransition2 = new UppaalTransition(EcoreUtil2.getContainerOfType(transition, Machine))
 		newTransition2.from = newStateName
 		newTransition2.to = transition.to.name
 		newTransition2.sync = transition.signal + "!"
@@ -594,11 +599,15 @@ class UppaalTransition {
 	var String guard
 	
 	var Transition originalTx
+	var Machine originalMachine
 	
-	new(){ }
+	new(Machine machine){ 
+		originalMachine = machine
+	}
 
 	new(Transition transition) {
 		originalTx = transition
+		originalMachine = EcoreUtil2.getContainerOfType(transition, Machine)
 		
 		from = transition.from.name
 		to = transition.to.name
@@ -637,6 +646,17 @@ class UppaalTransition {
 		if(originalTx===null) return newArrayList
 		return originalTx.actions
 	}
+	
+	def toStateWithTimeTransition() {
+		val state = originalMachine.states.findFirst[it.name == to]
+		if (state === null) return false;
+		return state.outgoingTransitions.exists[it.isTime]
+	}
+	
+	def getOutgoingTransitions(State state) {
+		return EcoreUtil2.getContainerOfType(state, Machine).transitions.filter[it.from == state]
+	}
+	
 }
 
 class UppaalState {
@@ -647,6 +667,31 @@ class UppaalState {
 	new(State state) {
 		this.name = state.name
 		this.originalState = state
+		if(state.isFinal)
+			committed = true
+	}
+	
+	/**
+	 * TODO: Duplicated method, create utils 
+	 */
+	def isFinal(State state){
+		val machine = EcoreUtil2.getContainerOfType(state, Machine)
+		val parentState = EcoreUtil2.getContainerOfType(machine, State)
+		// If does not have parent state, then it is not a state from a nested machine
+		if(parentState === null) return false
+		
+		val tx = machine.transitions.findFirst[to === state && !signal.isNullOrEmpty]
+		// If it does not have an outgoing tx with a signal, it is not final state
+		if(tx === null) return false
+		
+		val parentMachine = EcoreUtil2.getContainerOfType(parentState, Machine)
+		val parentTx = parentMachine.transitions.findFirst[from === parentState && tx.signal === it.when]
+		// If the outgoing tx from the parent state does not match the signal from the nested state
+		//   then it is not a final state
+		if(parentTx !== null) return false
+		
+		// It is a final state
+		return true
 	}
 	
 	new(String name) {
