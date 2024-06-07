@@ -1,6 +1,5 @@
 package dk.sdu.mmmi.assa.sm.generator
 
-import com.google.inject.Inject
 import dk.sdu.mmmi.assa.sm.stateMachine.Delay
 import dk.sdu.mmmi.assa.sm.stateMachine.Expression
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine
@@ -12,13 +11,12 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Statement
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition
 import dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation
 import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition
-import dk.sdu.mmmi.assa.sm.stateMachine.impl.ExpressionImpl
 import dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl
 import dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl
+import java.util.LinkedHashSet
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import org.eclipse.xtext.parser.IParser
 
 class UppaalGenerator {
 	
@@ -28,7 +26,7 @@ class UppaalGenerator {
 	
 	def generate(Root root, IFileSystemAccess2 fsa) {
 		processes = root.allUppaalProcesses
-		channels = root.allChannels
+		channels = root.allChannels.toList
 		clocks = root.allClocks
 		fsa.generateFile(root.name+'/uppaal.xta', root.compile)
 	}
@@ -58,8 +56,20 @@ class UppaalGenerator {
 			allWhenTx.exists[whenTx | signalTx.signal == whenTx.when]
 		]
 
-		ret.addAll(allWhenNoSignalTx.map[UppaalProcess.fromWhenTransition(it)].toList)
-		ret.addAll(allSignalNoWhenTx.map[UppaalProcess.fromSignalTransition(it)].toList)
+		val List<Transition> noRepeatedWhen = newArrayList
+		for(when: allWhenNoSignalTx) {
+			if(!noRepeatedWhen.exists[addedWhen | addedWhen.when == when.when])
+				noRepeatedWhen.add(when);
+		}
+		
+		val List<Transition> noRepeatedSignal = newArrayList
+		for(signal: allSignalNoWhenTx) {
+			if(!noRepeatedSignal.exists[addedSignal | addedSignal.signal == signal.signal])
+				noRepeatedSignal.add(signal);
+		}
+		
+		ret.addAll(noRepeatedWhen.map[UppaalProcess.fromWhenTransition(it)].toList)
+		ret.addAll(noRepeatedSignal.map[UppaalProcess.fromSignalTransition(it)].toList)
 		ret
 	}
 	
@@ -249,8 +259,8 @@ class UppaalGenerator {
 		statesWithMachine.map['''gen_«name»_«machine.name»_start'''].toList
 	}
 	
-	def List<String> allChannels(Root root) {
-		val retValue = newArrayList
+	def LinkedHashSet<String> allChannels(Root root) {
+		val retValue = newLinkedHashSet
 		retValue.addAll(root.allAuxiliarChannels)
 		retValue.addAll(root.allNestedChannels)
 		return retValue
