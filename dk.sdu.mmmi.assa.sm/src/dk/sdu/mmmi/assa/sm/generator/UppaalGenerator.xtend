@@ -1,8 +1,10 @@
 package dk.sdu.mmmi.assa.sm.generator
 
+import dk.sdu.mmmi.assa.sm.stateMachine.BoolExp
 import dk.sdu.mmmi.assa.sm.stateMachine.Delay
 import dk.sdu.mmmi.assa.sm.stateMachine.Expression
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine
+import dk.sdu.mmmi.assa.sm.stateMachine.Negation
 import dk.sdu.mmmi.assa.sm.stateMachine.Root
 import dk.sdu.mmmi.assa.sm.stateMachine.SMBool
 import dk.sdu.mmmi.assa.sm.stateMachine.SMNumber
@@ -11,6 +13,7 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Statement
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition
 import dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation
 import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition
+import dk.sdu.mmmi.assa.sm.stateMachine.VarReference
 import dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl
 import dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl
 import java.util.LinkedHashSet
@@ -76,6 +79,9 @@ class UppaalGenerator {
 	def CharSequence compile(Root root)'''
 	«FOR clock: clocks BEFORE "clock " SEPARATOR ", " AFTER ";"»«clock»«ENDFOR»
 	«FOR channel: channels BEFORE "chan " SEPARATOR ", " AFTER ";"»«channel»«ENDFOR»
+	«FOR variable: root.vars»
+	«variable.type» «variable.name» = «variable.expression.compileExpression»;
+	«ENDFOR»
 	«FOR process: processes»«process.compile»«ENDFOR»
 «««	«FOR automata:root.allAuxiliarAutomata»«automata.compile»«ENDFOR»
 	system «FOR process:processes SEPARATOR ", " AFTER ';'»«process.name»«ENDFOR»
@@ -107,6 +113,9 @@ class UppaalGenerator {
 		switch expression {
 			SMNumber: expression.value
 			SMBool: expression.value ? 1 : 0
+			BoolExp: '''(«expression.left.compileExpression» «expression.op» «expression.right.compileExpression»)'''
+			VarReference: expression.variable.name
+			Negation: '''!(«expression.exp.compileExpression»)'''
 		}
 	}
 	

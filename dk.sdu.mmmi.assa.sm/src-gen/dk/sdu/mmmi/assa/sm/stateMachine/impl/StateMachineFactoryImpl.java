@@ -77,8 +77,11 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
       case StateMachinePackage.MAX_EXECUTION_TIME: return createMaxExecutionTime();
       case StateMachinePackage.VAR_ASSIGNATION: return createVarAssignation();
       case StateMachinePackage.EQUALITY: return createEquality();
+      case StateMachinePackage.BOOL_EXP: return createBoolExp();
       case StateMachinePackage.SM_NUMBER: return createSMNumber();
       case StateMachinePackage.SM_BOOL: return createSMBool();
+      case StateMachinePackage.VAR_REFERENCE: return createVarReference();
+      case StateMachinePackage.NEGATION: return createNegation();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -234,6 +237,18 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
    * @generated
    */
   @Override
+  public BoolExp createBoolExp()
+  {
+    BoolExpImpl boolExp = new BoolExpImpl();
+    return boolExp;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public SMNumber createSMNumber()
   {
     SMNumberImpl smNumber = new SMNumberImpl();
@@ -250,6 +265,30 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
   {
     SMBoolImpl smBool = new SMBoolImpl();
     return smBool;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public VarReference createVarReference()
+  {
+    VarReferenceImpl varReference = new VarReferenceImpl();
+    return varReference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Negation createNegation()
+  {
+    NegationImpl negation = new NegationImpl();
+    return negation;
   }
 
   /**

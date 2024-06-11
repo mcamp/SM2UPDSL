@@ -21,12 +21,16 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class StateMachineSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected StateMachineGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_Primary_LeftParenthesisKeyword_4_0_a;
+	protected AbstractElementAlias match_Primary_LeftParenthesisKeyword_4_0_p;
 	protected AbstractElementAlias match_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q;
 	protected AbstractElementAlias match_Transition___ActionsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (StateMachineGrammarAccess) access;
+		match_Primary_LeftParenthesisKeyword_4_0_a = new TokenAlias(true, true, grammarAccess.getPrimaryAccess().getLeftParenthesisKeyword_4_0());
+		match_Primary_LeftParenthesisKeyword_4_0_p = new TokenAlias(true, false, grammarAccess.getPrimaryAccess().getLeftParenthesisKeyword_4_0());
 		match_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getSafetyKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getPropertiesKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_3_2()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_3_4()));
 		match_Transition___ActionsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTransitionAccess().getActionsKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getTransitionAccess().getLeftCurlyBracketKeyword_7_1()), new TokenAlias(false, false, grammarAccess.getTransitionAccess().getRightCurlyBracketKeyword_7_3()));
 	}
@@ -43,7 +47,11 @@ public class StateMachineSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q.equals(syntax))
+			if (match_Primary_LeftParenthesisKeyword_4_0_a.equals(syntax))
+				emit_Primary_LeftParenthesisKeyword_4_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Primary_LeftParenthesisKeyword_4_0_p.equals(syntax))
+				emit_Primary_LeftParenthesisKeyword_4_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q.equals(syntax))
 				emit_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Transition___ActionsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__q.equals(syntax))
 				emit_Transition___ActionsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
@@ -51,6 +59,34 @@ public class StateMachineSyntacticSequencer extends AbstractSyntacticSequencer {
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     '('*
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '!' exp=Primary
+	 *     (rule start) (ambiguity) value=Boolean
+	 *     (rule start) (ambiguity) value=INT
+	 *     (rule start) (ambiguity) variable=[VarDefinition|ID]
+	 *     (rule start) (ambiguity) {BoolExp.left=}
+	 *     (rule start) (ambiguity) {Equality.left=}
+	 */
+	protected void emit_Primary_LeftParenthesisKeyword_4_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '('+
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) {BoolExp.left=}
+	 *     (rule start) (ambiguity) {Equality.left=}
+	 */
+	protected void emit_Primary_LeftParenthesisKeyword_4_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 	/**
 	 * Ambiguous syntax:
 	 *     ('safety' 'properties' '{' '}')?

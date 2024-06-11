@@ -5,10 +5,12 @@ package dk.sdu.mmmi.assa.sm.serializer;
 
 import com.google.inject.Inject;
 import dk.sdu.mmmi.assa.sm.services.StateMachineGrammarAccess;
+import dk.sdu.mmmi.assa.sm.stateMachine.BoolExp;
 import dk.sdu.mmmi.assa.sm.stateMachine.Delay;
 import dk.sdu.mmmi.assa.sm.stateMachine.Equality;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime;
+import dk.sdu.mmmi.assa.sm.stateMachine.Negation;
 import dk.sdu.mmmi.assa.sm.stateMachine.Root;
 import dk.sdu.mmmi.assa.sm.stateMachine.SMBool;
 import dk.sdu.mmmi.assa.sm.stateMachine.SMNumber;
@@ -17,6 +19,7 @@ import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
 import dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation;
 import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition;
+import dk.sdu.mmmi.assa.sm.stateMachine.VarReference;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -42,6 +45,9 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == StateMachinePackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case StateMachinePackage.BOOL_EXP:
+				sequence_BoolExp(context, (BoolExp) semanticObject); 
+				return; 
 			case StateMachinePackage.DELAY:
 				sequence_SafetyProperty(context, (Delay) semanticObject); 
 				return; 
@@ -53,6 +59,9 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 				return; 
 			case StateMachinePackage.MAX_EXECUTION_TIME:
 				sequence_SafetyProperty(context, (MaxExecutionTime) semanticObject); 
+				return; 
+			case StateMachinePackage.NEGATION:
+				sequence_Primary(context, (Negation) semanticObject); 
 				return; 
 			case StateMachinePackage.ROOT:
 				sequence_Root(context, (Root) semanticObject); 
@@ -75,6 +84,9 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 			case StateMachinePackage.VAR_DEFINITION:
 				sequence_VarDefinition(context, (VarDefinition) semanticObject); 
 				return; 
+			case StateMachinePackage.VAR_REFERENCE:
+				sequence_Primary(context, (VarReference) semanticObject); 
+				return; 
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -82,12 +94,32 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	
 	/**
 	 * Contexts:
+	 *     Expression returns BoolExp
+	 *     Equality returns BoolExp
+	 *     Equality.Equality_1_0 returns BoolExp
+	 *     BoolExp returns BoolExp
+	 *     BoolExp.BoolExp_1_0 returns BoolExp
+	 *     Primary returns BoolExp
+	 *
+	 * Constraint:
+	 *     (left=BoolExp_BoolExp_1_0 (op='||' | op='&&') right=Primary)
+	 */
+	protected void sequence_BoolExp(ISerializationContext context, BoolExp semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Expression returns Equality
 	 *     Equality returns Equality
 	 *     Equality.Equality_1_0 returns Equality
+	 *     BoolExp returns Equality
+	 *     BoolExp.BoolExp_1_0 returns Equality
+	 *     Primary returns Equality
 	 *
 	 * Constraint:
-	 *     (left=Equality_Equality_1_0 (op='<' | op='<=' | op='>' | op='>=') right=Primary)
+	 *     (left=Equality_Equality_1_0 (op='<' | op='<=' | op='>' | op='>=' | op='==') right=BoolExp)
 	 */
 	protected void sequence_Equality(ISerializationContext context, Equality semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -108,9 +140,34 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	
 	/**
 	 * Contexts:
+	 *     Expression returns Negation
+	 *     Equality returns Negation
+	 *     Equality.Equality_1_0 returns Negation
+	 *     BoolExp returns Negation
+	 *     BoolExp.BoolExp_1_0 returns Negation
+	 *     Primary returns Negation
+	 *
+	 * Constraint:
+	 *     exp=Primary
+	 */
+	protected void sequence_Primary(ISerializationContext context, Negation semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.NEGATION__EXP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.NEGATION__EXP));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPrimaryAccess().getExpPrimaryParserRuleCall_3_2_0(), semanticObject.getExp());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Expression returns SMBool
 	 *     Equality returns SMBool
 	 *     Equality.Equality_1_0 returns SMBool
+	 *     BoolExp returns SMBool
+	 *     BoolExp.BoolExp_1_0 returns SMBool
 	 *     Primary returns SMBool
 	 *
 	 * Constraint:
@@ -132,6 +189,8 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	 *     Expression returns SMNumber
 	 *     Equality returns SMNumber
 	 *     Equality.Equality_1_0 returns SMNumber
+	 *     BoolExp returns SMNumber
+	 *     BoolExp.BoolExp_1_0 returns SMNumber
 	 *     Primary returns SMNumber
 	 *
 	 * Constraint:
@@ -150,10 +209,33 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	
 	/**
 	 * Contexts:
+	 *     Expression returns VarReference
+	 *     Equality returns VarReference
+	 *     Equality.Equality_1_0 returns VarReference
+	 *     BoolExp returns VarReference
+	 *     BoolExp.BoolExp_1_0 returns VarReference
+	 *     Primary returns VarReference
+	 *
+	 * Constraint:
+	 *     variable=[VarDefinition|ID]
+	 */
+	protected void sequence_Primary(ISerializationContext context, VarReference semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.VAR_REFERENCE__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.VAR_REFERENCE__VARIABLE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPrimaryAccess().getVariableVarDefinitionIDTerminalRuleCall_2_1_0_1(), semanticObject.eGet(StateMachinePackage.Literals.VAR_REFERENCE__VARIABLE, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Root returns Root
 	 *
 	 * Constraint:
-	 *     (name=ID machines+=Machine*)
+	 *     (name=ID vars+=VarDefinition* machines+=Machine*)
 	 */
 	protected void sequence_Root(ISerializationContext context, Root semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

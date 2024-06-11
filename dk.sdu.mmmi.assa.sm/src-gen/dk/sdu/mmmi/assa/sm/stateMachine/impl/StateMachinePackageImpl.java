@@ -3,11 +3,13 @@
  */
 package dk.sdu.mmmi.assa.sm.stateMachine.impl;
 
+import dk.sdu.mmmi.assa.sm.stateMachine.BoolExp;
 import dk.sdu.mmmi.assa.sm.stateMachine.Delay;
 import dk.sdu.mmmi.assa.sm.stateMachine.Equality;
 import dk.sdu.mmmi.assa.sm.stateMachine.Expression;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime;
+import dk.sdu.mmmi.assa.sm.stateMachine.Negation;
 import dk.sdu.mmmi.assa.sm.stateMachine.Root;
 import dk.sdu.mmmi.assa.sm.stateMachine.SMBool;
 import dk.sdu.mmmi.assa.sm.stateMachine.SMNumber;
@@ -19,6 +21,7 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Statement;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
 import dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation;
 import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition;
+import dk.sdu.mmmi.assa.sm.stateMachine.VarReference;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -124,6 +127,13 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass boolExpEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass smNumberEClass = null;
 
   /**
@@ -132,6 +142,20 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   private EClass smBoolEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass varReferenceEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass negationEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -224,9 +248,20 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EReference getRoot_Machines()
+  public EReference getRoot_Vars()
   {
     return (EReference)rootEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getRoot_Machines()
+  {
+    return (EReference)rootEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -675,6 +710,50 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
+  public EClass getBoolExp()
+  {
+    return boolExpEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getBoolExp_Left()
+  {
+    return (EReference)boolExpEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getBoolExp_Op()
+  {
+    return (EAttribute)boolExpEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getBoolExp_Right()
+  {
+    return (EReference)boolExpEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getSMNumber()
   {
     return smNumberEClass;
@@ -719,6 +798,50 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
+  public EClass getVarReference()
+  {
+    return varReferenceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getVarReference_Variable()
+  {
+    return (EReference)varReferenceEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getNegation()
+  {
+    return negationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getNegation_Exp()
+  {
+    return (EReference)negationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public StateMachineFactory getStateMachineFactory()
   {
     return (StateMachineFactory)getEFactoryInstance();
@@ -746,6 +869,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     // Create classes and their features
     rootEClass = createEClass(ROOT);
     createEAttribute(rootEClass, ROOT__NAME);
+    createEReference(rootEClass, ROOT__VARS);
     createEReference(rootEClass, ROOT__MACHINES);
 
     machineEClass = createEClass(MACHINE);
@@ -799,11 +923,22 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     createEAttribute(equalityEClass, EQUALITY__OP);
     createEReference(equalityEClass, EQUALITY__RIGHT);
 
+    boolExpEClass = createEClass(BOOL_EXP);
+    createEReference(boolExpEClass, BOOL_EXP__LEFT);
+    createEAttribute(boolExpEClass, BOOL_EXP__OP);
+    createEReference(boolExpEClass, BOOL_EXP__RIGHT);
+
     smNumberEClass = createEClass(SM_NUMBER);
     createEAttribute(smNumberEClass, SM_NUMBER__VALUE);
 
     smBoolEClass = createEClass(SM_BOOL);
     createEAttribute(smBoolEClass, SM_BOOL__VALUE);
+
+    varReferenceEClass = createEClass(VAR_REFERENCE);
+    createEReference(varReferenceEClass, VAR_REFERENCE__VARIABLE);
+
+    negationEClass = createEClass(NEGATION);
+    createEReference(negationEClass, NEGATION__EXP);
   }
 
   /**
@@ -839,12 +974,16 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     maxExecutionTimeEClass.getESuperTypes().add(this.getSafetyProperty());
     varAssignationEClass.getESuperTypes().add(this.getStatement());
     equalityEClass.getESuperTypes().add(this.getExpression());
+    boolExpEClass.getESuperTypes().add(this.getExpression());
     smNumberEClass.getESuperTypes().add(this.getExpression());
     smBoolEClass.getESuperTypes().add(this.getExpression());
+    varReferenceEClass.getESuperTypes().add(this.getExpression());
+    negationEClass.getESuperTypes().add(this.getExpression());
 
     // Initialize classes and features; add operations and parameters
     initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRoot_Name(), ecorePackage.getEString(), "name", null, 0, 1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRoot_Vars(), this.getVarDefinition(), null, "vars", null, 0, -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRoot_Machines(), this.getMachine(), null, "machines", null, 0, -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(machineEClass, Machine.class, "Machine", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -898,11 +1037,22 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     initEAttribute(getEquality_Op(), ecorePackage.getEString(), "op", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEquality_Right(), this.getExpression(), null, "right", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(boolExpEClass, BoolExp.class, "BoolExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getBoolExp_Left(), this.getExpression(), null, "left", null, 0, 1, BoolExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBoolExp_Op(), ecorePackage.getEString(), "op", null, 0, 1, BoolExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBoolExp_Right(), this.getExpression(), null, "right", null, 0, 1, BoolExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(smNumberEClass, SMNumber.class, "SMNumber", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSMNumber_Value(), ecorePackage.getEInt(), "value", null, 0, 1, SMNumber.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(smBoolEClass, SMBool.class, "SMBool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSMBool_Value(), ecorePackage.getEBoolean(), "value", null, 0, 1, SMBool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(varReferenceEClass, VarReference.class, "VarReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVarReference_Variable(), this.getVarDefinition(), null, "variable", null, 0, 1, VarReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(negationEClass, Negation.class, "Negation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNegation_Exp(), this.getExpression(), null, "exp", null, 0, 1, Negation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

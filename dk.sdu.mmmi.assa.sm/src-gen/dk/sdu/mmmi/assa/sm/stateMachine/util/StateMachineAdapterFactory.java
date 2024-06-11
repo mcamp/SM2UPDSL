@@ -136,6 +136,11 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
         return createEqualityAdapter();
       }
       @Override
+      public Adapter caseBoolExp(BoolExp object)
+      {
+        return createBoolExpAdapter();
+      }
+      @Override
       public Adapter caseSMNumber(SMNumber object)
       {
         return createSMNumberAdapter();
@@ -144,6 +149,16 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
       public Adapter caseSMBool(SMBool object)
       {
         return createSMBoolAdapter();
+      }
+      @Override
+      public Adapter caseVarReference(VarReference object)
+      {
+        return createVarReferenceAdapter();
+      }
+      @Override
+      public Adapter caseNegation(Negation object)
+      {
+        return createNegationAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -348,6 +363,21 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.BoolExp <em>Bool Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.BoolExp
+   * @generated
+   */
+  public Adapter createBoolExpAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.SMNumber <em>SM Number</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -373,6 +403,36 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSMBoolAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarReference <em>Var Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarReference
+   * @generated
+   */
+  public Adapter createVarReferenceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Negation <em>Negation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Negation
+   * @generated
+   */
+  public Adapter createNegationAdapter()
   {
     return null;
   }

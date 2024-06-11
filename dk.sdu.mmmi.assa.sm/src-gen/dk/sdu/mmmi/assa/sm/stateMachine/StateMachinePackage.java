@@ -77,13 +77,22 @@ public interface StateMachinePackage extends EPackage
   int ROOT__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Vars</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROOT__VARS = 1;
+
+  /**
    * The feature id for the '<em><b>Machines</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ROOT__MACHINES = 1;
+  int ROOT__MACHINES = 2;
 
   /**
    * The number of structural features of the '<em>Root</em>' class.
@@ -92,7 +101,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ROOT_FEATURE_COUNT = 2;
+  int ROOT_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl <em>Machine</em>}' class.
@@ -583,6 +592,52 @@ public interface StateMachinePackage extends EPackage
   int EQUALITY_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
 
   /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.BoolExpImpl <em>Bool Exp</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.BoolExpImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getBoolExp()
+   * @generated
+   */
+  int BOOL_EXP = 12;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOL_EXP__LEFT = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOL_EXP__OP = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOL_EXP__RIGHT = EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Bool Exp</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOL_EXP_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SMNumberImpl <em>SM Number</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -590,7 +645,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSMNumber()
    * @generated
    */
-  int SM_NUMBER = 12;
+  int SM_NUMBER = 13;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -618,7 +673,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSMBool()
    * @generated
    */
-  int SM_BOOL = 13;
+  int SM_BOOL = 14;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -637,6 +692,62 @@ public interface StateMachinePackage extends EPackage
    * @ordered
    */
   int SM_BOOL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.VarReferenceImpl <em>Var Reference</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.VarReferenceImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getVarReference()
+   * @generated
+   */
+  int VAR_REFERENCE = 15;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_REFERENCE__VARIABLE = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Var Reference</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.NegationImpl <em>Negation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.NegationImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getNegation()
+   * @generated
+   */
+  int NEGATION = 16;
+
+  /**
+   * The feature id for the '<em><b>Exp</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NEGATION__EXP = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Negation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NEGATION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
 
   /**
@@ -659,6 +770,17 @@ public interface StateMachinePackage extends EPackage
    * @generated
    */
   EAttribute getRoot_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getVars <em>Vars</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Vars</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Root#getVars()
+   * @see #getRoot()
+   * @generated
+   */
+  EReference getRoot_Vars();
 
   /**
    * Returns the meta object for the containment reference list '{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getMachines <em>Machines</em>}'.
@@ -1101,6 +1223,49 @@ public interface StateMachinePackage extends EPackage
   EReference getEquality_Right();
 
   /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.BoolExp <em>Bool Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Bool Exp</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.BoolExp
+   * @generated
+   */
+  EClass getBoolExp();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.BoolExp#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.BoolExp#getLeft()
+   * @see #getBoolExp()
+   * @generated
+   */
+  EReference getBoolExp_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.BoolExp#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.BoolExp#getOp()
+   * @see #getBoolExp()
+   * @generated
+   */
+  EAttribute getBoolExp_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.BoolExp#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.BoolExp#getRight()
+   * @see #getBoolExp()
+   * @generated
+   */
+  EReference getBoolExp_Right();
+
+  /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.SMNumber <em>SM Number</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1143,6 +1308,48 @@ public interface StateMachinePackage extends EPackage
   EAttribute getSMBool_Value();
 
   /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarReference <em>Var Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Var Reference</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarReference
+   * @generated
+   */
+  EClass getVarReference();
+
+  /**
+   * Returns the meta object for the reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarReference#getVariable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Variable</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.VarReference#getVariable()
+   * @see #getVarReference()
+   * @generated
+   */
+  EReference getVarReference_Variable();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Negation <em>Negation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Negation</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Negation
+   * @generated
+   */
+  EClass getNegation();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.Negation#getExp <em>Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Exp</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Negation#getExp()
+   * @see #getNegation()
+   * @generated
+   */
+  EReference getNegation_Exp();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1182,6 +1389,14 @@ public interface StateMachinePackage extends EPackage
      * @generated
      */
     EAttribute ROOT__NAME = eINSTANCE.getRoot_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Vars</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ROOT__VARS = eINSTANCE.getRoot_Vars();
 
     /**
      * The meta object literal for the '<em><b>Machines</b></em>' containment reference list feature.
@@ -1534,6 +1749,40 @@ public interface StateMachinePackage extends EPackage
     EReference EQUALITY__RIGHT = eINSTANCE.getEquality_Right();
 
     /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.BoolExpImpl <em>Bool Exp</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.BoolExpImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getBoolExp()
+     * @generated
+     */
+    EClass BOOL_EXP = eINSTANCE.getBoolExp();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference BOOL_EXP__LEFT = eINSTANCE.getBoolExp_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BOOL_EXP__OP = eINSTANCE.getBoolExp_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference BOOL_EXP__RIGHT = eINSTANCE.getBoolExp_Right();
+
+    /**
      * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.SMNumberImpl <em>SM Number</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1568,6 +1817,42 @@ public interface StateMachinePackage extends EPackage
      * @generated
      */
     EAttribute SM_BOOL__VALUE = eINSTANCE.getSMBool_Value();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.VarReferenceImpl <em>Var Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.VarReferenceImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getVarReference()
+     * @generated
+     */
+    EClass VAR_REFERENCE = eINSTANCE.getVarReference();
+
+    /**
+     * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VAR_REFERENCE__VARIABLE = eINSTANCE.getVarReference_Variable();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.NegationImpl <em>Negation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.NegationImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getNegation()
+     * @generated
+     */
+    EClass NEGATION = eINSTANCE.getNegation();
+
+    /**
+     * The meta object literal for the '<em><b>Exp</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference NEGATION__EXP = eINSTANCE.getNegation_Exp();
 
   }
 

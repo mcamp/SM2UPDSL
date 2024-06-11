@@ -132,6 +132,15 @@ public interface StateMachineFactory extends EFactory
   Equality createEquality();
 
   /**
+   * Returns a new object of class '<em>Bool Exp</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Bool Exp</em>'.
+   * @generated
+   */
+  BoolExp createBoolExp();
+
+  /**
    * Returns a new object of class '<em>SM Number</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -148,6 +157,24 @@ public interface StateMachineFactory extends EFactory
    * @generated
    */
   SMBool createSMBool();
+
+  /**
+   * Returns a new object of class '<em>Var Reference</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Var Reference</em>'.
+   * @generated
+   */
+  VarReference createVarReference();
+
+  /**
+   * Returns a new object of class '<em>Negation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Negation</em>'.
+   * @generated
+   */
+  Negation createNegation();
 
   /**
    * Returns the package supported by this factory.

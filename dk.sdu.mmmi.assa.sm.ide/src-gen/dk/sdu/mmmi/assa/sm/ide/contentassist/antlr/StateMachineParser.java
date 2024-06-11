@@ -35,6 +35,7 @@ public class StateMachineParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getStateAccess().getAlternatives_0(), "rule__State__Alternatives_0");
 			builder.put(grammarAccess.getSafetyPropertyAccess().getAlternatives(), "rule__SafetyProperty__Alternatives");
 			builder.put(grammarAccess.getEqualityAccess().getOpAlternatives_1_1_0(), "rule__Equality__OpAlternatives_1_1_0");
+			builder.put(grammarAccess.getBoolExpAccess().getOpAlternatives_1_1_0(), "rule__BoolExp__OpAlternatives_1_1_0");
 			builder.put(grammarAccess.getPrimaryAccess().getAlternatives(), "rule__Primary__Alternatives");
 			builder.put(grammarAccess.getBooleanAccess().getAlternatives(), "rule__Boolean__Alternatives");
 			builder.put(grammarAccess.getRootAccess().getGroup(), "rule__Root__Group__0");
@@ -54,12 +55,18 @@ public class StateMachineParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getStatementAccess().getGroup(), "rule__Statement__Group__0");
 			builder.put(grammarAccess.getEqualityAccess().getGroup(), "rule__Equality__Group__0");
 			builder.put(grammarAccess.getEqualityAccess().getGroup_1(), "rule__Equality__Group_1__0");
+			builder.put(grammarAccess.getBoolExpAccess().getGroup(), "rule__BoolExp__Group__0");
+			builder.put(grammarAccess.getBoolExpAccess().getGroup_1(), "rule__BoolExp__Group_1__0");
 			builder.put(grammarAccess.getPrimaryAccess().getGroup_0(), "rule__Primary__Group_0__0");
 			builder.put(grammarAccess.getPrimaryAccess().getGroup_1(), "rule__Primary__Group_1__0");
+			builder.put(grammarAccess.getPrimaryAccess().getGroup_2(), "rule__Primary__Group_2__0");
+			builder.put(grammarAccess.getPrimaryAccess().getGroup_3(), "rule__Primary__Group_3__0");
+			builder.put(grammarAccess.getPrimaryAccess().getGroup_4(), "rule__Primary__Group_4__0");
 			builder.put(grammarAccess.getFloatAccess().getGroup(), "rule__Float__Group__0");
 			builder.put(grammarAccess.getFloatAccess().getGroup_1(), "rule__Float__Group_1__0");
 			builder.put(grammarAccess.getRootAccess().getNameAssignment_1(), "rule__Root__NameAssignment_1");
-			builder.put(grammarAccess.getRootAccess().getMachinesAssignment_2(), "rule__Root__MachinesAssignment_2");
+			builder.put(grammarAccess.getRootAccess().getVarsAssignment_2(), "rule__Root__VarsAssignment_2");
+			builder.put(grammarAccess.getRootAccess().getMachinesAssignment_3(), "rule__Root__MachinesAssignment_3");
 			builder.put(grammarAccess.getMachineAccess().getNameAssignment_1(), "rule__Machine__NameAssignment_1");
 			builder.put(grammarAccess.getMachineAccess().getVarsAssignment_3_0(), "rule__Machine__VarsAssignment_3_0");
 			builder.put(grammarAccess.getMachineAccess().getStatesAssignment_3_1(), "rule__Machine__StatesAssignment_3_1");
@@ -89,8 +96,12 @@ public class StateMachineParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getStatementAccess().getExpressionAssignment_3(), "rule__Statement__ExpressionAssignment_3");
 			builder.put(grammarAccess.getEqualityAccess().getOpAssignment_1_1(), "rule__Equality__OpAssignment_1_1");
 			builder.put(grammarAccess.getEqualityAccess().getRightAssignment_1_2(), "rule__Equality__RightAssignment_1_2");
+			builder.put(grammarAccess.getBoolExpAccess().getOpAssignment_1_1(), "rule__BoolExp__OpAssignment_1_1");
+			builder.put(grammarAccess.getBoolExpAccess().getRightAssignment_1_2(), "rule__BoolExp__RightAssignment_1_2");
 			builder.put(grammarAccess.getPrimaryAccess().getValueAssignment_0_1(), "rule__Primary__ValueAssignment_0_1");
 			builder.put(grammarAccess.getPrimaryAccess().getValueAssignment_1_1(), "rule__Primary__ValueAssignment_1_1");
+			builder.put(grammarAccess.getPrimaryAccess().getVariableAssignment_2_1(), "rule__Primary__VariableAssignment_2_1");
+			builder.put(grammarAccess.getPrimaryAccess().getExpAssignment_3_2(), "rule__Primary__ExpAssignment_3_2");
 		}
 	}
 	

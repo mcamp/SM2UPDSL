@@ -8,6 +8,7 @@
       fileExtensions="sm" ecorePackage="StateMachine.ecore#/">
     <genClasses ecoreClass="StateMachine.ecore#//Root">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//Root/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Root/vars"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Root/machines"/>
     </genClasses>
     <genClasses ecoreClass="StateMachine.ecore#//Machine">
@@ -57,11 +58,22 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//Equality/op"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Equality/right"/>
     </genClasses>
+    <genClasses ecoreClass="StateMachine.ecore#//BoolExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//BoolExp/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//BoolExp/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//BoolExp/right"/>
+    </genClasses>
     <genClasses ecoreClass="StateMachine.ecore#//SMNumber">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//SMNumber/value"/>
     </genClasses>
     <genClasses ecoreClass="StateMachine.ecore#//SMBool">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//SMBool/value"/>
+    </genClasses>
+    <genClasses ecoreClass="StateMachine.ecore#//VarReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference StateMachine.ecore#//VarReference/variable"/>
+    </genClasses>
+    <genClasses ecoreClass="StateMachine.ecore#//Negation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Negation/exp"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

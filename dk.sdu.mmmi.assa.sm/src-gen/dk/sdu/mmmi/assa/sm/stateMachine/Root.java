@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getName <em>Name</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getVars <em>Vars</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Root#getMachines <em>Machines</em>}</li>
  * </ul>
  *
@@ -47,6 +48,18 @@ public interface Root extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Vars</b></em>' containment reference list.
+   * The list contents are of type {@link dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Vars</em>' containment reference list.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getRoot_Vars()
+   * @model containment="true"
+   * @generated
+   */
+  EList<VarDefinition> getVars();
 
   /**
    * Returns the value of the '<em><b>Machines</b></em>' containment reference list.

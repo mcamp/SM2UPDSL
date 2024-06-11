@@ -30,18 +30,22 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final Keyword cProjectKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Assignment cMachinesAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cMachinesMachineParserRuleCall_2_0 = (RuleCall)cMachinesAssignment_2.eContents().get(0);
+		private final Assignment cVarsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cVarsVarDefinitionParserRuleCall_2_0 = (RuleCall)cVarsAssignment_2.eContents().get(0);
+		private final Assignment cMachinesAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cMachinesMachineParserRuleCall_3_0 = (RuleCall)cMachinesAssignment_3.eContents().get(0);
 		
 		//Root:
 		//    (
 		//        'project' name=ID
+		//        vars+=VarDefinition*
 		//        machines+=Machine*
 		//    )?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//(
 		//    'project' name=ID
+		//    vars+=VarDefinition*
 		//    machines+=Machine*
 		//)?
 		public Group getGroup() { return cGroup; }
@@ -55,11 +59,17 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
+		//vars+=VarDefinition*
+		public Assignment getVarsAssignment_2() { return cVarsAssignment_2; }
+		
+		//VarDefinition
+		public RuleCall getVarsVarDefinitionParserRuleCall_2_0() { return cVarsVarDefinitionParserRuleCall_2_0; }
+		
 		//machines+=Machine*
-		public Assignment getMachinesAssignment_2() { return cMachinesAssignment_2; }
+		public Assignment getMachinesAssignment_3() { return cMachinesAssignment_3; }
 		
 		//Machine
-		public RuleCall getMachinesMachineParserRuleCall_2_0() { return cMachinesMachineParserRuleCall_2_0; }
+		public RuleCall getMachinesMachineParserRuleCall_3_0() { return cMachinesMachineParserRuleCall_3_0; }
 	}
 	public class MachineElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Machine");
@@ -519,7 +529,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	public class EqualityElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Equality");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cPrimaryParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cBoolExpParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cEqualityLeftAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cOpAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
@@ -528,30 +538,31 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final Keyword cOpLessThanSignEqualsSignKeyword_1_1_0_1 = (Keyword)cOpAlternatives_1_1_0.eContents().get(1);
 		private final Keyword cOpGreaterThanSignKeyword_1_1_0_2 = (Keyword)cOpAlternatives_1_1_0.eContents().get(2);
 		private final Keyword cOpGreaterThanSignEqualsSignKeyword_1_1_0_3 = (Keyword)cOpAlternatives_1_1_0.eContents().get(3);
+		private final Keyword cOpEqualsSignEqualsSignKeyword_1_1_0_4 = (Keyword)cOpAlternatives_1_1_0.eContents().get(4);
 		private final Assignment cRightAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cRightPrimaryParserRuleCall_1_2_0 = (RuleCall)cRightAssignment_1_2.eContents().get(0);
+		private final RuleCall cRightBoolExpParserRuleCall_1_2_0 = (RuleCall)cRightAssignment_1_2.eContents().get(0);
 		
 		//Equality returns Expression:
-		//    Primary ({Equality.left = current} op=('<'| '<=' | '>' | '>=') right=Primary)*
+		//    BoolExp ({Equality.left = current} op=('<'| '<=' | '>' | '>=' | '==') right=BoolExp)*
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//Primary ({Equality.left = current} op=('<'| '<=' | '>' | '>=') right=Primary)*
+		//BoolExp ({Equality.left = current} op=('<'| '<=' | '>' | '>=' | '==') right=BoolExp)*
 		public Group getGroup() { return cGroup; }
 		
-		//Primary
-		public RuleCall getPrimaryParserRuleCall_0() { return cPrimaryParserRuleCall_0; }
+		//BoolExp
+		public RuleCall getBoolExpParserRuleCall_0() { return cBoolExpParserRuleCall_0; }
 		
-		//({Equality.left = current} op=('<'| '<=' | '>' | '>=') right=Primary)*
+		//({Equality.left = current} op=('<'| '<=' | '>' | '>=' | '==') right=BoolExp)*
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//{Equality.left = current}
 		public Action getEqualityLeftAction_1_0() { return cEqualityLeftAction_1_0; }
 		
-		//op=('<'| '<=' | '>' | '>=')
+		//op=('<'| '<=' | '>' | '>=' | '==')
 		public Assignment getOpAssignment_1_1() { return cOpAssignment_1_1; }
 		
-		//('<'| '<=' | '>' | '>=')
+		//('<'| '<=' | '>' | '>=' | '==')
 		public Alternatives getOpAlternatives_1_1_0() { return cOpAlternatives_1_1_0; }
 		
 		//'<'
@@ -565,6 +576,57 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		
 		//'>='
 		public Keyword getOpGreaterThanSignEqualsSignKeyword_1_1_0_3() { return cOpGreaterThanSignEqualsSignKeyword_1_1_0_3; }
+		
+		//'=='
+		public Keyword getOpEqualsSignEqualsSignKeyword_1_1_0_4() { return cOpEqualsSignEqualsSignKeyword_1_1_0_4; }
+		
+		//right=BoolExp
+		public Assignment getRightAssignment_1_2() { return cRightAssignment_1_2; }
+		
+		//BoolExp
+		public RuleCall getRightBoolExpParserRuleCall_1_2_0() { return cRightBoolExpParserRuleCall_1_2_0; }
+	}
+	public class BoolExpElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.BoolExp");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cPrimaryParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cBoolExpLeftAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOpAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final Alternatives cOpAlternatives_1_1_0 = (Alternatives)cOpAssignment_1_1.eContents().get(0);
+		private final Keyword cOpVerticalLineVerticalLineKeyword_1_1_0_0 = (Keyword)cOpAlternatives_1_1_0.eContents().get(0);
+		private final Keyword cOpAmpersandAmpersandKeyword_1_1_0_1 = (Keyword)cOpAlternatives_1_1_0.eContents().get(1);
+		private final Assignment cRightAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cRightPrimaryParserRuleCall_1_2_0 = (RuleCall)cRightAssignment_1_2.eContents().get(0);
+		
+		//BoolExp returns Expression:
+		//    Primary ({BoolExp.left = current} op=('||' | '&&') right=Primary)*
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Primary ({BoolExp.left = current} op=('||' | '&&') right=Primary)*
+		public Group getGroup() { return cGroup; }
+		
+		//Primary
+		public RuleCall getPrimaryParserRuleCall_0() { return cPrimaryParserRuleCall_0; }
+		
+		//({BoolExp.left = current} op=('||' | '&&') right=Primary)*
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{BoolExp.left = current}
+		public Action getBoolExpLeftAction_1_0() { return cBoolExpLeftAction_1_0; }
+		
+		//op=('||' | '&&')
+		public Assignment getOpAssignment_1_1() { return cOpAssignment_1_1; }
+		
+		//('||' | '&&')
+		public Alternatives getOpAlternatives_1_1_0() { return cOpAlternatives_1_1_0; }
+		
+		//'||'
+		public Keyword getOpVerticalLineVerticalLineKeyword_1_1_0_0() { return cOpVerticalLineVerticalLineKeyword_1_1_0_0; }
+		
+		//'&&'
+		public Keyword getOpAmpersandAmpersandKeyword_1_1_0_1() { return cOpAmpersandAmpersandKeyword_1_1_0_1; }
 		
 		//right=Primary
 		public Assignment getRightAssignment_1_2() { return cRightAssignment_1_2; }
@@ -583,15 +645,35 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final Action cSMBoolAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cValueBooleanParserRuleCall_1_1_0 = (RuleCall)cValueAssignment_1_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Action cVarReferenceAction_2_0 = (Action)cGroup_2.eContents().get(0);
+		private final Assignment cVariableAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final CrossReference cVariableVarDefinitionCrossReference_2_1_0 = (CrossReference)cVariableAssignment_2_1.eContents().get(0);
+		private final RuleCall cVariableVarDefinitionIDTerminalRuleCall_2_1_0_1 = (RuleCall)cVariableVarDefinitionCrossReference_2_1_0.eContents().get(1);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final Action cNegationAction_3_0 = (Action)cGroup_3.eContents().get(0);
+		private final Keyword cExclamationMarkKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Assignment cExpAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cExpPrimaryParserRuleCall_3_2_0 = (RuleCall)cExpAssignment_3_2.eContents().get(0);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Keyword cLeftParenthesisKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final RuleCall cExpressionParserRuleCall_4_1 = (RuleCall)cGroup_4.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
 		
 		//Primary returns Expression:
 		//    {SMNumber} value=INT |
-		//    {SMBool} value=Boolean
+		//    {SMBool} value=Boolean |
+		//    {VarReference} variable=[VarDefinition] |
+		//    {Negation} '!' exp=Primary |
+		//    '(' Expression ')'
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{SMNumber} value=INT |
-		//{SMBool} value=Boolean
+		//{SMBool} value=Boolean |
+		//{VarReference} variable=[VarDefinition] |
+		//{Negation} '!' exp=Primary |
+		//'(' Expression ')'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{SMNumber} value=INT
@@ -617,6 +699,48 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		
 		//Boolean
 		public RuleCall getValueBooleanParserRuleCall_1_1_0() { return cValueBooleanParserRuleCall_1_1_0; }
+		
+		//{VarReference} variable=[VarDefinition]
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//{VarReference}
+		public Action getVarReferenceAction_2_0() { return cVarReferenceAction_2_0; }
+		
+		//variable=[VarDefinition]
+		public Assignment getVariableAssignment_2_1() { return cVariableAssignment_2_1; }
+		
+		//[VarDefinition]
+		public CrossReference getVariableVarDefinitionCrossReference_2_1_0() { return cVariableVarDefinitionCrossReference_2_1_0; }
+		
+		//ID
+		public RuleCall getVariableVarDefinitionIDTerminalRuleCall_2_1_0_1() { return cVariableVarDefinitionIDTerminalRuleCall_2_1_0_1; }
+		
+		//{Negation} '!' exp=Primary
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//{Negation}
+		public Action getNegationAction_3_0() { return cNegationAction_3_0; }
+		
+		//'!'
+		public Keyword getExclamationMarkKeyword_3_1() { return cExclamationMarkKeyword_3_1; }
+		
+		//exp=Primary
+		public Assignment getExpAssignment_3_2() { return cExpAssignment_3_2; }
+		
+		//Primary
+		public RuleCall getExpPrimaryParserRuleCall_3_2_0() { return cExpPrimaryParserRuleCall_3_2_0; }
+		
+		//'(' Expression ')'
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_4_0() { return cLeftParenthesisKeyword_4_0; }
+		
+		//Expression
+		public RuleCall getExpressionParserRuleCall_4_1() { return cExpressionParserRuleCall_4_1; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_4_2() { return cRightParenthesisKeyword_4_2; }
 	}
 	public class TypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.Type");
@@ -683,6 +807,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	private final StatementElements pStatement;
 	private final ExpressionElements pExpression;
 	private final EqualityElements pEquality;
+	private final BoolExpElements pBoolExp;
 	private final PrimaryElements pPrimary;
 	private final TypeElements pType;
 	private final FloatElements pFloat;
@@ -706,6 +831,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		this.pStatement = new StatementElements();
 		this.pExpression = new ExpressionElements();
 		this.pEquality = new EqualityElements();
+		this.pBoolExp = new BoolExpElements();
 		this.pPrimary = new PrimaryElements();
 		this.pType = new TypeElements();
 		this.pFloat = new FloatElements();
@@ -742,6 +868,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	//Root:
 	//    (
 	//        'project' name=ID
+	//        vars+=VarDefinition*
 	//        machines+=Machine*
 	//    )?;
 	public RootElements getRootAccess() {
@@ -835,7 +962,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	}
 	
 	//Equality returns Expression:
-	//    Primary ({Equality.left = current} op=('<'| '<=' | '>' | '>=') right=Primary)*
+	//    BoolExp ({Equality.left = current} op=('<'| '<=' | '>' | '>=' | '==') right=BoolExp)*
 	//;
 	public EqualityElements getEqualityAccess() {
 		return pEquality;
@@ -845,9 +972,23 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		return getEqualityAccess().getRule();
 	}
 	
+	//BoolExp returns Expression:
+	//    Primary ({BoolExp.left = current} op=('||' | '&&') right=Primary)*
+	//;
+	public BoolExpElements getBoolExpAccess() {
+		return pBoolExp;
+	}
+	
+	public ParserRule getBoolExpRule() {
+		return getBoolExpAccess().getRule();
+	}
+	
 	//Primary returns Expression:
 	//    {SMNumber} value=INT |
-	//    {SMBool} value=Boolean
+	//    {SMBool} value=Boolean |
+	//    {VarReference} variable=[VarDefinition] |
+	//    {Negation} '!' exp=Primary |
+	//    '(' Expression ')'
 	//;
 	public PrimaryElements getPrimaryAccess() {
 		return pPrimary;
