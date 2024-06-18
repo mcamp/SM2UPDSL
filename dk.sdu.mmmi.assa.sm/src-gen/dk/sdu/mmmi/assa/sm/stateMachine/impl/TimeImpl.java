@@ -3,8 +3,8 @@
  */
 package dk.sdu.mmmi.assa.sm.stateMachine.impl;
 
-import dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
+import dk.sdu.mmmi.assa.sm.stateMachine.Time;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -14,45 +14,45 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Max Execution Time</b></em>'.
+ * An implementation of the model object '<em><b>Time</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MaxExecutionTimeImpl#getTime <em>Time</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TimeImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MaxExecutionTimeImpl extends SafetyPropertyImpl implements MaxExecutionTime
+public class TimeImpl extends TimeOrRangeImpl implements Time
 {
   /**
-   * The default value of the '{@link #getTime() <em>Time</em>}' attribute.
+   * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTime()
+   * @see #getValue()
    * @generated
    * @ordered
    */
-  protected static final float TIME_EDEFAULT = 0.0F;
+  protected static final int VALUE_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getTime() <em>Time</em>}' attribute.
+   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTime()
+   * @see #getValue()
    * @generated
    * @ordered
    */
-  protected float time = TIME_EDEFAULT;
+  protected int value = VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected MaxExecutionTimeImpl()
+  protected TimeImpl()
   {
     super();
   }
@@ -65,7 +65,7 @@ public class MaxExecutionTimeImpl extends SafetyPropertyImpl implements MaxExecu
   @Override
   protected EClass eStaticClass()
   {
-    return StateMachinePackage.Literals.MAX_EXECUTION_TIME;
+    return StateMachinePackage.Literals.TIME;
   }
 
   /**
@@ -74,9 +74,9 @@ public class MaxExecutionTimeImpl extends SafetyPropertyImpl implements MaxExecu
    * @generated
    */
   @Override
-  public float getTime()
+  public int getValue()
   {
-    return time;
+    return value;
   }
 
   /**
@@ -85,12 +85,12 @@ public class MaxExecutionTimeImpl extends SafetyPropertyImpl implements MaxExecu
    * @generated
    */
   @Override
-  public void setTime(float newTime)
+  public void setValue(int newValue)
   {
-    float oldTime = time;
-    time = newTime;
+    int oldValue = value;
+    value = newValue;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.MAX_EXECUTION_TIME__TIME, oldTime, time));
+      eNotify(new ENotificationImpl(this, Notification.SET, StateMachinePackage.TIME__VALUE, oldValue, value));
   }
 
   /**
@@ -103,8 +103,8 @@ public class MaxExecutionTimeImpl extends SafetyPropertyImpl implements MaxExecu
   {
     switch (featureID)
     {
-      case StateMachinePackage.MAX_EXECUTION_TIME__TIME:
-        return getTime();
+      case StateMachinePackage.TIME__VALUE:
+        return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -119,8 +119,8 @@ public class MaxExecutionTimeImpl extends SafetyPropertyImpl implements MaxExecu
   {
     switch (featureID)
     {
-      case StateMachinePackage.MAX_EXECUTION_TIME__TIME:
-        setTime((Float)newValue);
+      case StateMachinePackage.TIME__VALUE:
+        setValue((Integer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -136,8 +136,8 @@ public class MaxExecutionTimeImpl extends SafetyPropertyImpl implements MaxExecu
   {
     switch (featureID)
     {
-      case StateMachinePackage.MAX_EXECUTION_TIME__TIME:
-        setTime(TIME_EDEFAULT);
+      case StateMachinePackage.TIME__VALUE:
+        setValue(VALUE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -153,8 +153,8 @@ public class MaxExecutionTimeImpl extends SafetyPropertyImpl implements MaxExecu
   {
     switch (featureID)
     {
-      case StateMachinePackage.MAX_EXECUTION_TIME__TIME:
-        return time != TIME_EDEFAULT;
+      case StateMachinePackage.TIME__VALUE:
+        return value != VALUE_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -170,10 +170,10 @@ public class MaxExecutionTimeImpl extends SafetyPropertyImpl implements MaxExecu
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (time: ");
-    result.append(time);
+    result.append(" (value: ");
+    result.append(value);
     result.append(')');
     return result.toString();
   }
 
-} //MaxExecutionTimeImpl
+} //TimeImpl

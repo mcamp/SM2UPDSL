@@ -123,13 +123,22 @@ public interface StateMachinePackage extends EPackage
   int MACHINE__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Properties</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MACHINE__PROPERTIES = 1;
+
+  /**
    * The feature id for the '<em><b>Vars</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MACHINE__VARS = 1;
+  int MACHINE__VARS = 2;
 
   /**
    * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -138,7 +147,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int MACHINE__STATES = 2;
+  int MACHINE__STATES = 3;
 
   /**
    * The feature id for the '<em><b>Transitions</b></em>' containment reference list.
@@ -147,7 +156,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int MACHINE__TRANSITIONS = 3;
+  int MACHINE__TRANSITIONS = 4;
 
   /**
    * The number of structural features of the '<em>Machine</em>' class.
@@ -156,7 +165,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int MACHINE_FEATURE_COUNT = 4;
+  int MACHINE_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl <em>State</em>}' class.
@@ -351,22 +360,32 @@ public interface StateMachinePackage extends EPackage
   int SAFETY_PROPERTY = 4;
 
   /**
-   * The feature id for the '<em><b>Time</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SAFETY_PROPERTY__TIME = 0;
-
-  /**
    * The number of structural features of the '<em>Safety Property</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SAFETY_PROPERTY_FEATURE_COUNT = 1;
+  int SAFETY_PROPERTY_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TimeOrRangeImpl <em>Time Or Range</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.TimeOrRangeImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getTimeOrRange()
+   * @generated
+   */
+  int TIME_OR_RANGE = 5;
+
+  /**
+   * The number of structural features of the '<em>Time Or Range</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TIME_OR_RANGE_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.VarDefinitionImpl <em>Var Definition</em>}' class.
@@ -376,7 +395,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getVarDefinition()
    * @generated
    */
-  int VAR_DEFINITION = 5;
+  int VAR_DEFINITION = 6;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -422,7 +441,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getStatement()
    * @generated
    */
-  int STATEMENT = 6;
+  int STATEMENT = 7;
 
   /**
    * The number of structural features of the '<em>Statement</em>' class.
@@ -441,7 +460,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getExpression()
    * @generated
    */
-  int EXPRESSION = 7;
+  int EXPRESSION = 8;
 
   /**
    * The number of structural features of the '<em>Expression</em>' class.
@@ -460,16 +479,25 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getDelay()
    * @generated
    */
-  int DELAY = 8;
+  int DELAY = 9;
 
   /**
-   * The feature id for the '<em><b>Time</b></em>' attribute.
+   * The feature id for the '<em><b>Time</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DELAY__TIME = SAFETY_PROPERTY__TIME;
+  int DELAY__TIME = SAFETY_PROPERTY_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Statements</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELAY__STATEMENTS = SAFETY_PROPERTY_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Delay</em>' class.
@@ -478,7 +506,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int DELAY_FEATURE_COUNT = SAFETY_PROPERTY_FEATURE_COUNT + 0;
+  int DELAY_FEATURE_COUNT = SAFETY_PROPERTY_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MaxExecutionTimeImpl <em>Max Execution Time</em>}' class.
@@ -488,7 +516,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getMaxExecutionTime()
    * @generated
    */
-  int MAX_EXECUTION_TIME = 9;
+  int MAX_EXECUTION_TIME = 10;
 
   /**
    * The feature id for the '<em><b>Time</b></em>' attribute.
@@ -497,7 +525,7 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int MAX_EXECUTION_TIME__TIME = SAFETY_PROPERTY__TIME;
+  int MAX_EXECUTION_TIME__TIME = SAFETY_PROPERTY_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Max Execution Time</em>' class.
@@ -506,7 +534,72 @@ public interface StateMachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int MAX_EXECUTION_TIME_FEATURE_COUNT = SAFETY_PROPERTY_FEATURE_COUNT + 0;
+  int MAX_EXECUTION_TIME_FEATURE_COUNT = SAFETY_PROPERTY_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TimeImpl <em>Time</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.TimeImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getTime()
+   * @generated
+   */
+  int TIME = 11;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TIME__VALUE = TIME_OR_RANGE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Time</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TIME_FEATURE_COUNT = TIME_OR_RANGE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.RangeImpl <em>Range</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.RangeImpl
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getRange()
+   * @generated
+   */
+  int RANGE = 12;
+
+  /**
+   * The feature id for the '<em><b>From</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE__FROM = TIME_OR_RANGE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>To</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE__TO = TIME_OR_RANGE_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Range</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE_FEATURE_COUNT = TIME_OR_RANGE_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.VarAssignationImpl <em>Var Assignation</em>}' class.
@@ -516,7 +609,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getVarAssignation()
    * @generated
    */
-  int VAR_ASSIGNATION = 10;
+  int VAR_ASSIGNATION = 13;
 
   /**
    * The feature id for the '<em><b>Variable</b></em>' reference.
@@ -553,7 +646,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getEquality()
    * @generated
    */
-  int EQUALITY = 11;
+  int EQUALITY = 14;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -599,7 +692,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getBoolExp()
    * @generated
    */
-  int BOOL_EXP = 12;
+  int BOOL_EXP = 15;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -645,7 +738,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSMNumber()
    * @generated
    */
-  int SM_NUMBER = 13;
+  int SM_NUMBER = 16;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -673,7 +766,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getSMBool()
    * @generated
    */
-  int SM_BOOL = 14;
+  int SM_BOOL = 17;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -701,7 +794,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getVarReference()
    * @generated
    */
-  int VAR_REFERENCE = 15;
+  int VAR_REFERENCE = 18;
 
   /**
    * The feature id for the '<em><b>Variable</b></em>' reference.
@@ -729,7 +822,7 @@ public interface StateMachinePackage extends EPackage
    * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getNegation()
    * @generated
    */
-  int NEGATION = 16;
+  int NEGATION = 19;
 
   /**
    * The feature id for the '<em><b>Exp</b></em>' containment reference.
@@ -813,6 +906,17 @@ public interface StateMachinePackage extends EPackage
    * @generated
    */
   EAttribute getMachine_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link dk.sdu.mmmi.assa.sm.stateMachine.Machine#getProperties <em>Properties</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Properties</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Machine#getProperties()
+   * @see #getMachine()
+   * @generated
+   */
+  EReference getMachine_Properties();
 
   /**
    * Returns the meta object for the containment reference list '{@link dk.sdu.mmmi.assa.sm.stateMachine.Machine#getVars <em>Vars</em>}'.
@@ -1054,15 +1158,14 @@ public interface StateMachinePackage extends EPackage
   EClass getSafetyProperty();
 
   /**
-   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty#getTime <em>Time</em>}'.
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.TimeOrRange <em>Time Or Range</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Time</em>'.
-   * @see dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty#getTime()
-   * @see #getSafetyProperty()
+   * @return the meta object for class '<em>Time Or Range</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.TimeOrRange
    * @generated
    */
-  EAttribute getSafetyProperty_Time();
+  EClass getTimeOrRange();
 
   /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition <em>Var Definition</em>}'.
@@ -1138,6 +1241,28 @@ public interface StateMachinePackage extends EPackage
   EClass getDelay();
 
   /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.assa.sm.stateMachine.Delay#getTime <em>Time</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Time</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Delay#getTime()
+   * @see #getDelay()
+   * @generated
+   */
+  EReference getDelay_Time();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link dk.sdu.mmmi.assa.sm.stateMachine.Delay#getStatements <em>Statements</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Statements</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Delay#getStatements()
+   * @see #getDelay()
+   * @generated
+   */
+  EReference getDelay_Statements();
+
+  /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime <em>Max Execution Time</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1146,6 +1271,70 @@ public interface StateMachinePackage extends EPackage
    * @generated
    */
   EClass getMaxExecutionTime();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime#getTime <em>Time</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Time</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime#getTime()
+   * @see #getMaxExecutionTime()
+   * @generated
+   */
+  EAttribute getMaxExecutionTime_Time();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Time <em>Time</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Time</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Time
+   * @generated
+   */
+  EClass getTime();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Time#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Time#getValue()
+   * @see #getTime()
+   * @generated
+   */
+  EAttribute getTime_Value();
+
+  /**
+   * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Range <em>Range</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Range</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Range
+   * @generated
+   */
+  EClass getRange();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Range#getFrom <em>From</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>From</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Range#getFrom()
+   * @see #getRange()
+   * @generated
+   */
+  EAttribute getRange_From();
+
+  /**
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.assa.sm.stateMachine.Range#getTo <em>To</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>To</em>'.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Range#getTo()
+   * @see #getRange()
+   * @generated
+   */
+  EAttribute getRange_To();
 
   /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation <em>Var Assignation</em>}'.
@@ -1425,6 +1614,14 @@ public interface StateMachinePackage extends EPackage
     EAttribute MACHINE__NAME = eINSTANCE.getMachine_Name();
 
     /**
+     * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MACHINE__PROPERTIES = eINSTANCE.getMachine_Properties();
+
+    /**
      * The meta object literal for the '<em><b>Vars</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1607,12 +1804,14 @@ public interface StateMachinePackage extends EPackage
     EClass SAFETY_PROPERTY = eINSTANCE.getSafetyProperty();
 
     /**
-     * The meta object literal for the '<em><b>Time</b></em>' attribute feature.
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TimeOrRangeImpl <em>Time Or Range</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.TimeOrRangeImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getTimeOrRange()
      * @generated
      */
-    EAttribute SAFETY_PROPERTY__TIME = eINSTANCE.getSafetyProperty_Time();
+    EClass TIME_OR_RANGE = eINSTANCE.getTimeOrRange();
 
     /**
      * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.VarDefinitionImpl <em>Var Definition</em>}' class.
@@ -1679,6 +1878,22 @@ public interface StateMachinePackage extends EPackage
     EClass DELAY = eINSTANCE.getDelay();
 
     /**
+     * The meta object literal for the '<em><b>Time</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DELAY__TIME = eINSTANCE.getDelay_Time();
+
+    /**
+     * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DELAY__STATEMENTS = eINSTANCE.getDelay_Statements();
+
+    /**
      * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MaxExecutionTimeImpl <em>Max Execution Time</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1687,6 +1902,58 @@ public interface StateMachinePackage extends EPackage
      * @generated
      */
     EClass MAX_EXECUTION_TIME = eINSTANCE.getMaxExecutionTime();
+
+    /**
+     * The meta object literal for the '<em><b>Time</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MAX_EXECUTION_TIME__TIME = eINSTANCE.getMaxExecutionTime_Time();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.TimeImpl <em>Time</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.TimeImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getTime()
+     * @generated
+     */
+    EClass TIME = eINSTANCE.getTime();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TIME__VALUE = eINSTANCE.getTime_Value();
+
+    /**
+     * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.RangeImpl <em>Range</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.RangeImpl
+     * @see dk.sdu.mmmi.assa.sm.stateMachine.impl.StateMachinePackageImpl#getRange()
+     * @generated
+     */
+    EClass RANGE = eINSTANCE.getRange();
+
+    /**
+     * The meta object literal for the '<em><b>From</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RANGE__FROM = eINSTANCE.getRange_From();
+
+    /**
+     * The meta object literal for the '<em><b>To</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RANGE__TO = eINSTANCE.getRange_To();
 
     /**
      * The meta object literal for the '{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.VarAssignationImpl <em>Var Assignation</em>}' class.

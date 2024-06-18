@@ -69,6 +69,15 @@ public interface StateMachineFactory extends EFactory
   SafetyProperty createSafetyProperty();
 
   /**
+   * Returns a new object of class '<em>Time Or Range</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Time Or Range</em>'.
+   * @generated
+   */
+  TimeOrRange createTimeOrRange();
+
+  /**
    * Returns a new object of class '<em>Var Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -112,6 +121,24 @@ public interface StateMachineFactory extends EFactory
    * @generated
    */
   MaxExecutionTime createMaxExecutionTime();
+
+  /**
+   * Returns a new object of class '<em>Time</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Time</em>'.
+   * @generated
+   */
+  Time createTime();
+
+  /**
+   * Returns a new object of class '<em>Range</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Range</em>'.
+   * @generated
+   */
+  Range createRange();
 
   /**
    * Returns a new object of class '<em>Var Assignation</em>'.

@@ -12,7 +12,9 @@ Root:
 	)?;
 	
 Machine:
-	'machine' name=ID '{' (vars+=VarDefinition | states+=State | transitions+=Transition)* '}';
+	'machine' name=ID 
+		('safety' 'properties' '{' properties+=SafetyProperty* '}')? 
+		'{' (vars+=VarDefinition | states+=State | transitions+=Transition)* '}';
 	
 State:
 	(fail?='fail' | end?='end')? 'state' name=ID ('safety' 'properties' '{' properties+=SafetyProperty* '}')? ('with' machine=Machine)?
@@ -28,9 +30,13 @@ Transition:
 ;
 
 SafetyProperty: 
-	{Delay} 'startup' 'delay' time=Float |
+	{Delay} 'startup' 'delay' time=TimeOrRange ('{' statements+=Statement* '}')?|
 	{MaxExecutionTime} 'max' 'execution' time=Float
+;
 
+TimeOrRange:
+	{Time} value = INT |
+	{Range} 'from' from=INT 'to' to=INT
 ;
 
 VarDefinition: 

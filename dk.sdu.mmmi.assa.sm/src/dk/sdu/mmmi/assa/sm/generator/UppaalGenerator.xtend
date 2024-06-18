@@ -5,17 +5,20 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Delay
 import dk.sdu.mmmi.assa.sm.stateMachine.Expression
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine
 import dk.sdu.mmmi.assa.sm.stateMachine.Negation
+import dk.sdu.mmmi.assa.sm.stateMachine.Range
 import dk.sdu.mmmi.assa.sm.stateMachine.Root
 import dk.sdu.mmmi.assa.sm.stateMachine.SMBool
 import dk.sdu.mmmi.assa.sm.stateMachine.SMNumber
 import dk.sdu.mmmi.assa.sm.stateMachine.State
 import dk.sdu.mmmi.assa.sm.stateMachine.Statement
+import dk.sdu.mmmi.assa.sm.stateMachine.Time
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition
 import dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation
 import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition
 import dk.sdu.mmmi.assa.sm.stateMachine.VarReference
 import dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl
 import dk.sdu.mmmi.assa.sm.stateMachine.impl.StateImpl
+import dk.sdu.mmmi.assa.sm.stateMachine.impl.VarAssignationImpl
 import java.util.LinkedHashSet
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
@@ -109,10 +112,10 @@ class UppaalGenerator {
 	}
 	'''
 	
-	def compileExpression(Expression expression) {
+	def String compileExpression(Expression expression) {
 		switch expression {
-			SMNumber: expression.value
-			SMBool: expression.value ? 1 : 0
+			SMNumber: expression.value.toString
+			SMBool: expression.value ? 1.toString : 0.toString
 			BoolExp: '''(«expression.left.compileExpression» «expression.op» «expression.right.compileExpression»)'''
 			VarReference: expression.variable.name
 			Negation: '''!(«expression.exp.compileExpression»)'''
@@ -174,36 +177,42 @@ class UppaalGenerator {
 		ret
 	}
 	
-	def compileAction(UppaalTransition transition)'''
-	«IF transition.isTime»
-	guard gen_clock >= «transition.timeout.toClockString»;
-	«ENDIF»
-	«IF transition.hasGuard»
-	guard «transition.guard.compileGuard»;
-	«ENDIF»
-	«IF !transition.sync.isNullOrEmpty»
-	sync «transition.sync»;
-	«ENDIF»
-	«IF transition.toStateWithTimeTransition»
-	assign gen_clock := 0;
-	«ENDIF»
-	«FOR action: transition.actions»
-	«action.compileAction»
-	«ENDFOR»
-	'''
+	def compileAction(UppaalTransition transition) {
+		// guards
+		val List<String> guards = newArrayList
+		if(transition.isTime)
+			guards.add("gen_clock >= "+transition.timeout.toClockString)
+		if(transition.hasGuard)
+			guards.add(transition.guard.compileGuard)
+		
+		// assigns
+		val List<String> assigns = newArrayList
+		if (transition.toStateWithTimeTransition)
+			assigns.add("gen_clock := 0")
+		for(action: transition.myActions)
+			assigns.add(action.compileAction)
+		for(action: transition.actions)
+			assigns.add(action.compileAction)
+		return '''
+		«FOR guard: guards BEFORE "guard " SEPARATOR " && " AFTER ";"»«guard»«ENDFOR»
+		«IF !transition.sync.isNullOrEmpty»
+		sync «transition.sync»;
+		«ENDIF»
+		«FOR action: assigns BEFORE "assign " SEPARATOR ", " AFTER ";"»«action»«ENDFOR»
+		'''
+	}
 	
-	def compileGuard(Object guard) {
+	def String compileGuard(Object guard) {
 		switch guard {
 			Expression: guard.compileExpression
 			String: guard
 		}
 	}
 	
-	def compileAction(Statement statement) {
+	def String compileAction(Statement statement) {
 		switch statement {
-			VarAssignation: '''assign «statement.variable.name» := «statement.expression.compileExpression»;'''	
+			VarAssignation: '''«statement.variable.name» := «statement.expression.compileExpression»'''	
 		}
-		
 	}
 	
 	def CharSequence toClockString(float seconds) {
@@ -217,7 +226,13 @@ class UppaalGenerator {
 	
 	def CharSequence compileBody(UppaalState state){
 		val originalState = state.originalState
-		if(originalState === null) return ""
+		if(originalState === null) {
+			if (state.body.isBlank) return ""
+			return '''
+			 {
+				«state.body»
+			}'''
+		} 
 		return originalState.compileBody
 	}
 	
@@ -278,7 +293,7 @@ class UppaalGenerator {
 	def List<String> allClocks(Root root) {
 		val retValue = newArrayList
 		if (root.hasTimeoutTransition) retValue.add("gen_clock")
-		if (root.hasStartupDelayProperty) retValue.add("startup_clock")
+		if (root.hasStartupDelayProperty) retValue.add("startup_clock")		
 		return retValue
 	}
 	
@@ -308,6 +323,11 @@ class UppaalProcess {
 			this.genInitNestedMachine(machine)
 		}
 		
+		// If machine has startup delay safety property
+		if(machine.hasStartupDelay){
+			this.genStartupDelay(machine)
+		}
+		
 		// Add transitions to process
 		// Fill txs first because state creates transitions, which I want them at the end
 		this.fillTransitions(machine)
@@ -315,8 +335,8 @@ class UppaalProcess {
 		// Add states to process
 		this.fillStates(machine)
 		
-		// Add from safety property
-		this.fillFromSafetyProperties(machine)
+		// TODO: Add from safety property
+		//this.fillFromSafetyProperties(machine)
 		
 		this.states.addAll(this.firstGeneratedStates)
 	}
@@ -440,38 +460,39 @@ class UppaalProcess {
 		}	
 	}
 	
-	def private fillFromSafetyProperties(Machine machine) {	
-		// Generated transitions: from startup delay states
-		for(state: machine.states) {
-			val startupDelay = state.properties.filter(Delay).head
-			if(startupDelay !== null) {
-				val preStateName = state.preStateName
-				val preState = new UppaalState(preStateName)
-				preState.committed = true
-				this.states.add(preState)
-
-				// Modify every transition that comes to a delay state
-				for(transition : machine.transitions.filter[to === state]){
-					val tx = new UppaalTransition(transition)
-					tx.to = preStateName
-					this.transitions.add(tx)	
-				}
-				
-				// two new transitions: one to the state when delay is correct, one to init when delay is not correct
-				var tx = new UppaalTransition(machine)
-				tx.from = preStateName
-				tx.to = state.name
-				tx.setGuard("startup_clock >= "+startupDelay.time.toClockString)
-				this.transitions.add(tx)
-				
-				tx = new UppaalTransition(machine)
-				tx.from = preStateName
-				tx.to = this.initState.name
-				tx.setGuard("startup_clock < "+startupDelay.time.toClockString)
-				this.transitions.add(tx)
-			}
-		}
-	}
+// TODO: implement safety properties over state
+//	def private fillFromSafetyProperties(Machine machine) {	
+//		// Generated transitions: from startup delay states
+//		for(state: machine.states) {
+//			val startupDelay = state.properties.filter(Delay).head
+//			if(startupDelay !== null) {
+//				val preStateName = state.preStateName
+//				val preState = new UppaalState(preStateName)
+//				preState.committed = true
+//				this.states.add(preState)
+//
+//				// Modify every transition that comes to a delay state
+//				for(transition : machine.transitions.filter[to === state]){
+//					val tx = new UppaalTransition(transition)
+//					tx.to = preStateName
+//					this.transitions.add(tx)	
+//				}
+//				
+//				// two new transitions: one to the state when delay is correct, one to init when delay is not correct
+//				var tx = new UppaalTransition(machine)
+//				tx.from = preStateName
+//				tx.to = state.name
+//				tx.setGuard("startup_clock >= "+startupDelay.time.toClockString)
+//				this.transitions.add(tx)
+//				
+//				tx = new UppaalTransition(machine)
+//				tx.from = preStateName
+//				tx.to = this.initState.name
+//				tx.setGuard("startup_clock < "+startupDelay.time.toClockString)
+//				this.transitions.add(tx)
+//			}
+//		}
+//	}
 	
 	/**
 	 * If a transition goes to a state with a nested machine
@@ -606,6 +627,46 @@ class UppaalProcess {
 	def int toInt(float number) {
 		return Math.round(number)
 	}
+	
+	def boolean hasStartupDelay(Machine machine) {
+		return !machine.properties.filter(Delay).isEmpty
+	}
+	
+	def private genStartupDelay(Machine machine) {
+		val uppaalstate = new UppaalState("gen_init")
+		this.states.add(uppaalstate)
+		val property = machine.properties.filter(Delay).head
+		val fromTime = property.time.from
+		val toTime = property.time.to
+		uppaalstate.body = "startup_clock <= "+toTime
+		if(!machine.states.empty) {
+			val newTransition = new UppaalTransition(machine)
+			newTransition.from = uppaalstate.name
+			newTransition.to = machine.states.get(0).name
+			newTransition.setGuard("startup_clock >= "+fromTime)
+			
+			val List<Statement> actions = property.statements
+			newTransition.putActions(actions)
+			this.transitions.add(newTransition)
+		}
+	}
+	
+	def dispatch int getFrom(Time time) {
+		time.value
+	}
+	
+	def dispatch int getFrom(Range range) {
+		range.from
+	}
+	
+	def dispatch int getTo(Time time) {
+		time.value
+	}
+	
+	def dispatch int getTo(Range range) {
+		range.to
+	}
+	
 }
 
 class UppaalTransition {
@@ -616,6 +677,7 @@ class UppaalTransition {
 	var public float timeout
 	var public boolean isTime
 	var String guard
+	var public List<Statement> myActions = newArrayList
 	
 	var Transition originalTx
 	var Machine originalMachine
@@ -661,8 +723,12 @@ class UppaalTransition {
 		this.guard = guard
 	}
 	
-	def actions() {
-		if(originalTx===null) return newArrayList
+	def putActions(List<Statement> actions) {
+		this.myActions = actions;
+	}
+	def getActions() {
+		if(originalTx===null) 
+				return newArrayList
 		return originalTx.actions
 	}
 	
@@ -682,6 +748,7 @@ class UppaalState {
 	var public String name
 	var public State originalState
 	var public boolean committed = false
+	var public String body = ""
 	
 	new(State state) {
 		this.name = state.name

@@ -101,6 +101,11 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
         return createSafetyPropertyAdapter();
       }
       @Override
+      public Adapter caseTimeOrRange(TimeOrRange object)
+      {
+        return createTimeOrRangeAdapter();
+      }
+      @Override
       public Adapter caseVarDefinition(VarDefinition object)
       {
         return createVarDefinitionAdapter();
@@ -124,6 +129,16 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
       public Adapter caseMaxExecutionTime(MaxExecutionTime object)
       {
         return createMaxExecutionTimeAdapter();
+      }
+      @Override
+      public Adapter caseTime(Time object)
+      {
+        return createTimeAdapter();
+      }
+      @Override
+      public Adapter caseRange(Range object)
+      {
+        return createRangeAdapter();
       }
       @Override
       public Adapter caseVarAssignation(VarAssignation object)
@@ -258,6 +273,21 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.TimeOrRange <em>Time Or Range</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.TimeOrRange
+   * @generated
+   */
+  public Adapter createTimeOrRangeAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition <em>Var Definition</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -328,6 +358,36 @@ public class StateMachineAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMaxExecutionTimeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Time <em>Time</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Time
+   * @generated
+   */
+  public Adapter createTimeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.assa.sm.stateMachine.Range <em>Range</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.Range
+   * @generated
+   */
+  public Adapter createRangeAdapter()
   {
     return null;
   }

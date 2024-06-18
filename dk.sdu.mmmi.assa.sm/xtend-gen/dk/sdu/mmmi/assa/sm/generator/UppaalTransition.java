@@ -28,6 +28,8 @@ public class UppaalTransition {
   
   private String guard;
   
+  public List<Statement> myActions = CollectionLiterals.<Statement>newArrayList();
+  
   private Transition originalTx;
   
   private Machine originalMachine;
@@ -87,7 +89,11 @@ public class UppaalTransition {
     this.guard = guard;
   }
   
-  public List<Statement> actions() {
+  public List<Statement> putActions(final List<Statement> actions) {
+    return this.myActions = actions;
+  }
+  
+  public List<Statement> getActions() {
     if ((this.originalTx == null)) {
       return CollectionLiterals.<Statement>newArrayList();
     }

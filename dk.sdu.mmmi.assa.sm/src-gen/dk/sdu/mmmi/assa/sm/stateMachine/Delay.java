@@ -3,12 +3,20 @@
  */
 package dk.sdu.mmmi.assa.sm.stateMachine;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Delay</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Delay#getTime <em>Time</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.Delay#getStatements <em>Statements</em>}</li>
+ * </ul>
  *
  * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getDelay()
  * @model
@@ -16,4 +24,38 @@ package dk.sdu.mmmi.assa.sm.stateMachine;
  */
 public interface Delay extends SafetyProperty
 {
+  /**
+   * Returns the value of the '<em><b>Time</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Time</em>' containment reference.
+   * @see #setTime(TimeOrRange)
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getDelay_Time()
+   * @model containment="true"
+   * @generated
+   */
+  TimeOrRange getTime();
+
+  /**
+   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.Delay#getTime <em>Time</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Time</em>' containment reference.
+   * @see #getTime()
+   * @generated
+   */
+  void setTime(TimeOrRange value);
+
+  /**
+   * Returns the value of the '<em><b>Statements</b></em>' containment reference list.
+   * The list contents are of type {@link dk.sdu.mmmi.assa.sm.stateMachine.Statement}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Statements</em>' containment reference list.
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getDelay_Statements()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Statement> getStatements();
+
 } // Delay

@@ -70,11 +70,14 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
       case StateMachinePackage.STATE: return createState();
       case StateMachinePackage.TRANSITION: return createTransition();
       case StateMachinePackage.SAFETY_PROPERTY: return createSafetyProperty();
+      case StateMachinePackage.TIME_OR_RANGE: return createTimeOrRange();
       case StateMachinePackage.VAR_DEFINITION: return createVarDefinition();
       case StateMachinePackage.STATEMENT: return createStatement();
       case StateMachinePackage.EXPRESSION: return createExpression();
       case StateMachinePackage.DELAY: return createDelay();
       case StateMachinePackage.MAX_EXECUTION_TIME: return createMaxExecutionTime();
+      case StateMachinePackage.TIME: return createTime();
+      case StateMachinePackage.RANGE: return createRange();
       case StateMachinePackage.VAR_ASSIGNATION: return createVarAssignation();
       case StateMachinePackage.EQUALITY: return createEquality();
       case StateMachinePackage.BOOL_EXP: return createBoolExp();
@@ -153,6 +156,18 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
    * @generated
    */
   @Override
+  public TimeOrRange createTimeOrRange()
+  {
+    TimeOrRangeImpl timeOrRange = new TimeOrRangeImpl();
+    return timeOrRange;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public VarDefinition createVarDefinition()
   {
     VarDefinitionImpl varDefinition = new VarDefinitionImpl();
@@ -205,6 +220,30 @@ public class StateMachineFactoryImpl extends EFactoryImpl implements StateMachin
   {
     MaxExecutionTimeImpl maxExecutionTime = new MaxExecutionTimeImpl();
     return maxExecutionTime;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Time createTime()
+  {
+    TimeImpl time = new TimeImpl();
+    return time;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Range createRange()
+  {
+    RangeImpl range = new RangeImpl();
+    return range;
   }
 
   /**

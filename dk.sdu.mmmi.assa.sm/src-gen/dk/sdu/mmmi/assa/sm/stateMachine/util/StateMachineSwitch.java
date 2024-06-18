@@ -108,6 +108,13 @@ public class StateMachineSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case StateMachinePackage.TIME_OR_RANGE:
+      {
+        TimeOrRange timeOrRange = (TimeOrRange)theEObject;
+        T result = caseTimeOrRange(timeOrRange);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case StateMachinePackage.VAR_DEFINITION:
       {
         VarDefinition varDefinition = (VarDefinition)theEObject;
@@ -142,6 +149,22 @@ public class StateMachineSwitch<T> extends Switch<T>
         MaxExecutionTime maxExecutionTime = (MaxExecutionTime)theEObject;
         T result = caseMaxExecutionTime(maxExecutionTime);
         if (result == null) result = caseSafetyProperty(maxExecutionTime);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case StateMachinePackage.TIME:
+      {
+        Time time = (Time)theEObject;
+        T result = caseTime(time);
+        if (result == null) result = caseTimeOrRange(time);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case StateMachinePackage.RANGE:
+      {
+        Range range = (Range)theEObject;
+        T result = caseRange(range);
+        if (result == null) result = caseTimeOrRange(range);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -286,6 +309,22 @@ public class StateMachineSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Time Or Range</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Time Or Range</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTimeOrRange(TimeOrRange object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Var Definition</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -361,6 +400,38 @@ public class StateMachineSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseMaxExecutionTime(MaxExecutionTime object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Time</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Time</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTime(Time object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Range</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Range</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRange(Range object)
   {
     return null;
   }

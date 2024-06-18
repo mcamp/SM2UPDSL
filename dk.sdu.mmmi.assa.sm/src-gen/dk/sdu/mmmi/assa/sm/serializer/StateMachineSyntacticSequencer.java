@@ -21,16 +21,20 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class StateMachineSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected StateMachineGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_Machine___SafetyKeyword_2_0_PropertiesKeyword_2_1_LeftCurlyBracketKeyword_2_2_RightCurlyBracketKeyword_2_4__q;
 	protected AbstractElementAlias match_Primary_LeftParenthesisKeyword_4_0_a;
 	protected AbstractElementAlias match_Primary_LeftParenthesisKeyword_4_0_p;
+	protected AbstractElementAlias match_SafetyProperty___LeftCurlyBracketKeyword_0_4_0_RightCurlyBracketKeyword_0_4_2__q;
 	protected AbstractElementAlias match_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q;
 	protected AbstractElementAlias match_Transition___ActionsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (StateMachineGrammarAccess) access;
+		match_Machine___SafetyKeyword_2_0_PropertiesKeyword_2_1_LeftCurlyBracketKeyword_2_2_RightCurlyBracketKeyword_2_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getMachineAccess().getSafetyKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getMachineAccess().getPropertiesKeyword_2_1()), new TokenAlias(false, false, grammarAccess.getMachineAccess().getLeftCurlyBracketKeyword_2_2()), new TokenAlias(false, false, grammarAccess.getMachineAccess().getRightCurlyBracketKeyword_2_4()));
 		match_Primary_LeftParenthesisKeyword_4_0_a = new TokenAlias(true, true, grammarAccess.getPrimaryAccess().getLeftParenthesisKeyword_4_0());
 		match_Primary_LeftParenthesisKeyword_4_0_p = new TokenAlias(true, false, grammarAccess.getPrimaryAccess().getLeftParenthesisKeyword_4_0());
+		match_SafetyProperty___LeftCurlyBracketKeyword_0_4_0_RightCurlyBracketKeyword_0_4_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSafetyPropertyAccess().getLeftCurlyBracketKeyword_0_4_0()), new TokenAlias(false, false, grammarAccess.getSafetyPropertyAccess().getRightCurlyBracketKeyword_0_4_2()));
 		match_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getSafetyKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getPropertiesKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_3_2()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_3_4()));
 		match_Transition___ActionsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTransitionAccess().getActionsKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getTransitionAccess().getLeftCurlyBracketKeyword_7_1()), new TokenAlias(false, false, grammarAccess.getTransitionAccess().getRightCurlyBracketKeyword_7_3()));
 	}
@@ -47,10 +51,14 @@ public class StateMachineSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Primary_LeftParenthesisKeyword_4_0_a.equals(syntax))
+			if (match_Machine___SafetyKeyword_2_0_PropertiesKeyword_2_1_LeftCurlyBracketKeyword_2_2_RightCurlyBracketKeyword_2_4__q.equals(syntax))
+				emit_Machine___SafetyKeyword_2_0_PropertiesKeyword_2_1_LeftCurlyBracketKeyword_2_2_RightCurlyBracketKeyword_2_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Primary_LeftParenthesisKeyword_4_0_a.equals(syntax))
 				emit_Primary_LeftParenthesisKeyword_4_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Primary_LeftParenthesisKeyword_4_0_p.equals(syntax))
 				emit_Primary_LeftParenthesisKeyword_4_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SafetyProperty___LeftCurlyBracketKeyword_0_4_0_RightCurlyBracketKeyword_0_4_2__q.equals(syntax))
+				emit_SafetyProperty___LeftCurlyBracketKeyword_0_4_0_RightCurlyBracketKeyword_0_4_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q.equals(syntax))
 				emit_State___SafetyKeyword_3_0_PropertiesKeyword_3_1_LeftCurlyBracketKeyword_3_2_RightCurlyBracketKeyword_3_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Transition___ActionsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__q.equals(syntax))
@@ -59,6 +67,20 @@ public class StateMachineSyntacticSequencer extends AbstractSyntacticSequencer {
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     ('safety' 'properties' '{' '}')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     name=ID (ambiguity) '{' '}' (rule end)
+	 *     name=ID (ambiguity) '{' states+=State
+	 *     name=ID (ambiguity) '{' transitions+=Transition
+	 *     name=ID (ambiguity) '{' vars+=VarDefinition
+	 */
+	protected void emit_Machine___SafetyKeyword_2_0_PropertiesKeyword_2_1_LeftCurlyBracketKeyword_2_2_RightCurlyBracketKeyword_2_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 	/**
 	 * Ambiguous syntax:
 	 *     '('*
@@ -84,6 +106,17 @@ public class StateMachineSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) {Equality.left=}
 	 */
 	protected void emit_Primary_LeftParenthesisKeyword_4_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('{' '}')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     time=TimeOrRange (ambiguity) (rule end)
+	 */
+	protected void emit_SafetyProperty___LeftCurlyBracketKeyword_0_4_0_RightCurlyBracketKeyword_0_4_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

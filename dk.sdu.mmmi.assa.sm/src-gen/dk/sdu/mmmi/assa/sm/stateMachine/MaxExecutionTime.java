@@ -9,6 +9,12 @@ package dk.sdu.mmmi.assa.sm.stateMachine;
  * A representation of the model object '<em><b>Max Execution Time</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime#getTime <em>Time</em>}</li>
+ * </ul>
  *
  * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getMaxExecutionTime()
  * @model
@@ -16,4 +22,26 @@ package dk.sdu.mmmi.assa.sm.stateMachine;
  */
 public interface MaxExecutionTime extends SafetyProperty
 {
+  /**
+   * Returns the value of the '<em><b>Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Time</em>' attribute.
+   * @see #setTime(float)
+   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getMaxExecutionTime_Time()
+   * @model
+   * @generated
+   */
+  float getTime();
+
+  /**
+   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime#getTime <em>Time</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Time</em>' attribute.
+   * @see #getTime()
+   * @generated
+   */
+  void setTime(float value);
+
 } // MaxExecutionTime

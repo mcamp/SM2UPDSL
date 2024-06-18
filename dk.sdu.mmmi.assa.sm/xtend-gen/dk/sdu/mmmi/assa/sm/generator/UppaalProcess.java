@@ -4,9 +4,14 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import dk.sdu.mmmi.assa.sm.stateMachine.Delay;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
+import dk.sdu.mmmi.assa.sm.stateMachine.Range;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
+import dk.sdu.mmmi.assa.sm.stateMachine.Statement;
+import dk.sdu.mmmi.assa.sm.stateMachine.Time;
+import dk.sdu.mmmi.assa.sm.stateMachine.TimeOrRange;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
 import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition;
+import java.util.Arrays;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.EcoreUtil2;
@@ -34,9 +39,12 @@ public class UppaalProcess {
     if (_isNested) {
       this.genInitNestedMachine(machine);
     }
+    boolean _hasStartupDelay = this.hasStartupDelay(machine);
+    if (_hasStartupDelay) {
+      this.genStartupDelay(machine);
+    }
     this.fillTransitions(machine);
     this.fillStates(machine);
-    this.fillFromSafetyProperties(machine);
     this.states.addAll(this.firstGeneratedStates);
   }
   
@@ -166,48 +174,6 @@ public class UppaalProcess {
             UppaalTransition _uppaalTransition = new UppaalTransition(transition);
             this.transitions.add(_uppaalTransition);
           }
-        }
-      }
-    }
-  }
-  
-  private void fillFromSafetyProperties(final Machine machine) {
-    EList<State> _states = machine.getStates();
-    for (final State state : _states) {
-      {
-        final Delay startupDelay = IterableExtensions.<Delay>head(Iterables.<Delay>filter(state.getProperties(), Delay.class));
-        if ((startupDelay != null)) {
-          final String preStateName = this.preStateName(state);
-          final UppaalState preState = new UppaalState(preStateName);
-          preState.committed = true;
-          this.states.add(preState);
-          final Function1<Transition, Boolean> _function = (Transition it) -> {
-            State _to = it.getTo();
-            return Boolean.valueOf((_to == state));
-          };
-          Iterable<Transition> _filter = IterableExtensions.<Transition>filter(machine.getTransitions(), _function);
-          for (final Transition transition : _filter) {
-            {
-              final UppaalTransition tx = new UppaalTransition(transition);
-              tx.to = preStateName;
-              this.transitions.add(tx);
-            }
-          }
-          UppaalTransition tx = new UppaalTransition(machine);
-          tx.from = preStateName;
-          tx.to = state.getName();
-          CharSequence _clockString = this.toClockString(startupDelay.getTime());
-          String _plus = ("startup_clock >= " + _clockString);
-          tx.setGuard(_plus);
-          this.transitions.add(tx);
-          UppaalTransition _uppaalTransition = new UppaalTransition(machine);
-          tx = _uppaalTransition;
-          tx.from = preStateName;
-          tx.to = this.initState().name;
-          CharSequence _clockString_1 = this.toClockString(startupDelay.getTime());
-          String _plus_1 = ("startup_clock < " + _clockString_1);
-          tx.setGuard(_plus_1);
-          this.transitions.add(tx);
         }
       }
     }
@@ -389,5 +355,78 @@ public class UppaalProcess {
   
   public int toInt(final float number) {
     return Math.round(number);
+  }
+  
+  public boolean hasStartupDelay(final Machine machine) {
+    boolean _isEmpty = IterableExtensions.isEmpty(Iterables.<Delay>filter(machine.getProperties(), Delay.class));
+    return (!_isEmpty);
+  }
+  
+  private boolean genStartupDelay(final Machine machine) {
+    boolean _xblockexpression = false;
+    {
+      final UppaalState uppaalstate = new UppaalState("gen_init");
+      this.states.add(uppaalstate);
+      final Delay property = IterableExtensions.<Delay>head(Iterables.<Delay>filter(machine.getProperties(), Delay.class));
+      final int fromTime = this.getFrom(property.getTime());
+      final int toTime = this.getTo(property.getTime());
+      uppaalstate.body = ("startup_clock <= " + Integer.valueOf(toTime));
+      boolean _xifexpression = false;
+      boolean _isEmpty = machine.getStates().isEmpty();
+      boolean _not = (!_isEmpty);
+      if (_not) {
+        boolean _xblockexpression_1 = false;
+        {
+          final UppaalTransition newTransition = new UppaalTransition(machine);
+          newTransition.from = uppaalstate.name;
+          newTransition.to = machine.getStates().get(0).getName();
+          newTransition.setGuard(("startup_clock >= " + Integer.valueOf(fromTime)));
+          final List<Statement> actions = property.getStatements();
+          newTransition.putActions(actions);
+          _xblockexpression_1 = this.transitions.add(newTransition);
+        }
+        _xifexpression = _xblockexpression_1;
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+  
+  protected int _getFrom(final Time time) {
+    return time.getValue();
+  }
+  
+  protected int _getFrom(final Range range) {
+    return range.getFrom();
+  }
+  
+  protected int _getTo(final Time time) {
+    return time.getValue();
+  }
+  
+  protected int _getTo(final Range range) {
+    return range.getTo();
+  }
+  
+  public int getFrom(final TimeOrRange range) {
+    if (range instanceof Range) {
+      return _getFrom((Range)range);
+    } else if (range instanceof Time) {
+      return _getFrom((Time)range);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(range).toString());
+    }
+  }
+  
+  public int getTo(final TimeOrRange range) {
+    if (range instanceof Range) {
+      return _getTo((Range)range);
+    } else if (range instanceof Time) {
+      return _getTo((Time)range);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(range).toString());
+    }
   }
 }

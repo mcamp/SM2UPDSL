@@ -10,6 +10,7 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Expression;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime;
 import dk.sdu.mmmi.assa.sm.stateMachine.Negation;
+import dk.sdu.mmmi.assa.sm.stateMachine.Range;
 import dk.sdu.mmmi.assa.sm.stateMachine.Root;
 import dk.sdu.mmmi.assa.sm.stateMachine.SMBool;
 import dk.sdu.mmmi.assa.sm.stateMachine.SMNumber;
@@ -18,6 +19,8 @@ import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachineFactory;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
 import dk.sdu.mmmi.assa.sm.stateMachine.Statement;
+import dk.sdu.mmmi.assa.sm.stateMachine.Time;
+import dk.sdu.mmmi.assa.sm.stateMachine.TimeOrRange;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
 import dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation;
 import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition;
@@ -78,6 +81,13 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass timeOrRangeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass varDefinitionEClass = null;
 
   /**
@@ -107,6 +117,20 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   private EClass maxExecutionTimeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass timeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass rangeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -292,7 +316,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EReference getMachine_Vars()
+  public EReference getMachine_Properties()
   {
     return (EReference)machineEClass.getEStructuralFeatures().get(1);
   }
@@ -303,7 +327,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EReference getMachine_States()
+  public EReference getMachine_Vars()
   {
     return (EReference)machineEClass.getEStructuralFeatures().get(2);
   }
@@ -314,9 +338,20 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EReference getMachine_Transitions()
+  public EReference getMachine_States()
   {
     return (EReference)machineEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMachine_Transitions()
+  {
+    return (EReference)machineEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -534,9 +569,9 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
-  public EAttribute getSafetyProperty_Time()
+  public EClass getTimeOrRange()
   {
-    return (EAttribute)safetyPropertyEClass.getEStructuralFeatures().get(0);
+    return timeOrRangeEClass;
   }
 
   /**
@@ -622,9 +657,97 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
    * @generated
    */
   @Override
+  public EReference getDelay_Time()
+  {
+    return (EReference)delayEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getDelay_Statements()
+  {
+    return (EReference)delayEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getMaxExecutionTime()
   {
     return maxExecutionTimeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getMaxExecutionTime_Time()
+  {
+    return (EAttribute)maxExecutionTimeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getTime()
+  {
+    return timeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getTime_Value()
+  {
+    return (EAttribute)timeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRange()
+  {
+    return rangeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getRange_From()
+  {
+    return (EAttribute)rangeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getRange_To()
+  {
+    return (EAttribute)rangeEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -874,6 +997,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
 
     machineEClass = createEClass(MACHINE);
     createEAttribute(machineEClass, MACHINE__NAME);
+    createEReference(machineEClass, MACHINE__PROPERTIES);
     createEReference(machineEClass, MACHINE__VARS);
     createEReference(machineEClass, MACHINE__STATES);
     createEReference(machineEClass, MACHINE__TRANSITIONS);
@@ -899,7 +1023,8 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     createEReference(transitionEClass, TRANSITION__ACTIONS);
 
     safetyPropertyEClass = createEClass(SAFETY_PROPERTY);
-    createEAttribute(safetyPropertyEClass, SAFETY_PROPERTY__TIME);
+
+    timeOrRangeEClass = createEClass(TIME_OR_RANGE);
 
     varDefinitionEClass = createEClass(VAR_DEFINITION);
     createEAttribute(varDefinitionEClass, VAR_DEFINITION__TYPE);
@@ -911,8 +1036,18 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     expressionEClass = createEClass(EXPRESSION);
 
     delayEClass = createEClass(DELAY);
+    createEReference(delayEClass, DELAY__TIME);
+    createEReference(delayEClass, DELAY__STATEMENTS);
 
     maxExecutionTimeEClass = createEClass(MAX_EXECUTION_TIME);
+    createEAttribute(maxExecutionTimeEClass, MAX_EXECUTION_TIME__TIME);
+
+    timeEClass = createEClass(TIME);
+    createEAttribute(timeEClass, TIME__VALUE);
+
+    rangeEClass = createEClass(RANGE);
+    createEAttribute(rangeEClass, RANGE__FROM);
+    createEAttribute(rangeEClass, RANGE__TO);
 
     varAssignationEClass = createEClass(VAR_ASSIGNATION);
     createEReference(varAssignationEClass, VAR_ASSIGNATION__VARIABLE);
@@ -972,6 +1107,8 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     // Add supertypes to classes
     delayEClass.getESuperTypes().add(this.getSafetyProperty());
     maxExecutionTimeEClass.getESuperTypes().add(this.getSafetyProperty());
+    timeEClass.getESuperTypes().add(this.getTimeOrRange());
+    rangeEClass.getESuperTypes().add(this.getTimeOrRange());
     varAssignationEClass.getESuperTypes().add(this.getStatement());
     equalityEClass.getESuperTypes().add(this.getExpression());
     boolExpEClass.getESuperTypes().add(this.getExpression());
@@ -988,6 +1125,7 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
 
     initEClass(machineEClass, Machine.class, "Machine", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getMachine_Name(), ecorePackage.getEString(), "name", null, 0, 1, Machine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMachine_Properties(), this.getSafetyProperty(), null, "properties", null, 0, -1, Machine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMachine_Vars(), this.getVarDefinition(), null, "vars", null, 0, -1, Machine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMachine_States(), this.getState(), null, "states", null, 0, -1, Machine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMachine_Transitions(), this.getTransition(), null, "transitions", null, 0, -1, Machine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1013,7 +1151,8 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     initEReference(getTransition_Actions(), this.getStatement(), null, "actions", null, 0, -1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(safetyPropertyEClass, SafetyProperty.class, "SafetyProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSafetyProperty_Time(), ecorePackage.getEFloat(), "time", null, 0, 1, SafetyProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(timeOrRangeEClass, TimeOrRange.class, "TimeOrRange", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(varDefinitionEClass, VarDefinition.class, "VarDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVarDefinition_Type(), ecorePackage.getEString(), "type", null, 0, 1, VarDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1025,8 +1164,18 @@ public class StateMachinePackageImpl extends EPackageImpl implements StateMachin
     initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(delayEClass, Delay.class, "Delay", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDelay_Time(), this.getTimeOrRange(), null, "time", null, 0, 1, Delay.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDelay_Statements(), this.getStatement(), null, "statements", null, 0, -1, Delay.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(maxExecutionTimeEClass, MaxExecutionTime.class, "MaxExecutionTime", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMaxExecutionTime_Time(), ecorePackage.getEFloat(), "time", null, 0, 1, MaxExecutionTime.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(timeEClass, Time.class, "Time", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTime_Value(), ecorePackage.getEInt(), "value", null, 0, 1, Time.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(rangeEClass, Range.class, "Range", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRange_From(), ecorePackage.getEInt(), "from", null, 0, 1, Range.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRange_To(), ecorePackage.getEInt(), "to", null, 0, 1, Range.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(varAssignationEClass, VarAssignation.class, "VarAssignation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getVarAssignation_Variable(), this.getVarDefinition(), null, "variable", null, 0, 1, VarAssignation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

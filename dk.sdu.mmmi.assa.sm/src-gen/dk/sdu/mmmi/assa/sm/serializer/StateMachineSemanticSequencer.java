@@ -11,11 +11,13 @@ import dk.sdu.mmmi.assa.sm.stateMachine.Equality;
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
 import dk.sdu.mmmi.assa.sm.stateMachine.MaxExecutionTime;
 import dk.sdu.mmmi.assa.sm.stateMachine.Negation;
+import dk.sdu.mmmi.assa.sm.stateMachine.Range;
 import dk.sdu.mmmi.assa.sm.stateMachine.Root;
 import dk.sdu.mmmi.assa.sm.stateMachine.SMBool;
 import dk.sdu.mmmi.assa.sm.stateMachine.SMNumber;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
+import dk.sdu.mmmi.assa.sm.stateMachine.Time;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
 import dk.sdu.mmmi.assa.sm.stateMachine.VarAssignation;
 import dk.sdu.mmmi.assa.sm.stateMachine.VarDefinition;
@@ -63,6 +65,9 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 			case StateMachinePackage.NEGATION:
 				sequence_Primary(context, (Negation) semanticObject); 
 				return; 
+			case StateMachinePackage.RANGE:
+				sequence_TimeOrRange(context, (Range) semanticObject); 
+				return; 
 			case StateMachinePackage.ROOT:
 				sequence_Root(context, (Root) semanticObject); 
 				return; 
@@ -74,6 +79,9 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 				return; 
 			case StateMachinePackage.STATE:
 				sequence_State(context, (State) semanticObject); 
+				return; 
+			case StateMachinePackage.TIME:
+				sequence_TimeOrRange(context, (Time) semanticObject); 
 				return; 
 			case StateMachinePackage.TRANSITION:
 				sequence_Transition(context, (Transition) semanticObject); 
@@ -131,7 +139,7 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	 *     Machine returns Machine
 	 *
 	 * Constraint:
-	 *     (name=ID (vars+=VarDefinition | states+=State | transitions+=Transition)*)
+	 *     (name=ID properties+=SafetyProperty* (vars+=VarDefinition | states+=State | transitions+=Transition)*)
 	 */
 	protected void sequence_Machine(ISerializationContext context, Machine semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -247,16 +255,10 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	 *     SafetyProperty returns Delay
 	 *
 	 * Constraint:
-	 *     time=Float
+	 *     (time=TimeOrRange statements+=Statement*)
 	 */
 	protected void sequence_SafetyProperty(ISerializationContext context, Delay semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.SAFETY_PROPERTY__TIME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.SAFETY_PROPERTY__TIME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSafetyPropertyAccess().getTimeFloatParserRuleCall_0_3_0(), semanticObject.getTime());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -269,8 +271,8 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 	 */
 	protected void sequence_SafetyProperty(ISerializationContext context, MaxExecutionTime semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.SAFETY_PROPERTY__TIME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.SAFETY_PROPERTY__TIME));
+			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.MAX_EXECUTION_TIME__TIME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.MAX_EXECUTION_TIME__TIME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getSafetyPropertyAccess().getTimeFloatParserRuleCall_1_3_0(), semanticObject.getTime());
@@ -307,6 +309,45 @@ public class StateMachineSemanticSequencer extends AbstractDelegatingSemanticSeq
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getStatementAccess().getVariableVarDefinitionIDTerminalRuleCall_1_0_1(), semanticObject.eGet(StateMachinePackage.Literals.VAR_ASSIGNATION__VARIABLE, false));
 		feeder.accept(grammarAccess.getStatementAccess().getExpressionExpressionParserRuleCall_3_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TimeOrRange returns Range
+	 *
+	 * Constraint:
+	 *     (from=INT to=INT)
+	 */
+	protected void sequence_TimeOrRange(ISerializationContext context, Range semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.RANGE__FROM) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.RANGE__FROM));
+			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.RANGE__TO) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.RANGE__TO));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTimeOrRangeAccess().getFromINTTerminalRuleCall_1_2_0(), semanticObject.getFrom());
+		feeder.accept(grammarAccess.getTimeOrRangeAccess().getToINTTerminalRuleCall_1_4_0(), semanticObject.getTo());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TimeOrRange returns Time
+	 *
+	 * Constraint:
+	 *     value=INT
+	 */
+	protected void sequence_TimeOrRange(ISerializationContext context, Time semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, StateMachinePackage.Literals.TIME__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, StateMachinePackage.Literals.TIME__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTimeOrRangeAccess().getValueINTTerminalRuleCall_0_1_0(), semanticObject.getValue());
 		feeder.finish();
 	}
 	

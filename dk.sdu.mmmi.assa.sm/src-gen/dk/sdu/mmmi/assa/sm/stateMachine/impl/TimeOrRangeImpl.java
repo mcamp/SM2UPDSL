@@ -3,8 +3,8 @@
  */
 package dk.sdu.mmmi.assa.sm.stateMachine.impl;
 
-import dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
+import dk.sdu.mmmi.assa.sm.stateMachine.TimeOrRange;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -12,19 +12,19 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Safety Property</b></em>'.
+ * An implementation of the model object '<em><b>Time Or Range</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class SafetyPropertyImpl extends MinimalEObjectImpl.Container implements SafetyProperty
+public class TimeOrRangeImpl extends MinimalEObjectImpl.Container implements TimeOrRange
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected SafetyPropertyImpl()
+  protected TimeOrRangeImpl()
   {
     super();
   }
@@ -37,7 +37,7 @@ public class SafetyPropertyImpl extends MinimalEObjectImpl.Container implements 
   @Override
   protected EClass eStaticClass()
   {
-    return StateMachinePackage.Literals.SAFETY_PROPERTY;
+    return StateMachinePackage.Literals.TIME_OR_RANGE;
   }
 
-} //SafetyPropertyImpl
+} //TimeOrRangeImpl

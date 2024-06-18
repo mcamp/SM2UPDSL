@@ -77,21 +77,32 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final Keyword cMachineKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
-		private final Assignment cVarsAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
-		private final RuleCall cVarsVarDefinitionParserRuleCall_3_0_0 = (RuleCall)cVarsAssignment_3_0.eContents().get(0);
-		private final Assignment cStatesAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
-		private final RuleCall cStatesStateParserRuleCall_3_1_0 = (RuleCall)cStatesAssignment_3_1.eContents().get(0);
-		private final Assignment cTransitionsAssignment_3_2 = (Assignment)cAlternatives_3.eContents().get(2);
-		private final RuleCall cTransitionsTransitionParserRuleCall_3_2_0 = (RuleCall)cTransitionsAssignment_3_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cSafetyKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cPropertiesKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Assignment cPropertiesAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
+		private final RuleCall cPropertiesSafetyPropertyParserRuleCall_2_3_0 = (RuleCall)cPropertiesAssignment_2_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_2_4 = (Keyword)cGroup_2.eContents().get(4);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
+		private final Assignment cVarsAssignment_4_0 = (Assignment)cAlternatives_4.eContents().get(0);
+		private final RuleCall cVarsVarDefinitionParserRuleCall_4_0_0 = (RuleCall)cVarsAssignment_4_0.eContents().get(0);
+		private final Assignment cStatesAssignment_4_1 = (Assignment)cAlternatives_4.eContents().get(1);
+		private final RuleCall cStatesStateParserRuleCall_4_1_0 = (RuleCall)cStatesAssignment_4_1.eContents().get(0);
+		private final Assignment cTransitionsAssignment_4_2 = (Assignment)cAlternatives_4.eContents().get(2);
+		private final RuleCall cTransitionsTransitionParserRuleCall_4_2_0 = (RuleCall)cTransitionsAssignment_4_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//Machine:
-		//    'machine' name=ID '{' (vars+=VarDefinition | states+=State | transitions+=Transition)* '}';
+		//    'machine' name=ID
+		//        ('safety' 'properties' '{' properties+=SafetyProperty* '}')?
+		//        '{' (vars+=VarDefinition | states+=State | transitions+=Transition)* '}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'machine' name=ID '{' (vars+=VarDefinition | states+=State | transitions+=Transition)* '}'
+		//'machine' name=ID
+		//    ('safety' 'properties' '{' properties+=SafetyProperty* '}')?
+		//    '{' (vars+=VarDefinition | states+=State | transitions+=Transition)* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'machine'
@@ -103,32 +114,53 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
+		//('safety' 'properties' '{' properties+=SafetyProperty* '}')?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'safety'
+		public Keyword getSafetyKeyword_2_0() { return cSafetyKeyword_2_0; }
+		
+		//'properties'
+		public Keyword getPropertiesKeyword_2_1() { return cPropertiesKeyword_2_1; }
+		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		public Keyword getLeftCurlyBracketKeyword_2_2() { return cLeftCurlyBracketKeyword_2_2; }
 		
-		//(vars+=VarDefinition | states+=State | transitions+=Transition)*
-		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+		//properties+=SafetyProperty*
+		public Assignment getPropertiesAssignment_2_3() { return cPropertiesAssignment_2_3; }
 		
-		//vars+=VarDefinition
-		public Assignment getVarsAssignment_3_0() { return cVarsAssignment_3_0; }
-		
-		//VarDefinition
-		public RuleCall getVarsVarDefinitionParserRuleCall_3_0_0() { return cVarsVarDefinitionParserRuleCall_3_0_0; }
-		
-		//states+=State
-		public Assignment getStatesAssignment_3_1() { return cStatesAssignment_3_1; }
-		
-		//State
-		public RuleCall getStatesStateParserRuleCall_3_1_0() { return cStatesStateParserRuleCall_3_1_0; }
-		
-		//transitions+=Transition
-		public Assignment getTransitionsAssignment_3_2() { return cTransitionsAssignment_3_2; }
-		
-		//Transition
-		public RuleCall getTransitionsTransitionParserRuleCall_3_2_0() { return cTransitionsTransitionParserRuleCall_3_2_0; }
+		//SafetyProperty
+		public RuleCall getPropertiesSafetyPropertyParserRuleCall_2_3_0() { return cPropertiesSafetyPropertyParserRuleCall_2_3_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+		public Keyword getRightCurlyBracketKeyword_2_4() { return cRightCurlyBracketKeyword_2_4; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		
+		//(vars+=VarDefinition | states+=State | transitions+=Transition)*
+		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		
+		//vars+=VarDefinition
+		public Assignment getVarsAssignment_4_0() { return cVarsAssignment_4_0; }
+		
+		//VarDefinition
+		public RuleCall getVarsVarDefinitionParserRuleCall_4_0_0() { return cVarsVarDefinitionParserRuleCall_4_0_0; }
+		
+		//states+=State
+		public Assignment getStatesAssignment_4_1() { return cStatesAssignment_4_1; }
+		
+		//State
+		public RuleCall getStatesStateParserRuleCall_4_1_0() { return cStatesStateParserRuleCall_4_1_0; }
+		
+		//transitions+=Transition
+		public Assignment getTransitionsAssignment_4_2() { return cTransitionsAssignment_4_2; }
+		
+		//Transition
+		public RuleCall getTransitionsTransitionParserRuleCall_4_2_0() { return cTransitionsTransitionParserRuleCall_4_2_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
 	public class StateElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.State");
@@ -380,7 +412,12 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final Keyword cStartupKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
 		private final Keyword cDelayKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
 		private final Assignment cTimeAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cTimeFloatParserRuleCall_0_3_0 = (RuleCall)cTimeAssignment_0_3.eContents().get(0);
+		private final RuleCall cTimeTimeOrRangeParserRuleCall_0_3_0 = (RuleCall)cTimeAssignment_0_3.eContents().get(0);
+		private final Group cGroup_0_4 = (Group)cGroup_0.eContents().get(4);
+		private final Keyword cLeftCurlyBracketKeyword_0_4_0 = (Keyword)cGroup_0_4.eContents().get(0);
+		private final Assignment cStatementsAssignment_0_4_1 = (Assignment)cGroup_0_4.eContents().get(1);
+		private final RuleCall cStatementsStatementParserRuleCall_0_4_1_0 = (RuleCall)cStatementsAssignment_0_4_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_0_4_2 = (Keyword)cGroup_0_4.eContents().get(2);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Action cMaxExecutionTimeAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Keyword cMaxKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
@@ -389,16 +426,16 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final RuleCall cTimeFloatParserRuleCall_1_3_0 = (RuleCall)cTimeAssignment_1_3.eContents().get(0);
 		
 		//SafetyProperty:
-		//    {Delay} 'startup' 'delay' time=Float |
+		//    {Delay} 'startup' 'delay' time=TimeOrRange ('{' statements+=Statement* '}')?|
 		//    {MaxExecutionTime} 'max' 'execution' time=Float
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Delay} 'startup' 'delay' time=Float |
+		//{Delay} 'startup' 'delay' time=TimeOrRange ('{' statements+=Statement* '}')?|
 		//{MaxExecutionTime} 'max' 'execution' time=Float
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{Delay} 'startup' 'delay' time=Float
+		//{Delay} 'startup' 'delay' time=TimeOrRange ('{' statements+=Statement* '}')?
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{Delay}
@@ -410,11 +447,26 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		//'delay'
 		public Keyword getDelayKeyword_0_2() { return cDelayKeyword_0_2; }
 		
-		//time=Float
+		//time=TimeOrRange
 		public Assignment getTimeAssignment_0_3() { return cTimeAssignment_0_3; }
 		
-		//Float
-		public RuleCall getTimeFloatParserRuleCall_0_3_0() { return cTimeFloatParserRuleCall_0_3_0; }
+		//TimeOrRange
+		public RuleCall getTimeTimeOrRangeParserRuleCall_0_3_0() { return cTimeTimeOrRangeParserRuleCall_0_3_0; }
+		
+		//('{' statements+=Statement* '}')?
+		public Group getGroup_0_4() { return cGroup_0_4; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_0_4_0() { return cLeftCurlyBracketKeyword_0_4_0; }
+		
+		//statements+=Statement*
+		public Assignment getStatementsAssignment_0_4_1() { return cStatementsAssignment_0_4_1; }
+		
+		//Statement
+		public RuleCall getStatementsStatementParserRuleCall_0_4_1_0() { return cStatementsStatementParserRuleCall_0_4_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_0_4_2() { return cRightCurlyBracketKeyword_0_4_2; }
 		
 		//{MaxExecutionTime} 'max' 'execution' time=Float
 		public Group getGroup_1() { return cGroup_1; }
@@ -433,6 +485,68 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		
 		//Float
 		public RuleCall getTimeFloatParserRuleCall_1_3_0() { return cTimeFloatParserRuleCall_1_3_0; }
+	}
+	public class TimeOrRangeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.TimeOrRange");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cTimeAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cValueAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cValueINTTerminalRuleCall_0_1_0 = (RuleCall)cValueAssignment_0_1.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Action cRangeAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Keyword cFromKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cFromAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cFromINTTerminalRuleCall_1_2_0 = (RuleCall)cFromAssignment_1_2.eContents().get(0);
+		private final Keyword cToKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		private final Assignment cToAssignment_1_4 = (Assignment)cGroup_1.eContents().get(4);
+		private final RuleCall cToINTTerminalRuleCall_1_4_0 = (RuleCall)cToAssignment_1_4.eContents().get(0);
+		
+		//TimeOrRange:
+		//    {Time} value = INT |
+		//    {Range} 'from' from=INT 'to' to=INT
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Time} value = INT |
+		//{Range} 'from' from=INT 'to' to=INT
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//{Time} value = INT
+		public Group getGroup_0() { return cGroup_0; }
+		
+		//{Time}
+		public Action getTimeAction_0_0() { return cTimeAction_0_0; }
+		
+		//value = INT
+		public Assignment getValueAssignment_0_1() { return cValueAssignment_0_1; }
+		
+		//INT
+		public RuleCall getValueINTTerminalRuleCall_0_1_0() { return cValueINTTerminalRuleCall_0_1_0; }
+		
+		//{Range} 'from' from=INT 'to' to=INT
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{Range}
+		public Action getRangeAction_1_0() { return cRangeAction_1_0; }
+		
+		//'from'
+		public Keyword getFromKeyword_1_1() { return cFromKeyword_1_1; }
+		
+		//from=INT
+		public Assignment getFromAssignment_1_2() { return cFromAssignment_1_2; }
+		
+		//INT
+		public RuleCall getFromINTTerminalRuleCall_1_2_0() { return cFromINTTerminalRuleCall_1_2_0; }
+		
+		//'to'
+		public Keyword getToKeyword_1_3() { return cToKeyword_1_3; }
+		
+		//to=INT
+		public Assignment getToAssignment_1_4() { return cToAssignment_1_4; }
+		
+		//INT
+		public RuleCall getToINTTerminalRuleCall_1_4_0() { return cToINTTerminalRuleCall_1_4_0; }
 	}
 	public class VarDefinitionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.assa.sm.StateMachine.VarDefinition");
@@ -803,6 +917,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	private final StateElements pState;
 	private final TransitionElements pTransition;
 	private final SafetyPropertyElements pSafetyProperty;
+	private final TimeOrRangeElements pTimeOrRange;
 	private final VarDefinitionElements pVarDefinition;
 	private final StatementElements pStatement;
 	private final ExpressionElements pExpression;
@@ -827,6 +942,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 		this.pState = new StateElements();
 		this.pTransition = new TransitionElements();
 		this.pSafetyProperty = new SafetyPropertyElements();
+		this.pTimeOrRange = new TimeOrRangeElements();
 		this.pVarDefinition = new VarDefinitionElements();
 		this.pStatement = new StatementElements();
 		this.pExpression = new ExpressionElements();
@@ -880,7 +996,9 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	}
 	
 	//Machine:
-	//    'machine' name=ID '{' (vars+=VarDefinition | states+=State | transitions+=Transition)* '}';
+	//    'machine' name=ID
+	//        ('safety' 'properties' '{' properties+=SafetyProperty* '}')?
+	//        '{' (vars+=VarDefinition | states+=State | transitions+=Transition)* '}';
 	public MachineElements getMachineAccess() {
 		return pMachine;
 	}
@@ -917,7 +1035,7 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	}
 	
 	//SafetyProperty:
-	//    {Delay} 'startup' 'delay' time=Float |
+	//    {Delay} 'startup' 'delay' time=TimeOrRange ('{' statements+=Statement* '}')?|
 	//    {MaxExecutionTime} 'max' 'execution' time=Float
 	//;
 	public SafetyPropertyElements getSafetyPropertyAccess() {
@@ -926,6 +1044,18 @@ public class StateMachineGrammarAccess extends AbstractElementFinder.AbstractGra
 	
 	public ParserRule getSafetyPropertyRule() {
 		return getSafetyPropertyAccess().getRule();
+	}
+	
+	//TimeOrRange:
+	//    {Time} value = INT |
+	//    {Range} 'from' from=INT 'to' to=INT
+	//;
+	public TimeOrRangeElements getTimeOrRangeAccess() {
+		return pTimeOrRange;
+	}
+	
+	public ParserRule getTimeOrRangeRule() {
+		return getTimeOrRangeAccess().getRule();
 	}
 	
 	//VarDefinition:

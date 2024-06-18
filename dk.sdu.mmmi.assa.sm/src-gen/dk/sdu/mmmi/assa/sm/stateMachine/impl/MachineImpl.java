@@ -4,6 +4,7 @@
 package dk.sdu.mmmi.assa.sm.stateMachine.impl;
 
 import dk.sdu.mmmi.assa.sm.stateMachine.Machine;
+import dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty;
 import dk.sdu.mmmi.assa.sm.stateMachine.State;
 import dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage;
 import dk.sdu.mmmi.assa.sm.stateMachine.Transition;
@@ -34,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl#getName <em>Name</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl#getVars <em>Vars</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl#getStates <em>States</em>}</li>
  *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.impl.MachineImpl#getTransitions <em>Transitions</em>}</li>
@@ -62,6 +64,16 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getProperties() <em>Properties</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getProperties()
+   * @generated
+   * @ordered
+   */
+  protected EList<SafetyProperty> properties;
 
   /**
    * The cached value of the '{@link #getVars() <em>Vars</em>}' containment reference list.
@@ -145,6 +157,21 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
    * @generated
    */
   @Override
+  public EList<SafetyProperty> getProperties()
+  {
+    if (properties == null)
+    {
+      properties = new EObjectContainmentEList<SafetyProperty>(SafetyProperty.class, this, StateMachinePackage.MACHINE__PROPERTIES);
+    }
+    return properties;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<VarDefinition> getVars()
   {
     if (vars == null)
@@ -194,6 +221,8 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
   {
     switch (featureID)
     {
+      case StateMachinePackage.MACHINE__PROPERTIES:
+        return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
       case StateMachinePackage.MACHINE__VARS:
         return ((InternalEList<?>)getVars()).basicRemove(otherEnd, msgs);
       case StateMachinePackage.MACHINE__STATES:
@@ -216,6 +245,8 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
     {
       case StateMachinePackage.MACHINE__NAME:
         return getName();
+      case StateMachinePackage.MACHINE__PROPERTIES:
+        return getProperties();
       case StateMachinePackage.MACHINE__VARS:
         return getVars();
       case StateMachinePackage.MACHINE__STATES:
@@ -239,6 +270,10 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
     {
       case StateMachinePackage.MACHINE__NAME:
         setName((String)newValue);
+        return;
+      case StateMachinePackage.MACHINE__PROPERTIES:
+        getProperties().clear();
+        getProperties().addAll((Collection<? extends SafetyProperty>)newValue);
         return;
       case StateMachinePackage.MACHINE__VARS:
         getVars().clear();
@@ -269,6 +304,9 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
       case StateMachinePackage.MACHINE__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case StateMachinePackage.MACHINE__PROPERTIES:
+        getProperties().clear();
+        return;
       case StateMachinePackage.MACHINE__VARS:
         getVars().clear();
         return;
@@ -294,6 +332,8 @@ public class MachineImpl extends MinimalEObjectImpl.Container implements Machine
     {
       case StateMachinePackage.MACHINE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case StateMachinePackage.MACHINE__PROPERTIES:
+        return properties != null && !properties.isEmpty();
       case StateMachinePackage.MACHINE__VARS:
         return vars != null && !vars.isEmpty();
       case StateMachinePackage.MACHINE__STATES:

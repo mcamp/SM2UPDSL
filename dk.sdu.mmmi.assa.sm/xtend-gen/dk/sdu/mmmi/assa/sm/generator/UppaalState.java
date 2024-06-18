@@ -16,6 +16,8 @@ public class UppaalState {
   
   public boolean committed = false;
   
+  public String body = "";
+  
   public UppaalState(final State state) {
     this.name = state.getName();
     this.originalState = state;

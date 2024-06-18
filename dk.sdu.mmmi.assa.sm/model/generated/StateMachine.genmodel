@@ -13,6 +13,7 @@
     </genClasses>
     <genClasses ecoreClass="StateMachine.ecore#//Machine">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//Machine/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Machine/properties"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Machine/vars"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Machine/states"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Machine/transitions"/>
@@ -37,9 +38,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//Transition/signal"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Transition/actions"/>
     </genClasses>
-    <genClasses ecoreClass="StateMachine.ecore#//SafetyProperty">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//SafetyProperty/time"/>
-    </genClasses>
+    <genClasses ecoreClass="StateMachine.ecore#//SafetyProperty"/>
+    <genClasses ecoreClass="StateMachine.ecore#//TimeOrRange"/>
     <genClasses ecoreClass="StateMachine.ecore#//VarDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//VarDefinition/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//VarDefinition/name"/>
@@ -47,8 +47,20 @@
     </genClasses>
     <genClasses ecoreClass="StateMachine.ecore#//Statement"/>
     <genClasses ecoreClass="StateMachine.ecore#//Expression"/>
-    <genClasses ecoreClass="StateMachine.ecore#//Delay"/>
-    <genClasses ecoreClass="StateMachine.ecore#//MaxExecutionTime"/>
+    <genClasses ecoreClass="StateMachine.ecore#//Delay">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Delay/time"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//Delay/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="StateMachine.ecore#//MaxExecutionTime">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//MaxExecutionTime/time"/>
+    </genClasses>
+    <genClasses ecoreClass="StateMachine.ecore#//Time">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//Time/value"/>
+    </genClasses>
+    <genClasses ecoreClass="StateMachine.ecore#//Range">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//Range/from"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute StateMachine.ecore#//Range/to"/>
+    </genClasses>
     <genClasses ecoreClass="StateMachine.ecore#//VarAssignation">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference StateMachine.ecore#//VarAssignation/variable"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference StateMachine.ecore#//VarAssignation/expression"/>

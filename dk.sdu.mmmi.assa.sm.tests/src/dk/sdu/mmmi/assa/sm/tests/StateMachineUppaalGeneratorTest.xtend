@@ -347,6 +347,7 @@ class StateMachineUppaalGeneratorTest {
 		)
 	}
 	
+	
 	@Test
 	def void signalTimeoutTransition() {
 		'''
@@ -669,56 +670,6 @@ class StateMachineUppaalGeneratorTest {
 	}
 	
 	@Test
-	def void safetyPropertyStartupDelay() {
-		'''
-			project test
-			machine m1 {
-				state one
-				state two
-				state three safety properties {
-					startup delay 50
-				}
-				one -> two
-				two -> three after 5
-				three -> one after 5
-			}
-		'''.assertUppaal('''
-			clock gen_clock, startup_clock;
-			process m1 {
-				state
-					one,
-					two {
-						gen_clock <= 5
-					},
-					three {
-						gen_clock <= 5
-					},
-					gen_pre_three;
-				commit gen_pre_three;
-				init one;
-				trans
-					one -> two {
-						assign gen_clock := 0;
-					},
-					three -> one {
-						guard gen_clock >= 5;
-					},
-					two -> gen_pre_three {
-						guard gen_clock >= 5;
-					},
-					gen_pre_three -> three {
-						guard startup_clock >= 50;
-						assign gen_clock := 0;
-					},
-					gen_pre_three -> one {
-						guard startup_clock < 50;
-					};
-			}
-			system m1;
-		''')
-	}
-	
-	@Test
 	def machineWithWhenAndSignalTransitions(){
 		'''
 			project test
@@ -803,51 +754,152 @@ class StateMachineUppaalGeneratorTest {
 	}
 	
 	@Test
-	def void safetyPropertyOnInnerMachine() {
+	def void safetyPropertyStartupDelayMachine() {
+		'''
+			project test
+			bool test_var := false
+			machine m1 safety properties {
+				startup delay 5 {
+					test_var := false
+				}
+			} {
+				state one
+				state two
+				one -> two
+				two -> one
+			}
+		'''.assertUppaal('''
+			clock startup_clock;
+			bool test_var = 0;
+			process m1 {
+				state
+					gen_init {
+						startup_clock <= 5
+					},
+					one,
+					two;
+				init gen_init;
+				trans
+					gen_init -> one {
+						guard startup_clock >= 5;
+						assign test_var := 0;
+					},
+					one -> two {
+					},
+					two -> one {
+					};
+			}
+			system m1;
+		''')
+	}
+	
+	@Test
+	def void safetyPropertyStartupDelayRangeMachine() {
+		'''
+			project test
+			machine m1 safety properties {
+				startup delay from 5 to 10
+			} {
+				state one
+				state two
+				one -> two
+				two -> one
+			}
+		'''.assertUppaal('''
+			clock startup_clock;
+			process m1 {
+				state
+					gen_init {
+						startup_clock <= 10
+					},
+					one,
+					two;
+				init gen_init;
+				trans
+					gen_init -> one {
+						guard startup_clock >= 5;
+					},
+					one -> two {
+					},
+					two -> one {
+					};
+			}
+			system m1;
+		''')
+	}
+	
+	@Test
+	def void guardAndTimeTx() {
 		'''
 			project test
 			machine m1 {
 				state one
-				state two with machine inner {
-					state innerState safety properties {
-						startup delay 5	
-					}
-				}
+				state two
+				state three
+				one -> two 
+				two -> three guard true after 3
 			}
 		'''.assertUppaal('''
-			clock startup_clock;
-			chan gen_two_inner_start;
+			clock gen_clock;
 			process m1 {
 				state
 					one,
-					gen_pre_two,
-					two;
-				commit gen_pre_two;
+					two {
+						gen_clock <= 3
+					},
+					three;
 				init one;
 				trans
-					gen_pre_two -> two {
-						sync gen_two_inner_start!;
+					one -> two {
+						assign gen_clock := 0;
+					},
+					two -> three {
+						guard gen_clock >= 3 && 1;
 					};
 			}
-			process two_inner {
+			system m1;
+		''')
+	}
+	
+	@Test
+	def void safetyPropertyStartupDelayAndTime() {
+		'''
+			project test
+			machine m1 safety properties {
+				startup delay 5
+			} {
+				bool test_var := false
+				state one
+				state two
+				one -> two after 3
+				two -> one
+			}
+		'''.assertUppaal('''
+			clock gen_clock, startup_clock;
+			process m1 {
+				bool test_var := 0;
 				state
-					gen_init,
-					innerState,
-					gen_pre_innerState;
-				commit gen_pre_innerState;
+					gen_init {
+						startup_clock <= 5
+					},
+					one {
+						gen_clock <= 3
+					},
+					two;
 				init gen_init;
 				trans
-					gen_init -> gen_pre_innerState {
-						sync gen_two_inner_start?;
-					},
-					gen_pre_innerState -> innerState {
+					gen_init -> one {
 						guard startup_clock >= 5;
+						assign gen_clock := 0;
 					},
-					gen_pre_innerState -> gen_init {
-						guard startup_clock < 5;
+					one -> two {
+						guard gen_clock >= 3;
+					},
+					two -> one {
+						assign gen_clock := 0;
 					};
 			}
-			system m1, two_inner;
+			system m1;
 		''')
 	}
 }

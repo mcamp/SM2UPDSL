@@ -10,12 +10,6 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Safety Property</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty#getTime <em>Time</em>}</li>
- * </ul>
  *
  * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getSafetyProperty()
  * @model
@@ -23,26 +17,4 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface SafetyProperty extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Time</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Time</em>' attribute.
-   * @see #setTime(float)
-   * @see dk.sdu.mmmi.assa.sm.stateMachine.StateMachinePackage#getSafetyProperty_Time()
-   * @model
-   * @generated
-   */
-  float getTime();
-
-  /**
-   * Sets the value of the '{@link dk.sdu.mmmi.assa.sm.stateMachine.SafetyProperty#getTime <em>Time</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Time</em>' attribute.
-   * @see #getTime()
-   * @generated
-   */
-  void setTime(float value);
-
 } // SafetyProperty
