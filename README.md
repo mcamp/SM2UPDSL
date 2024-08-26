@@ -2,6 +2,7 @@
 
 This DSL is designed to develop state machines, which are then automatically translated to [UPPAAL timed automata](https://uppaal.org/).
 This approach is inspired by allowing developers to build robotic behaviors using state machines, which then can be formally verified.
+The DSL is built using [Xtext](https://eclipse.dev/Xtext/).
 
 The EBNF of this DSL is:
 
